@@ -1,0 +1,18 @@
+//
+//  Created by Jesse Squires
+
+//  License
+//  Copyright (c) 2014 Jesse Squires
+//
+
+//  ********************************
+//  Special thanks to the localization contributors!
+//
+//  https://github.com/jessesquires/JSQMessagesViewController/issues/237
+//  ********************************
+
+"load_earlier_messages" = "载入较早的信息";
+
+"send" = "发送";
+
+"new_message" = "新信息";
