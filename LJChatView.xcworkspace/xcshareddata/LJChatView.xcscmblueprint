@@ -1,0 +1,32 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "388CB1DEEB61C50DCFDA8AECEE75F3786EFDAC10",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "c1b34985-89f7-4ad2-b6ed-32456ccb691a++1688" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "c1b34985-89f7-4ad2-b6ed-32456ccb691a++1688" : 0,
+    "388CB1DEEB61C50DCFDA8AECEE75F3786EFDAC10" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "45576114-EA16-409A-AF9A-7863DB57A599",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "c1b34985-89f7-4ad2-b6ed-32456ccb691a++1688" : "LJChatView\/LJChatView\/GJGCChatInputPanel\/",
+    "388CB1DEEB61C50DCFDA8AECEE75F3786EFDAC10" : "LJChatView\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "LJChatView",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "LJChatView.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/LJjack\/LJChatView.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "388CB1DEEB61C50DCFDA8AECEE75F3786EFDAC10"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/192.168.64.5:8888\/svn\/Mobile",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "c1b34985-89f7-4ad2-b6ed-32456ccb691a++1688"
+    }
+  ]
+}
