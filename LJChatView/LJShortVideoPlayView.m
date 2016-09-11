@@ -17,10 +17,11 @@
 @property (nonatomic, strong) NSString *videoPath;
 @property (nonatomic, strong) UIImage *aFrameImage;
 
+@property (nonatomic, strong) LJMovieDecoder *movieDecoder;
 
 @property (nonatomic, assign) CGSize sizeInPixels;
 
-@property (nonatomic, strong) NSMutableArray *imageRefMArray;
+
 
 @property (nonatomic, strong) CAKeyframeAnimation *animation;
 
@@ -50,54 +51,46 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    
-}
-
 #pragma mark - Private Methods
 
 - (void)handelImagesAsset {
-    self.imageRefMArray = [NSMutableArray array];
-
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        LJMovieDecoder *movieDecoder = [[LJMovieDecoder alloc] init];
-        movieDecoder.delegate = self;
-        [movieDecoder analyzedVideoPathToSampBufferRef:self.videoPath size:self.bounds.size];
+        
+        self.movieDecoder = [[LJMovieDecoder alloc] init];
+        self.movieDecoder.delegate = self;
+        [self.movieDecoder startReadVideoPathToSampBufferRef:self.videoPath size:self.bounds.size];
     });
 }
 
-- (void)moveDecoder:(LJMovieDecoder *)movieDecoder pixelBuffer:(CVImageBufferRef)imageBuffer progress:(CGFloat)progress {
-    CGImageRef imageRef = [UIImage imageFromPixelBuffer:imageBuffer];
-    if (!(__bridge id)(imageRef)) { return; }
+- (void)moveDecoder:(LJMovieDecoder *)movieDecoder progress:(CGFloat)progress {
     
-    [self.imageRefMArray addObject:CFBridgingRelease(imageRef)];
+    
 }
 
-- (void)moveDecoderOnDecoderFinished:(LJMovieDecoder *)movieDecoder transform:(CGAffineTransform)transform duration:(CFTimeInterval)duration {
-    
-    [self animationImagesWithTransform:transform duration:duration];
+- (void)moveDecoderOnDecoderFinished:(LJMovieDecoder *)movieDecoder imageArray:(NSArray *)imageArray duration:(CGFloat)duration {
+    NSLog(@"333333333");
+    [self animationImagesWithImageArray:imageArray duration:duration];
 }
 
-- (void)animationImagesWithTransform:(CGAffineTransform)transform duration:(CFTimeInterval)duration {
+- (void)animationImagesWithImageArray:(NSArray *)imageArray duration:(CGFloat)duration {
+    NSLog(@"----- %@",[NSThread currentThread]);
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.animation) {
-            [self.layer removeAnimationForKey:@"LJShortVideoPlayViewAnimationKey"];
-            [self.layer addAnimation:self.animation forKey:nil];
+            [self play];
         } else {
-            if (self.imageRefMArray.count) {
+            if (imageArray.count) {
                 // 通过动画来播放我们的图片
                 CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"contents"];
                 animation.duration = duration;
-                animation.values = self.imageRefMArray;
+                animation.values = imageArray;
                 animation.repeatCount = MAXFLOAT;
+                NSLog(@"======== %lu    %.1f",(unsigned long)imageArray.count, duration);
                 if ([[self.layer animationKeys] containsObject:@"LJShortVideoPlayViewAnimationKey"]) {
                     [self.layer removeAnimationForKey:@"LJShortVideoPlayViewAnimationKey"];
                 }
                 
                 [self.layer addAnimation:animation forKey:@"LJShortVideoPlayViewAnimationKey"];
-                self.transform = transform;
+
                 self.animation = animation;
                 NSLog(@"==== %@",NSStringFromCGRect(self.frame));
 //                self.sizeInPixels = self.frame.size;
@@ -107,37 +100,26 @@
     });
 }
 
+
+
 #pragma mark - Public
 
 - (void)play {
-    [self animationImagesWithTransform:CGAffineTransformIdentity duration:0];
+    if (self.animation) {
+        [self.layer removeAnimationForKey:@"LJShortVideoPlayViewAnimationKey"];
+        [self.layer addAnimation:self.animation forKey:nil];
+    }
 }
 
 - (void)stop {
     
-    
+    [self.movieDecoder cancelReading];
 }
 
 #pragma mark - Notification
 
 - (void)didEnterBackgroundNotification:(NSNotification *)notification {
     [self stop];
-}
-
-#pragma mark - Getters
-
-- (CGSize)sizeInPixels {
-    if (CGSizeEqualToSize(_sizeInPixels, CGSizeZero)) {
-        if ([self respondsToSelector:@selector(setContentScaleFactor:)]) {
-            CGSize pointSize = self.bounds.size;
-            return CGSizeMake(self.contentScaleFactor * pointSize.width, self.contentScaleFactor * pointSize.height);
-        }
-        else {
-            return self.bounds.size;
-        }
-    } else {
-        return _sizeInPixels;
-    }
 }
 
 @end

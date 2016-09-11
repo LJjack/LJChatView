@@ -7,14 +7,18 @@
 //
 
 #import "UIImage+LJVideo.h"
-#define clamp(a) (a>255?255:(a<0?0:a))
+#import <ImageIO/ImageIO.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 
+#define clamp(a) (a>255?255:(a<0?0:a))
 
 @implementation UIImage (LJVideo)
 
 // AVFoundation 捕捉视频帧，很多时候都需要把某一帧转换成 image
-+ (CGImageRef)imageFromPixelBuffer:(CVImageBufferRef)imageBuffer {
++ (CGImageRef)lj_CGImageRefFromSampleBuffer:(CMSampleBufferRef)sampleBuffer {
     @autoreleasepool {
+        CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+        
         CVPixelBufferLockBaseAddress(imageBuffer,0);
         
         size_t width = CVPixelBufferGetWidth(imageBuffer);
@@ -53,53 +57,18 @@
         CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
         CGContextRef context = CGBitmapContextCreate(rgbBuffer, width, height, 8, width * bytesPerPixel, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaNoneSkipLast);
         CGImageRef quartzImage = CGBitmapContextCreateImage(context);
-//        UIImage *image = [UIImage imageWithCGImage:quartzImage];
         
         CGContextRelease(context);
         CGColorSpaceRelease(colorSpace);
-//        CGImageRelease(quartzImage);
         free(rgbBuffer);
         
         CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
-//        // 锁定 pixel buffer 的基地址
-//        CVPixelBufferLockBaseAddress(imageBuffer, 0);
-//        
-//        // 得到 pixel buffer 的宽和高
-//        size_t width = CVPixelBufferGetWidth(imageBuffer);
-//        size_t height = CVPixelBufferGetHeight(imageBuffer);
-//        // 得到 pixel buffer 的基地址
-//        void *baseAddress = CVPixelBufferGetBaseAddress(imageBuffer);
-//        // 得到 pixel buffer 的行字节数
-//        size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
-//        
-//        // 创建一个依赖于设备的 RGB 颜色空间
-//        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-//        
-//        // 用抽样缓存的数据创建一个位图格式的图形上下文（graphic context）对象
-//        CGContextRef context = CGBitmapContextCreate(baseAddress, width, height, 8, bytesPerRow, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
-//        
-//        //根据这个位图 context 中的像素创建一个 Quartz image 对象
-//        CGImageRef quartzImage = CGBitmapContextCreateImage(context);
-        // 解锁 pixel buffer
-//        CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
-//        CVPixelBufferRelease(imageBuffer);
-//        
-//        // 释放 context 和颜色空间
-//        CGContextRelease(context);
-//        CGColorSpaceRelease(colorSpace);
-        
-        // 用 Quzetz image 创建一个 UIImage 对象
-        // UIImage *image = [UIImage imageWithCGImage:quartzImage];
-        
-        // 释放 Quartz image 对象
-        //    CGImageRelease(quartzImage);
-        
         return quartzImage;
     }
 }
 
 //视频截图
-+ (UIImage *)imageVideoCaptureVideoPath:(NSString *)videoPath {
++ (UIImage *)lj_imageVideoCaptureVideoPath:(NSString *)videoPath {
     @autoreleasepool {
         if (!videoPath) {
             return nil;
@@ -138,4 +107,41 @@
     }
 }
 
+
+
 @end
+
+
+static void makeAnimatedGif(NSArray *images, NSURL *gifURL, NSTimeInterval duration) {
+    NSTimeInterval perSecond = duration /images.count;
+    
+    NSDictionary *fileProperties = @{
+                                     (__bridge id)kCGImagePropertyGIFDictionary: @{
+                                             (__bridge id)kCGImagePropertyGIFLoopCount: @0, // 0 means loop forever
+                                             }
+                                     };
+    
+    NSDictionary *frameProperties = @{
+                                      (__bridge id)kCGImagePropertyGIFDictionary: @{
+                                              (__bridge id)kCGImagePropertyGIFDelayTime: @(perSecond), // a float (not double!) in seconds, rounded to centiseconds in the GIF data
+                                              }
+                                      };
+    
+    CGImageDestinationRef destination = CGImageDestinationCreateWithURL((__bridge CFURLRef)gifURL, kUTTypeGIF, images.count, NULL);
+    CGImageDestinationSetProperties(destination, (__bridge CFDictionaryRef)fileProperties);
+    
+    for (UIImage *image in images) {
+        @autoreleasepool {
+            
+            CGImageDestinationAddImage(destination, image.CGImage, (__bridge CFDictionaryRef)frameProperties);
+        }
+    }
+    
+    if (!CGImageDestinationFinalize(destination)) {
+        NSLog(@"failed to finalize image destination");
+    }else{
+        
+        
+    }
+    CFRelease(destination);
+}

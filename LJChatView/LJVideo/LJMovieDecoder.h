@@ -6,16 +6,15 @@
 //  Copyright © 2016年 刘俊杰. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <AVFoundation/AVFoundation.h>
+#import <UIKit/UIKit.h>
 
 @class LJMovieDecoder;
 
 @protocol LJMovieDecoderDelegate <NSObject>
 
-- (void)moveDecoder:(LJMovieDecoder *)movieDecoder pixelBuffer:(CVImageBufferRef)imageBuffer progress:(CGFloat)progress;
+- (void)moveDecoder:(LJMovieDecoder *)movieDecoder progress:(CGFloat)progress;
 
-- (void)moveDecoderOnDecoderFinished:(LJMovieDecoder *)movieDecoder transform:(CGAffineTransform)transform duration:(CFTimeInterval)duration;
+- (void)moveDecoderOnDecoderFinished:(LJMovieDecoder *)movieDecoder imageArray:(NSArray *)imageArray duration:(CGFloat)duration;
 
 @end
 
@@ -25,9 +24,7 @@
 
 @property (nonatomic, weak) id<LJMovieDecoderDelegate> delegate;
 
-- (void)analyzedVideoPathToSampBufferRef:(NSString *)videoPath size:(CGSize)size;
-
-- (void)startReading;
+- (void)startReadVideoPathToSampBufferRef:(NSString *)videoPath size:(CGSize)size;
 
 - (void)cancelReading;
 

@@ -484,7 +484,7 @@
     if(data.length < 28 * 1024 * 1024) {
 //        IMAMsg *msg = [IMAMsg msgWithVideoPath:savePath];
 //        [self sendMsg:msg];
-        UIImage *showImage = [UIImage imageVideoCaptureVideoPath:savePath];
+        UIImage *showImage = [UIImage lj_imageVideoCaptureVideoPath:savePath];
 //        [UIImage imagesVideoCaptureVideoURL:[NSURL fileURLWithPath:savePath] ];
         UISaveVideoAtPathToSavedPhotosAlbum(savePath, nil, nil, nil);
         [self.demoData addVideoMediaMessageWithVideoPath:savePath showImage:showImage];

@@ -58,20 +58,12 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    CGSize mediaSize =  [super mediaViewDisplaySize];
-    CGFloat height = self.aFrameImage.size.height * self.aFrameImage.scale;
-    CGFloat width = self.aFrameImage.size.width * self.aFrameImage.scale;
+    CGSize size =  [super mediaViewDisplaySize];
+    CGFloat height = self.aFrameImage.size.height;
+    CGFloat width = self.aFrameImage.size.width;
     
-    CGSize size;
-    if (height <= mediaSize.height && width <= mediaSize.width) {
-        size = CGSizeMake(width, height);
-    } else {
-        if (height > width) {
-            size = CGSizeMake(mediaSize.height * (width/height), mediaSize.height);
-        } else {
-            size = CGSizeMake(mediaSize.width, mediaSize.width * (height/width));
-        }
-    }
+    size.height = size.width/width * height;
+    
     return size;
 }
 
@@ -96,10 +88,6 @@
         [JSQMessagesMediaViewBubbleImageMasker applyBubbleImageMaskToMediaView:self.cachedVideoView isOutgoing:self.appliesMediaViewMaskAsOutgoing];
     }
     [self.playerView play];
-    NSLog(@"playerView.frame= %@",NSStringFromCGRect(self.playerView.frame));
-     NSLog(@"cachedVideoView.frame= %@",NSStringFromCGRect(self.cachedVideoView.frame));
-    
-    
     
     return self.cachedVideoView;
 }

@@ -71,6 +71,8 @@
         
         self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
         self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleGreenColor]];
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"123" ofType:@"mp4"];
+        [self addVideoMediaMessageWithVideoPath:path showImage:[UIImage imageNamed:@"goldengate"]];
     }
     
     return self;

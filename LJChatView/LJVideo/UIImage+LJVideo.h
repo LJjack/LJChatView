@@ -18,7 +18,7 @@
  *
  *  @return CGImageRef
  */
-+ (CGImageRef)imageFromPixelBuffer:(CVImageBufferRef)imageBuffer;
++ (CGImageRef)lj_CGImageRefFromSampleBuffer:(CMSampleBufferRef)sampleBuffer;
 
 /**
  *  视频截图, 默认截取 1.0 处的图片
@@ -27,6 +27,6 @@
  *
  *  @return UIImage
  */
-+ (UIImage *)imageVideoCaptureVideoPath:(NSString *)videoPath;
++ (UIImage *)lj_imageVideoCaptureVideoPath:(NSString *)videoPath;
 
 @end
