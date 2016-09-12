@@ -10,7 +10,6 @@
 		830A061E1D8256BC002965E6 /* 123.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 830A061D1D8256BC002965E6 /* 123.mp4 */; };
 		830A062B1D826164002965E6 /* LJShowFPS.m in Sources */ = {isa = PBXBuildFile; fileRef = 830A062A1D826164002965E6 /* LJShowFPS.m */; };
 		830A06341D828EA0002965E6 /* LJShortVideoMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 830A06331D828EA0002965E6 /* LJShortVideoMediaItem.m */; };
-		830A06371D828FC1002965E6 /* LJShortVideoPlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 830A06361D828FC1002965E6 /* LJShortVideoPlayView.m */; };
 		8329A70E1D66D9020081FDD5 /* LJMovieDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 8329A70B1D66D9020081FDD5 /* LJMovieDecoder.m */; };
 		8329A70F1D66D9020081FDD5 /* UIImage+LJVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8329A70D1D66D9020081FDD5 /* UIImage+LJVideo.m */; };
 		8339CDC01D646FE600D54476 /* LJVideoSource.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8339CDBF1D646FE600D54476 /* LJVideoSource.xcassets */; };
@@ -236,18 +235,11 @@
 		838BAC851D51F0CB00F2F1FD /* GJCFAudioRecordSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BABB01D51F0CB00F2F1FD /* GJCFAudioRecordSettings.m */; };
 		838BAC861D51F0CB00F2F1FD /* GJCFCachePathManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BABB31D51F0CB00F2F1FD /* GJCFCachePathManager.m */; };
 		838BAC871D51F0CB00F2F1FD /* UIView+GJCFViewFrameUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BABB61D51F0CB00F2F1FD /* UIView+GJCFViewFrameUitil.m */; };
-		838BAC9C1D52CED100F2F1FD /* TZAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BAC8A1D52CED100F2F1FD /* TZAssetCell.m */; };
-		838BAC9D1D52CED100F2F1FD /* TZAssetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BAC8C1D52CED100F2F1FD /* TZAssetModel.m */; };
-		838BAC9E1D52CED100F2F1FD /* TZImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BAC8E1D52CED100F2F1FD /* TZImageManager.m */; };
-		838BAC9F1D52CED100F2F1FD /* TZImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 838BAC8F1D52CED100F2F1FD /* TZImagePickerController.bundle */; };
-		838BACA01D52CED100F2F1FD /* TZImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BAC911D52CED100F2F1FD /* TZImagePickerController.m */; };
-		838BACA11D52CED100F2F1FD /* TZPhotoPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BAC931D52CED100F2F1FD /* TZPhotoPickerController.m */; };
-		838BACA21D52CED100F2F1FD /* TZPhotoPreviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BAC951D52CED100F2F1FD /* TZPhotoPreviewCell.m */; };
-		838BACA31D52CED100F2F1FD /* TZPhotoPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BAC971D52CED100F2F1FD /* TZPhotoPreviewController.m */; };
-		838BACA41D52CED100F2F1FD /* TZVideoPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BAC991D52CED100F2F1FD /* TZVideoPlayerController.m */; };
-		838BACA51D52CED100F2F1FD /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BAC9B1D52CED100F2F1FD /* UIView+Layout.m */; };
 		83917AEC1D533ACE00C92C12 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83917AEB1D533ACE00C92C12 /* Reveal.framework */; };
 		83917AEE1D533ADF00C92C12 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 83917AED1D533ADF00C92C12 /* libz.1.2.5.tbd */; };
+		83B4078E1D869A0500CAD8CF /* LJRoundProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B4078D1D869A0500CAD8CF /* LJRoundProgressView.m */; };
+		83B407911D869A6700CAD8CF /* LJShortVideoPlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B407901D869A6700CAD8CF /* LJShortVideoPlayView.m */; };
+		83B407941D86AB2E00CAD8CF /* LJVideoMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B407931D86AB2E00CAD8CF /* LJVideoMediaItem.m */; };
 		A7355649B836919B6F0C8AD8 /* libPods-LJChatView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD64963A411C9DF679A3139 /* libPods-LJChatView.a */; };
 /* End PBXBuildFile section */
 
@@ -259,8 +251,6 @@
 		830A062A1D826164002965E6 /* LJShowFPS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJShowFPS.m; sourceTree = "<group>"; };
 		830A06321D828EA0002965E6 /* LJShortVideoMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJShortVideoMediaItem.h; sourceTree = "<group>"; };
 		830A06331D828EA0002965E6 /* LJShortVideoMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJShortVideoMediaItem.m; sourceTree = "<group>"; };
-		830A06351D828FC1002965E6 /* LJShortVideoPlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJShortVideoPlayView.h; sourceTree = "<group>"; };
-		830A06361D828FC1002965E6 /* LJShortVideoPlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJShortVideoPlayView.m; sourceTree = "<group>"; };
 		8329A70A1D66D9020081FDD5 /* LJMovieDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJMovieDecoder.h; sourceTree = "<group>"; };
 		8329A70B1D66D9020081FDD5 /* LJMovieDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJMovieDecoder.m; sourceTree = "<group>"; };
 		8329A70C1D66D9020081FDD5 /* UIImage+LJVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+LJVideo.h"; sourceTree = "<group>"; };
@@ -571,27 +561,14 @@
 		838BABB31D51F0CB00F2F1FD /* GJCFCachePathManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFCachePathManager.m; sourceTree = "<group>"; };
 		838BABB51D51F0CB00F2F1FD /* UIView+GJCFViewFrameUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+GJCFViewFrameUitil.h"; sourceTree = "<group>"; };
 		838BABB61D51F0CB00F2F1FD /* UIView+GJCFViewFrameUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+GJCFViewFrameUitil.m"; sourceTree = "<group>"; };
-		838BAC891D52CED100F2F1FD /* TZAssetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZAssetCell.h; sourceTree = "<group>"; };
-		838BAC8A1D52CED100F2F1FD /* TZAssetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZAssetCell.m; sourceTree = "<group>"; };
-		838BAC8B1D52CED100F2F1FD /* TZAssetModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZAssetModel.h; sourceTree = "<group>"; };
-		838BAC8C1D52CED100F2F1FD /* TZAssetModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZAssetModel.m; sourceTree = "<group>"; };
-		838BAC8D1D52CED100F2F1FD /* TZImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZImageManager.h; sourceTree = "<group>"; };
-		838BAC8E1D52CED100F2F1FD /* TZImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZImageManager.m; sourceTree = "<group>"; };
-		838BAC8F1D52CED100F2F1FD /* TZImagePickerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TZImagePickerController.bundle; sourceTree = "<group>"; };
-		838BAC901D52CED100F2F1FD /* TZImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZImagePickerController.h; sourceTree = "<group>"; };
-		838BAC911D52CED100F2F1FD /* TZImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZImagePickerController.m; sourceTree = "<group>"; };
-		838BAC921D52CED100F2F1FD /* TZPhotoPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZPhotoPickerController.h; sourceTree = "<group>"; };
-		838BAC931D52CED100F2F1FD /* TZPhotoPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZPhotoPickerController.m; sourceTree = "<group>"; };
-		838BAC941D52CED100F2F1FD /* TZPhotoPreviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZPhotoPreviewCell.h; sourceTree = "<group>"; };
-		838BAC951D52CED100F2F1FD /* TZPhotoPreviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZPhotoPreviewCell.m; sourceTree = "<group>"; };
-		838BAC961D52CED100F2F1FD /* TZPhotoPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZPhotoPreviewController.h; sourceTree = "<group>"; };
-		838BAC971D52CED100F2F1FD /* TZPhotoPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZPhotoPreviewController.m; sourceTree = "<group>"; };
-		838BAC981D52CED100F2F1FD /* TZVideoPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZVideoPlayerController.h; sourceTree = "<group>"; };
-		838BAC991D52CED100F2F1FD /* TZVideoPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZVideoPlayerController.m; sourceTree = "<group>"; };
-		838BAC9A1D52CED100F2F1FD /* UIView+Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Layout.h"; sourceTree = "<group>"; };
-		838BAC9B1D52CED100F2F1FD /* UIView+Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Layout.m"; sourceTree = "<group>"; };
 		83917AEB1D533ACE00C92C12 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 		83917AED1D533ADF00C92C12 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
+		83B4078C1D869A0500CAD8CF /* LJRoundProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJRoundProgressView.h; sourceTree = "<group>"; };
+		83B4078D1D869A0500CAD8CF /* LJRoundProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJRoundProgressView.m; sourceTree = "<group>"; };
+		83B4078F1D869A6700CAD8CF /* LJShortVideoPlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJShortVideoPlayView.h; sourceTree = "<group>"; };
+		83B407901D869A6700CAD8CF /* LJShortVideoPlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJShortVideoPlayView.m; sourceTree = "<group>"; };
+		83B407921D86AB2E00CAD8CF /* LJVideoMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJVideoMediaItem.h; sourceTree = "<group>"; };
+		83B407931D86AB2E00CAD8CF /* LJVideoMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJVideoMediaItem.m; sourceTree = "<group>"; };
 		937BF3A65342DE7FF73FCFD7 /* Pods-LJChatView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LJChatView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LJChatView/Pods-LJChatView.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -621,7 +598,10 @@
 		8339CDB61D646F9000D54476 /* LJVideo */ = {
 			isa = PBXGroup;
 			children = (
+				83B4078B1D869A0500CAD8CF /* LJRoundProgressView */,
 				8339CDBF1D646FE600D54476 /* LJVideoSource.xcassets */,
+				83B4078F1D869A6700CAD8CF /* LJShortVideoPlayView.h */,
+				83B407901D869A6700CAD8CF /* LJShortVideoPlayView.m */,
 				836B0C8E1D65432300D665FF /* LJRecordVideoView.h */,
 				836B0C8F1D65432300D665FF /* LJRecordVideoView.m */,
 				8329A70A1D66D9020081FDD5 /* LJMovieDecoder.h */,
@@ -813,7 +793,6 @@
 			isa = PBXGroup;
 			children = (
 				8339CDB61D646F9000D54476 /* LJVideo */,
-				838BAC881D52CED100F2F1FD /* TZImagePickerController */,
 				838BAAB21D51F0CA00F2F1FD /* GJGCChatInputPanel */,
 				838BAB931D51F0CB00F2F1FD /* GJGCChatInputPanel-Depend */,
 				838BAA221D51EE8100F2F1FD /* JSQMessagesViewController */,
@@ -829,8 +808,8 @@
 				838BAAA31D51EE9800F2F1FD /* DemoMessagesViewController.m */,
 				830A06321D828EA0002965E6 /* LJShortVideoMediaItem.h */,
 				830A06331D828EA0002965E6 /* LJShortVideoMediaItem.m */,
-				830A06351D828FC1002965E6 /* LJShortVideoPlayView.h */,
-				830A06361D828FC1002965E6 /* LJShortVideoPlayView.m */,
+				83B407921D86AB2E00CAD8CF /* LJVideoMediaItem.h */,
+				83B407931D86AB2E00CAD8CF /* LJVideoMediaItem.m */,
 				830A06291D826164002965E6 /* LJShowFPS.h */,
 				830A062A1D826164002965E6 /* LJShowFPS.m */,
 				830A061D1D8256BC002965E6 /* 123.mp4 */,
@@ -1154,30 +1133,13 @@
 			path = UitilCategory;
 			sourceTree = "<group>";
 		};
-		838BAC881D52CED100F2F1FD /* TZImagePickerController */ = {
+		83B4078B1D869A0500CAD8CF /* LJRoundProgressView */ = {
 			isa = PBXGroup;
 			children = (
-				838BAC891D52CED100F2F1FD /* TZAssetCell.h */,
-				838BAC8A1D52CED100F2F1FD /* TZAssetCell.m */,
-				838BAC8B1D52CED100F2F1FD /* TZAssetModel.h */,
-				838BAC8C1D52CED100F2F1FD /* TZAssetModel.m */,
-				838BAC8D1D52CED100F2F1FD /* TZImageManager.h */,
-				838BAC8E1D52CED100F2F1FD /* TZImageManager.m */,
-				838BAC8F1D52CED100F2F1FD /* TZImagePickerController.bundle */,
-				838BAC901D52CED100F2F1FD /* TZImagePickerController.h */,
-				838BAC911D52CED100F2F1FD /* TZImagePickerController.m */,
-				838BAC921D52CED100F2F1FD /* TZPhotoPickerController.h */,
-				838BAC931D52CED100F2F1FD /* TZPhotoPickerController.m */,
-				838BAC941D52CED100F2F1FD /* TZPhotoPreviewCell.h */,
-				838BAC951D52CED100F2F1FD /* TZPhotoPreviewCell.m */,
-				838BAC961D52CED100F2F1FD /* TZPhotoPreviewController.h */,
-				838BAC971D52CED100F2F1FD /* TZPhotoPreviewController.m */,
-				838BAC981D52CED100F2F1FD /* TZVideoPlayerController.h */,
-				838BAC991D52CED100F2F1FD /* TZVideoPlayerController.m */,
-				838BAC9A1D52CED100F2F1FD /* UIView+Layout.h */,
-				838BAC9B1D52CED100F2F1FD /* UIView+Layout.m */,
+				83B4078C1D869A0500CAD8CF /* LJRoundProgressView.h */,
+				83B4078D1D869A0500CAD8CF /* LJRoundProgressView.m */,
 			);
-			path = TZImagePickerController;
+			path = LJRoundProgressView;
 			sourceTree = "<group>";
 		};
 		ADFF93DA912AF8D797369362 /* Frameworks */ = {
@@ -1195,12 +1157,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 838BAA1F1D51EE6000F2F1FD /* Build configuration list for PBXNativeTarget "LJChatView" */;
 			buildPhases = (
+				429A56D9C5A36CA5A79C179E /* [CP] Check Pods Manifest.lock */,
 				369730D5FDD7008D3F85780C /* [CP] Check Pods Manifest.lock */,
 				838BAA041D51EE6000F2F1FD /* Sources */,
 				838BAA051D51EE6000F2F1FD /* Frameworks */,
 				838BAA061D51EE6000F2F1FD /* Resources */,
 				03FA691226521996BC74D84F /* [CP] Embed Pods Frameworks */,
 				C111C53C0E2AC794F718A1F8 /* [CP] Copy Pods Resources */,
+				549E34A06A7FD4BCB57D0CAE /* 📦 Embed Pods Frameworks */,
+				8544D4A7C36B4A3291AD7789 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1384,7 +1349,6 @@
 				834D0B071D58612F001B7AED /* 072[乒乓]@2x.png in Resources */,
 				834D0B5B1D58612F001B7AED /* 聊天语音-icon-取消@2x.png in Resources */,
 				834D0AC31D58612F001B7AED /* 005[微笑]@2x.png in Resources */,
-				838BAC9F1D52CED100F2F1FD /* TZImagePickerController.bundle in Resources */,
 				834D0B671D58612F001B7AED /* 聊天键盘-icon-选择帖子@3x.png in Resources */,
 				834D0AEC1D58612F001B7AED /* 045[难过]@2x.png in Resources */,
 				834D0AF41D58612F001B7AED /* 053[蜡烛]@2x.png in Resources */,
@@ -1439,6 +1403,51 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		429A56D9C5A36CA5A79C179E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		549E34A06A7FD4BCB57D0CAE /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LJChatView/Pods-LJChatView-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8544D4A7C36B4A3291AD7789 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LJChatView/Pods-LJChatView-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		C111C53C0E2AC794F718A1F8 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1466,22 +1475,20 @@
 				838BAC801D51F0CB00F2F1FD /* GJCFAudioFileUitil.m in Sources */,
 				838BAC831D51F0CB00F2F1FD /* GJCFAudioPlayer.m in Sources */,
 				838BAAA11D51EE8100F2F1FD /* JSQMessagesTypingView.m in Sources */,
-				838BACA41D52CED100F2F1FD /* TZVideoPlayerController.m in Sources */,
 				838BAA8E1D51EE8100F2F1FD /* JSQMediaItem.m in Sources */,
 				838BAA941D51EE8100F2F1FD /* JSQMessagesCellTextView.m in Sources */,
 				838BAC841D51F0CB00F2F1FD /* GJCFAudioRecord.m in Sources */,
 				838BABC01D51F0CB00F2F1FD /* GJGCChatInputExpandEmojiPanelPageItem.m in Sources */,
 				838BAA8B1D51EE8100F2F1FD /* JSQMessagesCollectionViewLayoutAttributes.m in Sources */,
 				838BAA961D51EE8100F2F1FD /* JSQMessagesCollectionViewCell.m in Sources */,
+				83B407911D869A6700CAD8CF /* LJShortVideoPlayView.m in Sources */,
 				838BAA8D1D51EE8100F2F1FD /* JSQLocationMediaItem.m in Sources */,
 				838BABB91D51F0CB00F2F1FD /* GJGCChatInputConst.m in Sources */,
 				838BAA811D51EE8100F2F1FD /* JSQMessagesViewController.m in Sources */,
 				8329A70F1D66D9020081FDD5 /* UIImage+LJVideo.m in Sources */,
-				838BAC9C1D52CED100F2F1FD /* TZAssetCell.m in Sources */,
 				838BABC51D51F0CB00F2F1FD /* GJGCChatInputGifFloatView.m in Sources */,
 				838BAA991D51EE8100F2F1FD /* JSQMessagesCollectionViewCellOutgoing.m in Sources */,
 				838BABC91D51F0CB00F2F1FD /* GJGCChatInputTextView.m in Sources */,
-				838BACA11D52CED100F2F1FD /* TZPhotoPickerController.m in Sources */,
 				838BABC41D51F0CB00F2F1FD /* GJGCChatInputExpandMenuPanelItem.m in Sources */,
 				838BAA951D51EE8100F2F1FD /* JSQMessagesCollectionView.m in Sources */,
 				838BAC7F1D51F0CB00F2F1FD /* GJCFEncodeAndDecode.m in Sources */,
@@ -1492,7 +1499,6 @@
 				838BAA911D51EE8100F2F1FD /* JSQMessagesBubbleImage.m in Sources */,
 				836B0C901D65432300D665FF /* LJRecordVideoView.m in Sources */,
 				838BAAA71D51EEA900F2F1FD /* DemoModelData.m in Sources */,
-				838BACA51D52CED100F2F1FD /* UIView+Layout.m in Sources */,
 				838BAAA41D51EE9800F2F1FD /* DemoMessagesViewController.m in Sources */,
 				838BAA8F1D51EE8100F2F1FD /* JSQMessage.m in Sources */,
 				838BABBF1D51F0CB00F2F1FD /* GJGCChatInputExpandEmojiPanelMenuBarDataSourceItem.m in Sources */,
@@ -1500,10 +1506,7 @@
 				838BAA8A1D51EE8100F2F1FD /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.m in Sources */,
 				838BAA9F1D51EE8100F2F1FD /* JSQMessagesTypingIndicatorFooterView.m in Sources */,
 				838BAA861D51EE8100F2F1FD /* JSQMessagesTimestampFormatter.m in Sources */,
-				838BACA21D52CED100F2F1FD /* TZPhotoPreviewCell.m in Sources */,
 				830A062B1D826164002965E6 /* LJShowFPS.m in Sources */,
-				838BACA01D52CED100F2F1FD /* TZImagePickerController.m in Sources */,
-				838BACA31D52CED100F2F1FD /* TZPhotoPreviewController.m in Sources */,
 				838BAA801D51EE8100F2F1FD /* UIView+JSQMessages.m in Sources */,
 				838BAA9E1D51EE8100F2F1FD /* JSQMessagesMediaPlaceholderView.m in Sources */,
 				838BABBD1D51F0CB00F2F1FD /* GJGCChatInputExpandEmojiPanelMenuBar.m in Sources */,
@@ -1515,12 +1518,12 @@
 				838BAA7C1D51EE8100F2F1FD /* NSBundle+JSQMessages.m in Sources */,
 				838BAA901D51EE8100F2F1FD /* JSQMessagesAvatarImage.m in Sources */,
 				838BABCB1D51F0CB00F2F1FD /* GJGCIconSeprateImageView.m in Sources */,
+				83B407941D86AB2E00CAD8CF /* LJVideoMediaItem.m in Sources */,
 				838BAA8C1D51EE8100F2F1FD /* JSQAudioMediaItem.m in Sources */,
 				838BAC7E1D51F0CB00F2F1FD /* FLAnimatedImageView.m in Sources */,
 				838BAAAD1D51EED300F2F1FD /* NSString+LJEmojiParser.m in Sources */,
 				838BABB71D51F0CB00F2F1FD /* GJGCChatInputBar.m in Sources */,
 				8329A70E1D66D9020081FDD5 /* LJMovieDecoder.m in Sources */,
-				830A06371D828FC1002965E6 /* LJShortVideoPlayView.m in Sources */,
 				838BAC851D51F0CB00F2F1FD /* GJCFAudioRecordSettings.m in Sources */,
 				838BAC821D51F0CB00F2F1FD /* GJCFAudioModel.m in Sources */,
 				838BABCA1D51F0CB00F2F1FD /* GJGCIconSeprateButton.m in Sources */,
@@ -1530,12 +1533,10 @@
 				838BAC861D51F0CB00F2F1FD /* GJCFCachePathManager.m in Sources */,
 				838BABB81D51F0CB00F2F1FD /* GJGCChatInputBarItem.m in Sources */,
 				838BAA831D51EE8100F2F1FD /* JSQMessagesAvatarImageFactory.m in Sources */,
-				838BAC9D1D52CED100F2F1FD /* TZAssetModel.m in Sources */,
 				838BAA7D1D51EE8100F2F1FD /* NSString+JSQMessages.m in Sources */,
 				838BAAAA1D51EEC000F2F1FD /* NSUserDefaults+DemoSettings.m in Sources */,
 				838BAC7D1D51F0CB00F2F1FD /* FLAnimatedImage.m in Sources */,
 				838BABBA1D51F0CB00F2F1FD /* GJGCChatInputExpandEmojiPanel.m in Sources */,
-				838BAC9E1D52CED100F2F1FD /* TZImageManager.m in Sources */,
 				838BAA9C1D51EE8100F2F1FD /* JSQMessagesLoadEarlierHeaderView.m in Sources */,
 				838BAA921D51EE8100F2F1FD /* JSQPhotoMediaItem.m in Sources */,
 				838BAA7E1D51EE8100F2F1FD /* UIColor+JSQMessages.m in Sources */,
@@ -1544,6 +1545,7 @@
 				838BABBB1D51F0CB00F2F1FD /* GJGCChatInputExpandEmojiPanelGifPageItem.m in Sources */,
 				838BAA0D1D51EE6000F2F1FD /* main.m in Sources */,
 				838BABBE1D51F0CB00F2F1FD /* GJGCChatInputExpandEmojiPanelMenuBarDataSource.m in Sources */,
+				83B4078E1D869A0500CAD8CF /* LJRoundProgressView.m in Sources */,
 				838BABC21D51F0CB00F2F1FD /* GJGCChatInputExpandMenuPanelConfigModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

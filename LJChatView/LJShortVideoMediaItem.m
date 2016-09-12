@@ -9,7 +9,6 @@
 #import "LJShortVideoMediaItem.h"
 
 #import "JSQMessagesMediaViewBubbleImageMasker.h"
-//#import "UIImage+JSQMessages.h"
 
 #import "LJShortVideoPlayView.h"
 
@@ -64,7 +63,7 @@
     
     size.height = size.width/width * height;
     
-    return size;
+    return CGSizeMake(240, 180);
 }
 
 #pragma mark - JSQMessageMediaData protocol
@@ -79,10 +78,9 @@
         //当前尺寸
         CGSize size = [self mediaViewDisplaySize];
         CGRect frame = CGRectMake(0, 0, size.width, size.height);
+        self.cachedVideoView = [[UIView alloc] initWithFrame:frame];
         //实例化播放view
         self.playerView = [[LJShortVideoPlayView alloc] initWithFrame:frame videoPath:self.videoPath aFrameImage:self.aFrameImage];
-        
-        self.cachedVideoView = [[UIView alloc] initWithFrame:frame];
         [self.cachedVideoView addSubview:self.playerView];
         
         [JSQMessagesMediaViewBubbleImageMasker applyBubbleImageMaskToMediaView:self.cachedVideoView isOutgoing:self.appliesMediaViewMaskAsOutgoing];

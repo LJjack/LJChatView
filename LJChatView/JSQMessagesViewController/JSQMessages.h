@@ -31,7 +31,9 @@
 #import "JSQAudioMediaItem.h"
 #import "JSQPhotoMediaItem.h"
 #import "JSQLocationMediaItem.h"
-#import "LJShortVideoMediaItem.h"//自己写的
+//  === 自己写的 ===
+#import "LJShortVideoMediaItem.h"
+#import "LJVideoMediaItem.h"
 
 #import "JSQMessagesBubbleImage.h"
 #import "JSQMessagesAvatarImage.h"

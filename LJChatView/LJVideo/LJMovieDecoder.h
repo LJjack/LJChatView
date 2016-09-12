@@ -14,7 +14,8 @@
 
 - (void)moveDecoder:(LJMovieDecoder *)movieDecoder progress:(CGFloat)progress;
 
-- (void)moveDecoderOnDecoderFinished:(LJMovieDecoder *)movieDecoder imageArray:(NSArray *)imageArray duration:(CGFloat)duration;
+
+- (void)moveDecoderOnDecoderFinished:(LJMovieDecoder *)movieDecoder imageArray:(NSArray *)imageArray transform:(CGAffineTransform)transform duration:(CGFloat)duration;
 
 @end
 
@@ -24,7 +25,7 @@
 
 @property (nonatomic, weak) id<LJMovieDecoderDelegate> delegate;
 
-- (void)startReadVideoPathToSampBufferRef:(NSString *)videoPath size:(CGSize)size;
+- (void)startReadVideoPathToSampBufferRef:(NSString *)videoPath;
 
 - (void)cancelReading;
 

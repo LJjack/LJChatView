@@ -44,11 +44,13 @@ static NSString * const kJSQDemoAvatarIdWoz = @"309-41802-93823";
 - (void)addPhotoMediaMessageWithImagePath:(nonnull NSString *)imagePath;
 
 - (void)addPhotoMediaMessageWithImage:(nonnull UIImage *)image;
-
+//
 - (void)addLocationMediaMessageCompletion:(JSQLocationMediaItemCompletionBlock)completion;
-
+//添加微视频
+- (void)addShortVideoMediaMessageWithVideoPath:(nonnull NSString *)videoPath showImage:(nonnull UIImage *)showImage;
+//添加视频
 - (void)addVideoMediaMessageWithVideoPath:(nonnull NSString *)videoPath showImage:(nonnull UIImage *)showImage;
-
+//
 - (void)addAudioMediaMessageWithPath:(nonnull NSString *)audioPath audioTime:(NSInteger)audioTime;
 
 @end

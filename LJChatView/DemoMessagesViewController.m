@@ -11,9 +11,12 @@
 #import "GJGCChatInputPanel.h"
 #import "GJCFAudioPlayer.h"
 #import "NSString+LJEmojiParser.h"
-#import "TZImagePickerController.h"
-#import "TZImageManager.h"
-#import "TZVideoPlayerController.h"
+
+#import <TZImagePickerController/TZImagePickerController.h>
+
+#import <TZImagePickerController/TZImageManager.h>
+#import <TZImagePickerController/TZVideoPlayerController.h>
+
 #import "UIImage+LJVideo.h"
 #import "LJRecordVideoView.h"
 
@@ -485,9 +488,9 @@
 //        IMAMsg *msg = [IMAMsg msgWithVideoPath:savePath];
 //        [self sendMsg:msg];
         UIImage *showImage = [UIImage lj_imageVideoCaptureVideoPath:savePath];
-//        [UIImage imagesVideoCaptureVideoURL:[NSURL fileURLWithPath:savePath] ];
+
         UISaveVideoAtPathToSavedPhotosAlbum(savePath, nil, nil, nil);
-        [self.demoData addVideoMediaMessageWithVideoPath:savePath showImage:showImage];
+        [self.demoData addShortVideoMediaMessageWithVideoPath:savePath showImage:showImage];
         [self finishSendingMessage];
         NSLog(@"==== %@", savePath);
     } else {
@@ -1046,6 +1049,8 @@
         
         NSLog(@"点击音频!");
     } else if ([message.media isKindOfClass:[LJShortVideoMediaItem class]]) {
+        NSLog(@"点击 微 视频!");
+    } else if ([message.media isKindOfClass:[LJVideoMediaItem class]]) {
         NSLog(@"点击视频!");
     } else if ([message.media isKindOfClass:[JSQLocationMediaItem class]]) {
         NSLog(@"点击地图!");

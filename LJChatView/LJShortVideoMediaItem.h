@@ -11,7 +11,7 @@
 @interface LJShortVideoMediaItem : JSQMediaItem
 
 @property (nonatomic, strong) NSString *videoPath;
-@property (strong, nonatomic) UIImage *aFrameImage; //<! 一帧图片
+@property (nonatomic, strong) UIImage *aFrameImage; //<! 一帧图片
 
 - (instancetype)initWithVideoPath:(NSString *)videoPath aFrameImage:(UIImage *)aFrameImage;
 

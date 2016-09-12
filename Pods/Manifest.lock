@@ -1,12 +1,20 @@
 PODS:
   - MBProgressHUD (0.9.2)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
+  - TZImagePickerController (1.6.4)
 
 DEPENDENCIES:
   - MBProgressHUD
+  - SDWebImage
+  - TZImagePickerController
 
 SPEC CHECKSUMS:
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  TZImagePickerController: e13a695a4623a94ac094b43baa28f8046d6a29f9
 
-PODFILE CHECKSUM: 5f66ce15269e9a97a0813831a18d37d792ca5ff6
+PODFILE CHECKSUM: 38ffefae53db244510a6e38e8c7a1de15a00c69a
 
 COCOAPODS: 1.0.1

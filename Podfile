@@ -2,8 +2,7 @@
  platform :ios, '8.0'
 
 target 'LJChatView' do
-  # Uncomment this line if you're using Swift or would like to use dynamic frameworks
-  # use_frameworks!
-
+ pod 'TZImagePickerController'
  pod 'MBProgressHUD'
+ pod 'SDWebImage'
 end
