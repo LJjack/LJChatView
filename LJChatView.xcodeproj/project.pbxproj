@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		830A061E1D8256BC002965E6 /* 123.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 830A061D1D8256BC002965E6 /* 123.mp4 */; };
 		830A062B1D826164002965E6 /* LJShowFPS.m in Sources */ = {isa = PBXBuildFile; fileRef = 830A062A1D826164002965E6 /* LJShowFPS.m */; };
 		830A06341D828EA0002965E6 /* LJShortVideoMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 830A06331D828EA0002965E6 /* LJShortVideoMediaItem.m */; };
 		8329A70E1D66D9020081FDD5 /* LJMovieDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 8329A70B1D66D9020081FDD5 /* LJMovieDecoder.m */; };
@@ -247,7 +246,6 @@
 /* Begin PBXFileReference section */
 		1FD64963A411C9DF679A3139 /* libPods-LJChatView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LJChatView.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		73E0139A39D7FF96ACF06A91 /* Pods-LJChatView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LJChatView.release.xcconfig"; path = "Pods/Target Support Files/Pods-LJChatView/Pods-LJChatView.release.xcconfig"; sourceTree = "<group>"; };
-		830A061D1D8256BC002965E6 /* 123.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 123.mp4; sourceTree = "<group>"; };
 		830A06291D826164002965E6 /* LJShowFPS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJShowFPS.h; sourceTree = "<group>"; };
 		830A062A1D826164002965E6 /* LJShowFPS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJShowFPS.m; sourceTree = "<group>"; };
 		830A06321D828EA0002965E6 /* LJShortVideoMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJShortVideoMediaItem.h; sourceTree = "<group>"; };
@@ -979,7 +977,6 @@
 				83303CE51D87E4EB00A99C20 /* LJMessageStateBtn.m */,
 				830A06291D826164002965E6 /* LJShowFPS.h */,
 				830A062A1D826164002965E6 /* LJShowFPS.m */,
-				830A061D1D8256BC002965E6 /* 123.mp4 */,
 				838BAAAE1D51F03E00F2F1FD /* jsq_messages_sample.m4a */,
 				838BAA141D51EE6000F2F1FD /* Main.storyboard */,
 				838BAA171D51EE6000F2F1FD /* Assets.xcassets */,
@@ -1229,7 +1226,6 @@
 				83303C3F1D87892F00A99C20 /* 029[害羞]@2x.png in Resources */,
 				83303C451D87892F00A99C20 /* 035[嘘]@2x.png in Resources */,
 				83303C991D87892F00A99C20 /* 聊天-icon-选择表情@2x.png in Resources */,
-				830A061E1D8256BC002965E6 /* 123.mp4 in Resources */,
 				83303C8B1D87892F00A99C20 /* emoji.plist in Resources */,
 				83303C331D87892F00A99C20 /* 017[鼓掌]@2x.png in Resources */,
 				83303C901D87892F00A99C20 /* 大表情-bg-预览@2x.png in Resources */,
