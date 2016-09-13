@@ -12,7 +12,7 @@
 
 @interface LJShortVideoPlayView ()<LJMovieDecoderDelegate>
 
-@property (nonatomic, strong) NSString *videoPath;
+@property (nonatomic, copy) NSString *videoPath;
 
 @property (nonatomic, strong) UIImage *aFrameImage;
 

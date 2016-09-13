@@ -10,6 +10,10 @@
 
 @interface LJShortVideoPlayView : UIView
 
+@property (nonatomic, copy, readonly) NSString *videoPath;
+
+@property (nonatomic, strong, readonly) UIImage *aFrameImage;
+
 - (instancetype)initWithFrame:(CGRect)frame videoPath:(NSString *)videoPath aFrameImage:(UIImage *)aFrameImage;
 
 - (void)play;

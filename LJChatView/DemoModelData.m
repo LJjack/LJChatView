@@ -5,7 +5,6 @@
 //
 
 #import "DemoModelData.h"
-#import "NSUserDefaults+DemoSettings.h"
 
 
 /**
@@ -21,7 +20,7 @@
     self = [super init];
     if (self) {
         
-        if ([NSUserDefaults emptyMessagesSetting]) {
+        if (/* DISABLES CODE */ (NO)) {
             self.messages = [NSMutableArray new];
         }
         else {
@@ -120,7 +119,7 @@
     /**
      *  Setting to load extra messages for testing/demo
      */
-    if ([NSUserDefaults extraMessagesSetting]) {
+    if (/* DISABLES CODE */ (NO)) {
         NSArray *copyOfMessages = [self.messages copy];
         for (NSUInteger i = 0; i < 4; i++) {
             [self.messages addObjectsFromArray:copyOfMessages];

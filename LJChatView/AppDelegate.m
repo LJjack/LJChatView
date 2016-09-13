@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "NSUserDefaults+DemoSettings.h"
 
 #import "LJShowFPS.h"
 
@@ -20,8 +19,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [LJShowFPS sharedInstance];
-    [NSUserDefaults saveIncomingAvatarSetting:YES];
-    [NSUserDefaults saveOutgoingAvatarSetting:YES];
     return YES;
 }
 

@@ -175,6 +175,18 @@
 		83303CAD1D87892F00A99C20 /* 聊天键盘切换-btn-圆@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83303C0A1D87892F00A99C20 /* 聊天键盘切换-btn-圆@3x.png */; };
 		83303CAE1D87892F00A99C20 /* 输入框-灰色@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83303C0B1D87892F00A99C20 /* 输入框-灰色@2x.png */; };
 		83303CAF1D87892F00A99C20 /* 输入框-白色@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83303C0C1D87892F00A99C20 /* 输入框-白色@2x.png */; };
+		83303CD31D878B5500A99C20 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 83303CB31D878B5500A99C20 /* FLAnimatedImage.m */; };
+		83303CD41D878B5500A99C20 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83303CB51D878B5500A99C20 /* FLAnimatedImageView.m */; };
+		83303CD51D878B5500A99C20 /* GJCFEncodeAndDecode.m in Sources */ = {isa = PBXBuildFile; fileRef = 83303CB91D878B5500A99C20 /* GJCFEncodeAndDecode.m */; };
+		83303CD61D878B5500A99C20 /* GJCFAudioFileUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = 83303CBC1D878B5500A99C20 /* GJCFAudioFileUitil.m */; };
+		83303CD71D878B5500A99C20 /* GJCFAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83303CBF1D878B5500A99C20 /* GJCFAudioManager.m */; };
+		83303CD81D878B5500A99C20 /* GJCFAudioModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83303CC21D878B5500A99C20 /* GJCFAudioModel.m */; };
+		83303CD91D878B5500A99C20 /* GJCFAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 83303CC51D878B5500A99C20 /* GJCFAudioPlayer.m */; };
+		83303CDA1D878B5500A99C20 /* GJCFAudioRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 83303CC91D878B5500A99C20 /* GJCFAudioRecord.m */; };
+		83303CDB1D878B5500A99C20 /* GJCFAudioRecordSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 83303CCC1D878B5500A99C20 /* GJCFAudioRecordSettings.m */; };
+		83303CDC1D878B5500A99C20 /* GJCFCachePathManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83303CCF1D878B5500A99C20 /* GJCFCachePathManager.m */; };
+		83303CDD1D878B5500A99C20 /* UIView+GJCFViewFrameUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = 83303CD21D878B5500A99C20 /* UIView+GJCFViewFrameUitil.m */; };
+		83303CE31D878DCC00A99C20 /* LJFullVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83303CE21D878DCC00A99C20 /* LJFullVideoView.m */; };
 		8339CDC01D646FE600D54476 /* LJVideoSource.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8339CDBF1D646FE600D54476 /* LJVideoSource.xcassets */; };
 		836B0C901D65432300D665FF /* LJRecordVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836B0C8F1D65432300D665FF /* LJRecordVideoView.m */; };
 		838BAA0D1D51EE6000F2F1FD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BAA0C1D51EE6000F2F1FD /* main.m */; };
@@ -221,20 +233,8 @@
 		838BAAA11D51EE8100F2F1FD /* JSQMessagesTypingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BAA7A1D51EE8100F2F1FD /* JSQMessagesTypingView.m */; };
 		838BAAA41D51EE9800F2F1FD /* DemoMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BAAA31D51EE9800F2F1FD /* DemoMessagesViewController.m */; };
 		838BAAA71D51EEA900F2F1FD /* DemoModelData.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BAAA61D51EEA900F2F1FD /* DemoModelData.m */; };
-		838BAAAA1D51EEC000F2F1FD /* NSUserDefaults+DemoSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BAAA91D51EEC000F2F1FD /* NSUserDefaults+DemoSettings.m */; };
 		838BAAAD1D51EED300F2F1FD /* NSString+LJEmojiParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BAAAC1D51EED300F2F1FD /* NSString+LJEmojiParser.m */; };
 		838BAAB01D51F03E00F2F1FD /* jsq_messages_sample.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 838BAAAE1D51F03E00F2F1FD /* jsq_messages_sample.m4a */; };
-		838BAC7D1D51F0CB00F2F1FD /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BAB961D51F0CB00F2F1FD /* FLAnimatedImage.m */; };
-		838BAC7E1D51F0CB00F2F1FD /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BAB981D51F0CB00F2F1FD /* FLAnimatedImageView.m */; };
-		838BAC7F1D51F0CB00F2F1FD /* GJCFEncodeAndDecode.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BAB9C1D51F0CB00F2F1FD /* GJCFEncodeAndDecode.m */; };
-		838BAC801D51F0CB00F2F1FD /* GJCFAudioFileUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BAB9F1D51F0CB00F2F1FD /* GJCFAudioFileUitil.m */; };
-		838BAC811D51F0CB00F2F1FD /* GJCFAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BABA21D51F0CB00F2F1FD /* GJCFAudioManager.m */; };
-		838BAC821D51F0CB00F2F1FD /* GJCFAudioModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BABA51D51F0CB00F2F1FD /* GJCFAudioModel.m */; };
-		838BAC831D51F0CB00F2F1FD /* GJCFAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BABA91D51F0CB00F2F1FD /* GJCFAudioPlayer.m */; };
-		838BAC841D51F0CB00F2F1FD /* GJCFAudioRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BABAD1D51F0CB00F2F1FD /* GJCFAudioRecord.m */; };
-		838BAC851D51F0CB00F2F1FD /* GJCFAudioRecordSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BABB01D51F0CB00F2F1FD /* GJCFAudioRecordSettings.m */; };
-		838BAC861D51F0CB00F2F1FD /* GJCFCachePathManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BABB31D51F0CB00F2F1FD /* GJCFCachePathManager.m */; };
-		838BAC871D51F0CB00F2F1FD /* UIView+GJCFViewFrameUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BABB61D51F0CB00F2F1FD /* UIView+GJCFViewFrameUitil.m */; };
 		83917AEC1D533ACE00C92C12 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83917AEB1D533ACE00C92C12 /* Reveal.framework */; };
 		83917AEE1D533ADF00C92C12 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 83917AED1D533ADF00C92C12 /* libz.1.2.5.tbd */; };
 		83B4078E1D869A0500CAD8CF /* LJRoundProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B4078D1D869A0500CAD8CF /* LJRoundProgressView.m */; };
@@ -440,6 +440,32 @@
 		83303C0A1D87892F00A99C20 /* 聊天键盘切换-btn-圆@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "聊天键盘切换-btn-圆@3x.png"; sourceTree = "<group>"; };
 		83303C0B1D87892F00A99C20 /* 输入框-灰色@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "输入框-灰色@2x.png"; sourceTree = "<group>"; };
 		83303C0C1D87892F00A99C20 /* 输入框-白色@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "输入框-白色@2x.png"; sourceTree = "<group>"; };
+		83303CB21D878B5500A99C20 /* FLAnimatedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImage.h; sourceTree = "<group>"; };
+		83303CB31D878B5500A99C20 /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImage.m; sourceTree = "<group>"; };
+		83303CB41D878B5500A99C20 /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImageView.h; sourceTree = "<group>"; };
+		83303CB51D878B5500A99C20 /* FLAnimatedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImageView.m; sourceTree = "<group>"; };
+		83303CB81D878B5500A99C20 /* GJCFEncodeAndDecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFEncodeAndDecode.h; sourceTree = "<group>"; };
+		83303CB91D878B5500A99C20 /* GJCFEncodeAndDecode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFEncodeAndDecode.m; sourceTree = "<group>"; };
+		83303CBB1D878B5500A99C20 /* GJCFAudioFileUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioFileUitil.h; sourceTree = "<group>"; };
+		83303CBC1D878B5500A99C20 /* GJCFAudioFileUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFAudioFileUitil.m; sourceTree = "<group>"; };
+		83303CBE1D878B5500A99C20 /* GJCFAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioManager.h; sourceTree = "<group>"; };
+		83303CBF1D878B5500A99C20 /* GJCFAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFAudioManager.m; sourceTree = "<group>"; };
+		83303CC11D878B5500A99C20 /* GJCFAudioModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioModel.h; sourceTree = "<group>"; };
+		83303CC21D878B5500A99C20 /* GJCFAudioModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFAudioModel.m; sourceTree = "<group>"; };
+		83303CC41D878B5500A99C20 /* GJCFAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioPlayer.h; sourceTree = "<group>"; };
+		83303CC51D878B5500A99C20 /* GJCFAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFAudioPlayer.m; sourceTree = "<group>"; };
+		83303CC61D878B5500A99C20 /* GJCFAudioPlayerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioPlayerDelegate.h; sourceTree = "<group>"; };
+		83303CC81D878B5500A99C20 /* GJCFAudioRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioRecord.h; sourceTree = "<group>"; };
+		83303CC91D878B5500A99C20 /* GJCFAudioRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFAudioRecord.m; sourceTree = "<group>"; };
+		83303CCA1D878B5500A99C20 /* GJCFAudioRecordDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioRecordDelegate.h; sourceTree = "<group>"; };
+		83303CCB1D878B5500A99C20 /* GJCFAudioRecordSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioRecordSettings.h; sourceTree = "<group>"; };
+		83303CCC1D878B5500A99C20 /* GJCFAudioRecordSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFAudioRecordSettings.m; sourceTree = "<group>"; };
+		83303CCE1D878B5500A99C20 /* GJCFCachePathManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFCachePathManager.h; sourceTree = "<group>"; };
+		83303CCF1D878B5500A99C20 /* GJCFCachePathManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFCachePathManager.m; sourceTree = "<group>"; };
+		83303CD11D878B5500A99C20 /* UIView+GJCFViewFrameUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+GJCFViewFrameUitil.h"; sourceTree = "<group>"; };
+		83303CD21D878B5500A99C20 /* UIView+GJCFViewFrameUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+GJCFViewFrameUitil.m"; sourceTree = "<group>"; };
+		83303CE11D878DCC00A99C20 /* LJFullVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJFullVideoView.h; sourceTree = "<group>"; };
+		83303CE21D878DCC00A99C20 /* LJFullVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJFullVideoView.m; sourceTree = "<group>"; };
 		8339CDBF1D646FE600D54476 /* LJVideoSource.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = LJVideoSource.xcassets; sourceTree = "<group>"; };
 		836B0C8E1D65432300D665FF /* LJRecordVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJRecordVideoView.h; sourceTree = "<group>"; };
 		836B0C8F1D65432300D665FF /* LJRecordVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJRecordVideoView.m; sourceTree = "<group>"; };
@@ -532,35 +558,9 @@
 		838BAAA31D51EE9800F2F1FD /* DemoMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoMessagesViewController.m; sourceTree = "<group>"; };
 		838BAAA51D51EEA900F2F1FD /* DemoModelData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoModelData.h; sourceTree = "<group>"; };
 		838BAAA61D51EEA900F2F1FD /* DemoModelData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoModelData.m; sourceTree = "<group>"; };
-		838BAAA81D51EEC000F2F1FD /* NSUserDefaults+DemoSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+DemoSettings.h"; sourceTree = "<group>"; };
-		838BAAA91D51EEC000F2F1FD /* NSUserDefaults+DemoSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+DemoSettings.m"; sourceTree = "<group>"; };
 		838BAAAB1D51EED300F2F1FD /* NSString+LJEmojiParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+LJEmojiParser.h"; sourceTree = "<group>"; };
 		838BAAAC1D51EED300F2F1FD /* NSString+LJEmojiParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+LJEmojiParser.m"; sourceTree = "<group>"; };
 		838BAAAE1D51F03E00F2F1FD /* jsq_messages_sample.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = jsq_messages_sample.m4a; sourceTree = "<group>"; };
-		838BAB951D51F0CB00F2F1FD /* FLAnimatedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImage.h; sourceTree = "<group>"; };
-		838BAB961D51F0CB00F2F1FD /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImage.m; sourceTree = "<group>"; };
-		838BAB971D51F0CB00F2F1FD /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImageView.h; sourceTree = "<group>"; };
-		838BAB981D51F0CB00F2F1FD /* FLAnimatedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImageView.m; sourceTree = "<group>"; };
-		838BAB9B1D51F0CB00F2F1FD /* GJCFEncodeAndDecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFEncodeAndDecode.h; sourceTree = "<group>"; };
-		838BAB9C1D51F0CB00F2F1FD /* GJCFEncodeAndDecode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFEncodeAndDecode.m; sourceTree = "<group>"; };
-		838BAB9E1D51F0CB00F2F1FD /* GJCFAudioFileUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioFileUitil.h; sourceTree = "<group>"; };
-		838BAB9F1D51F0CB00F2F1FD /* GJCFAudioFileUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFAudioFileUitil.m; sourceTree = "<group>"; };
-		838BABA11D51F0CB00F2F1FD /* GJCFAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioManager.h; sourceTree = "<group>"; };
-		838BABA21D51F0CB00F2F1FD /* GJCFAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFAudioManager.m; sourceTree = "<group>"; };
-		838BABA41D51F0CB00F2F1FD /* GJCFAudioModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioModel.h; sourceTree = "<group>"; };
-		838BABA51D51F0CB00F2F1FD /* GJCFAudioModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFAudioModel.m; sourceTree = "<group>"; };
-		838BABA81D51F0CB00F2F1FD /* GJCFAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioPlayer.h; sourceTree = "<group>"; };
-		838BABA91D51F0CB00F2F1FD /* GJCFAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFAudioPlayer.m; sourceTree = "<group>"; };
-		838BABAA1D51F0CB00F2F1FD /* GJCFAudioPlayerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioPlayerDelegate.h; sourceTree = "<group>"; };
-		838BABAC1D51F0CB00F2F1FD /* GJCFAudioRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioRecord.h; sourceTree = "<group>"; };
-		838BABAD1D51F0CB00F2F1FD /* GJCFAudioRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFAudioRecord.m; sourceTree = "<group>"; };
-		838BABAE1D51F0CB00F2F1FD /* GJCFAudioRecordDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioRecordDelegate.h; sourceTree = "<group>"; };
-		838BABAF1D51F0CB00F2F1FD /* GJCFAudioRecordSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioRecordSettings.h; sourceTree = "<group>"; };
-		838BABB01D51F0CB00F2F1FD /* GJCFAudioRecordSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFAudioRecordSettings.m; sourceTree = "<group>"; };
-		838BABB21D51F0CB00F2F1FD /* GJCFCachePathManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFCachePathManager.h; sourceTree = "<group>"; };
-		838BABB31D51F0CB00F2F1FD /* GJCFCachePathManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFCachePathManager.m; sourceTree = "<group>"; };
-		838BABB51D51F0CB00F2F1FD /* UIView+GJCFViewFrameUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+GJCFViewFrameUitil.h"; sourceTree = "<group>"; };
-		838BABB61D51F0CB00F2F1FD /* UIView+GJCFViewFrameUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+GJCFViewFrameUitil.m"; sourceTree = "<group>"; };
 		83917AEB1D533ACE00C92C12 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 		83917AED1D533ADF00C92C12 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		83B4078C1D869A0500CAD8CF /* LJRoundProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJRoundProgressView.h; sourceTree = "<group>"; };
@@ -803,6 +803,117 @@
 			path = emoji;
 			sourceTree = "<group>";
 		};
+		83303CB01D878B5500A99C20 /* GJGCChatInputPanel-Depend */ = {
+			isa = PBXGroup;
+			children = (
+				83303CB11D878B5500A99C20 /* FLAnimatedImage */,
+				83303CB61D878B5500A99C20 /* GJCFAudioManager */,
+				83303CCD1D878B5500A99C20 /* GJCFCachePathManager */,
+				83303CD01D878B5500A99C20 /* UitilCategory */,
+			);
+			path = "GJGCChatInputPanel-Depend";
+			sourceTree = "<group>";
+		};
+		83303CB11D878B5500A99C20 /* FLAnimatedImage */ = {
+			isa = PBXGroup;
+			children = (
+				83303CB21D878B5500A99C20 /* FLAnimatedImage.h */,
+				83303CB31D878B5500A99C20 /* FLAnimatedImage.m */,
+				83303CB41D878B5500A99C20 /* FLAnimatedImageView.h */,
+				83303CB51D878B5500A99C20 /* FLAnimatedImageView.m */,
+			);
+			path = FLAnimatedImage;
+			sourceTree = "<group>";
+		};
+		83303CB61D878B5500A99C20 /* GJCFAudioManager */ = {
+			isa = PBXGroup;
+			children = (
+				83303CB71D878B5500A99C20 /* Encode&Decode */,
+				83303CBA1D878B5500A99C20 /* FileUitil */,
+				83303CBD1D878B5500A99C20 /* Manager */,
+				83303CC01D878B5500A99C20 /* Model */,
+				83303CC31D878B5500A99C20 /* Play */,
+				83303CC71D878B5500A99C20 /* Record */,
+			);
+			path = GJCFAudioManager;
+			sourceTree = "<group>";
+		};
+		83303CB71D878B5500A99C20 /* Encode&Decode */ = {
+			isa = PBXGroup;
+			children = (
+				83303CB81D878B5500A99C20 /* GJCFEncodeAndDecode.h */,
+				83303CB91D878B5500A99C20 /* GJCFEncodeAndDecode.m */,
+			);
+			path = "Encode&Decode";
+			sourceTree = "<group>";
+		};
+		83303CBA1D878B5500A99C20 /* FileUitil */ = {
+			isa = PBXGroup;
+			children = (
+				83303CBB1D878B5500A99C20 /* GJCFAudioFileUitil.h */,
+				83303CBC1D878B5500A99C20 /* GJCFAudioFileUitil.m */,
+			);
+			path = FileUitil;
+			sourceTree = "<group>";
+		};
+		83303CBD1D878B5500A99C20 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				83303CBE1D878B5500A99C20 /* GJCFAudioManager.h */,
+				83303CBF1D878B5500A99C20 /* GJCFAudioManager.m */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		83303CC01D878B5500A99C20 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				83303CC11D878B5500A99C20 /* GJCFAudioModel.h */,
+				83303CC21D878B5500A99C20 /* GJCFAudioModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		83303CC31D878B5500A99C20 /* Play */ = {
+			isa = PBXGroup;
+			children = (
+				83303CC41D878B5500A99C20 /* GJCFAudioPlayer.h */,
+				83303CC51D878B5500A99C20 /* GJCFAudioPlayer.m */,
+				83303CC61D878B5500A99C20 /* GJCFAudioPlayerDelegate.h */,
+			);
+			path = Play;
+			sourceTree = "<group>";
+		};
+		83303CC71D878B5500A99C20 /* Record */ = {
+			isa = PBXGroup;
+			children = (
+				83303CC81D878B5500A99C20 /* GJCFAudioRecord.h */,
+				83303CC91D878B5500A99C20 /* GJCFAudioRecord.m */,
+				83303CCA1D878B5500A99C20 /* GJCFAudioRecordDelegate.h */,
+				83303CCB1D878B5500A99C20 /* GJCFAudioRecordSettings.h */,
+				83303CCC1D878B5500A99C20 /* GJCFAudioRecordSettings.m */,
+			);
+			path = Record;
+			sourceTree = "<group>";
+		};
+		83303CCD1D878B5500A99C20 /* GJCFCachePathManager */ = {
+			isa = PBXGroup;
+			children = (
+				83303CCE1D878B5500A99C20 /* GJCFCachePathManager.h */,
+				83303CCF1D878B5500A99C20 /* GJCFCachePathManager.m */,
+			);
+			path = GJCFCachePathManager;
+			sourceTree = "<group>";
+		};
+		83303CD01D878B5500A99C20 /* UitilCategory */ = {
+			isa = PBXGroup;
+			children = (
+				83303CD11D878B5500A99C20 /* UIView+GJCFViewFrameUitil.h */,
+				83303CD21D878B5500A99C20 /* UIView+GJCFViewFrameUitil.m */,
+			);
+			path = UitilCategory;
+			sourceTree = "<group>";
+		};
 		8339CDB61D646F9000D54476 /* LJVideo */ = {
 			isa = PBXGroup;
 			children = (
@@ -816,6 +927,8 @@
 				8329A70B1D66D9020081FDD5 /* LJMovieDecoder.m */,
 				8329A70C1D66D9020081FDD5 /* UIImage+LJVideo.h */,
 				8329A70D1D66D9020081FDD5 /* UIImage+LJVideo.m */,
+				83303CE11D878DCC00A99C20 /* LJFullVideoView.h */,
+				83303CE21D878DCC00A99C20 /* LJFullVideoView.m */,
 			);
 			path = LJVideo;
 			sourceTree = "<group>";
@@ -845,14 +958,12 @@
 			children = (
 				8339CDB61D646F9000D54476 /* LJVideo */,
 				83303B511D87892F00A99C20 /* GJGCChatInputPanel */,
-				838BAB931D51F0CB00F2F1FD /* GJGCChatInputPanel-Depend */,
+				83303CB01D878B5500A99C20 /* GJGCChatInputPanel-Depend */,
 				838BAA221D51EE8100F2F1FD /* JSQMessagesViewController */,
 				838BAA0E1D51EE6000F2F1FD /* AppDelegate.h */,
 				838BAA0F1D51EE6000F2F1FD /* AppDelegate.m */,
 				838BAAAB1D51EED300F2F1FD /* NSString+LJEmojiParser.h */,
 				838BAAAC1D51EED300F2F1FD /* NSString+LJEmojiParser.m */,
-				838BAAA81D51EEC000F2F1FD /* NSUserDefaults+DemoSettings.h */,
-				838BAAA91D51EEC000F2F1FD /* NSUserDefaults+DemoSettings.m */,
 				838BAAA51D51EEA900F2F1FD /* DemoModelData.h */,
 				838BAAA61D51EEA900F2F1FD /* DemoModelData.m */,
 				838BAAA21D51EE9800F2F1FD /* DemoMessagesViewController.h */,
@@ -1020,117 +1131,6 @@
 				838BAA7A1D51EE8100F2F1FD /* JSQMessagesTypingView.m */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		838BAB931D51F0CB00F2F1FD /* GJGCChatInputPanel-Depend */ = {
-			isa = PBXGroup;
-			children = (
-				838BAB941D51F0CB00F2F1FD /* FLAnimatedImage */,
-				838BAB991D51F0CB00F2F1FD /* GJCFAudioManager */,
-				838BABB11D51F0CB00F2F1FD /* GJCFCachePathManager */,
-				838BABB41D51F0CB00F2F1FD /* UitilCategory */,
-			);
-			path = "GJGCChatInputPanel-Depend";
-			sourceTree = "<group>";
-		};
-		838BAB941D51F0CB00F2F1FD /* FLAnimatedImage */ = {
-			isa = PBXGroup;
-			children = (
-				838BAB951D51F0CB00F2F1FD /* FLAnimatedImage.h */,
-				838BAB961D51F0CB00F2F1FD /* FLAnimatedImage.m */,
-				838BAB971D51F0CB00F2F1FD /* FLAnimatedImageView.h */,
-				838BAB981D51F0CB00F2F1FD /* FLAnimatedImageView.m */,
-			);
-			path = FLAnimatedImage;
-			sourceTree = "<group>";
-		};
-		838BAB991D51F0CB00F2F1FD /* GJCFAudioManager */ = {
-			isa = PBXGroup;
-			children = (
-				838BAB9A1D51F0CB00F2F1FD /* Encode&Decode */,
-				838BAB9D1D51F0CB00F2F1FD /* FileUitil */,
-				838BABA01D51F0CB00F2F1FD /* Manager */,
-				838BABA31D51F0CB00F2F1FD /* Model */,
-				838BABA71D51F0CB00F2F1FD /* Play */,
-				838BABAB1D51F0CB00F2F1FD /* Record */,
-			);
-			path = GJCFAudioManager;
-			sourceTree = "<group>";
-		};
-		838BAB9A1D51F0CB00F2F1FD /* Encode&Decode */ = {
-			isa = PBXGroup;
-			children = (
-				838BAB9B1D51F0CB00F2F1FD /* GJCFEncodeAndDecode.h */,
-				838BAB9C1D51F0CB00F2F1FD /* GJCFEncodeAndDecode.m */,
-			);
-			path = "Encode&Decode";
-			sourceTree = "<group>";
-		};
-		838BAB9D1D51F0CB00F2F1FD /* FileUitil */ = {
-			isa = PBXGroup;
-			children = (
-				838BAB9E1D51F0CB00F2F1FD /* GJCFAudioFileUitil.h */,
-				838BAB9F1D51F0CB00F2F1FD /* GJCFAudioFileUitil.m */,
-			);
-			path = FileUitil;
-			sourceTree = "<group>";
-		};
-		838BABA01D51F0CB00F2F1FD /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				838BABA11D51F0CB00F2F1FD /* GJCFAudioManager.h */,
-				838BABA21D51F0CB00F2F1FD /* GJCFAudioManager.m */,
-			);
-			path = Manager;
-			sourceTree = "<group>";
-		};
-		838BABA31D51F0CB00F2F1FD /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				838BABA41D51F0CB00F2F1FD /* GJCFAudioModel.h */,
-				838BABA51D51F0CB00F2F1FD /* GJCFAudioModel.m */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		838BABA71D51F0CB00F2F1FD /* Play */ = {
-			isa = PBXGroup;
-			children = (
-				838BABA81D51F0CB00F2F1FD /* GJCFAudioPlayer.h */,
-				838BABA91D51F0CB00F2F1FD /* GJCFAudioPlayer.m */,
-				838BABAA1D51F0CB00F2F1FD /* GJCFAudioPlayerDelegate.h */,
-			);
-			path = Play;
-			sourceTree = "<group>";
-		};
-		838BABAB1D51F0CB00F2F1FD /* Record */ = {
-			isa = PBXGroup;
-			children = (
-				838BABAC1D51F0CB00F2F1FD /* GJCFAudioRecord.h */,
-				838BABAD1D51F0CB00F2F1FD /* GJCFAudioRecord.m */,
-				838BABAE1D51F0CB00F2F1FD /* GJCFAudioRecordDelegate.h */,
-				838BABAF1D51F0CB00F2F1FD /* GJCFAudioRecordSettings.h */,
-				838BABB01D51F0CB00F2F1FD /* GJCFAudioRecordSettings.m */,
-			);
-			path = Record;
-			sourceTree = "<group>";
-		};
-		838BABB11D51F0CB00F2F1FD /* GJCFCachePathManager */ = {
-			isa = PBXGroup;
-			children = (
-				838BABB21D51F0CB00F2F1FD /* GJCFCachePathManager.h */,
-				838BABB31D51F0CB00F2F1FD /* GJCFCachePathManager.m */,
-			);
-			path = GJCFCachePathManager;
-			sourceTree = "<group>";
-		};
-		838BABB41D51F0CB00F2F1FD /* UitilCategory */ = {
-			isa = PBXGroup;
-			children = (
-				838BABB51D51F0CB00F2F1FD /* UIView+GJCFViewFrameUitil.h */,
-				838BABB61D51F0CB00F2F1FD /* UIView+GJCFViewFrameUitil.m */,
-			);
-			path = UitilCategory;
 			sourceTree = "<group>";
 		};
 		83B4078B1D869A0500CAD8CF /* LJRoundProgressView */ = {
@@ -1471,31 +1471,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				838BAA851D51EE8100F2F1FD /* JSQMessagesMediaViewBubbleImageMasker.m in Sources */,
-				838BAC801D51F0CB00F2F1FD /* GJCFAudioFileUitil.m in Sources */,
-				838BAC831D51F0CB00F2F1FD /* GJCFAudioPlayer.m in Sources */,
 				83303C171D87892F00A99C20 /* GJGCChatInputExpandMenuPanel.m in Sources */,
 				838BAAA11D51EE8100F2F1FD /* JSQMessagesTypingView.m in Sources */,
 				838BAA8E1D51EE8100F2F1FD /* JSQMediaItem.m in Sources */,
+				83303CDD1D878B5500A99C20 /* UIView+GJCFViewFrameUitil.m in Sources */,
 				83303C101D87892F00A99C20 /* GJGCChatInputExpandEmojiPanel.m in Sources */,
 				838BAA941D51EE8100F2F1FD /* JSQMessagesCellTextView.m in Sources */,
-				838BAC841D51F0CB00F2F1FD /* GJCFAudioRecord.m in Sources */,
 				838BAA8B1D51EE8100F2F1FD /* JSQMessagesCollectionViewLayoutAttributes.m in Sources */,
+				83303CD31D878B5500A99C20 /* FLAnimatedImage.m in Sources */,
 				838BAA961D51EE8100F2F1FD /* JSQMessagesCollectionViewCell.m in Sources */,
 				83B407911D869A6700CAD8CF /* LJShortVideoPlayView.m in Sources */,
 				838BAA8D1D51EE8100F2F1FD /* JSQLocationMediaItem.m in Sources */,
 				838BAA811D51EE8100F2F1FD /* JSQMessagesViewController.m in Sources */,
 				8329A70F1D66D9020081FDD5 /* UIImage+LJVideo.m in Sources */,
+				83303CD51D878B5500A99C20 /* GJCFEncodeAndDecode.m in Sources */,
 				83303C1B1D87892F00A99C20 /* GJGCChatInputGifFloatView.m in Sources */,
+				83303CDB1D878B5500A99C20 /* GJCFAudioRecordSettings.m in Sources */,
 				83303C151D87892F00A99C20 /* GJGCChatInputExpandEmojiPanelMenuBarDataSourceItem.m in Sources */,
 				83303C121D87892F00A99C20 /* GJGCChatInputExpandEmojiPanelGifSubItem.m in Sources */,
 				83303C141D87892F00A99C20 /* GJGCChatInputExpandEmojiPanelMenuBarDataSource.m in Sources */,
 				83303C191D87892F00A99C20 /* GJGCChatInputExpandMenuPanelDataSource.m in Sources */,
+				83303CE31D878DCC00A99C20 /* LJFullVideoView.m in Sources */,
 				838BAA991D51EE8100F2F1FD /* JSQMessagesCollectionViewCellOutgoing.m in Sources */,
 				838BAA951D51EE8100F2F1FD /* JSQMessagesCollectionView.m in Sources */,
-				838BAC7F1D51F0CB00F2F1FD /* GJCFEncodeAndDecode.m in Sources */,
 				83303C0D1D87892F00A99C20 /* GJGCChatInputBar.m in Sources */,
 				83303C161D87892F00A99C20 /* GJGCChatInputExpandEmojiPanelPageItem.m in Sources */,
 				838BAA891D51EE8100F2F1FD /* JSQMessagesCollectionViewFlowLayout.m in Sources */,
+				83303CD61D878B5500A99C20 /* GJCFAudioFileUitil.m in Sources */,
 				830A06341D828EA0002965E6 /* LJShortVideoMediaItem.m in Sources */,
 				83303C111D87892F00A99C20 /* GJGCChatInputExpandEmojiPanelGifPageItem.m in Sources */,
 				838BAA841D51EE8100F2F1FD /* JSQMessagesBubbleImageFactory.m in Sources */,
@@ -1504,12 +1506,14 @@
 				838BAAA71D51EEA900F2F1FD /* DemoModelData.m in Sources */,
 				838BAAA41D51EE9800F2F1FD /* DemoMessagesViewController.m in Sources */,
 				83303C1D1D87892F00A99C20 /* GJGCChatInputPanelStyle.m in Sources */,
+				83303CD41D878B5500A99C20 /* FLAnimatedImageView.m in Sources */,
 				838BAA8F1D51EE8100F2F1FD /* JSQMessage.m in Sources */,
 				83303C1C1D87892F00A99C20 /* GJGCChatInputPanel.m in Sources */,
 				838BAA8A1D51EE8100F2F1FD /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.m in Sources */,
 				838BAA9F1D51EE8100F2F1FD /* JSQMessagesTypingIndicatorFooterView.m in Sources */,
 				83303C201D87892F00A99C20 /* GJGCIconSeprateButton.m in Sources */,
 				838BAA861D51EE8100F2F1FD /* JSQMessagesTimestampFormatter.m in Sources */,
+				83303CD81D878B5500A99C20 /* GJCFAudioModel.m in Sources */,
 				830A062B1D826164002965E6 /* LJShowFPS.m in Sources */,
 				838BAA801D51EE8100F2F1FD /* UIView+JSQMessages.m in Sources */,
 				838BAA9E1D51EE8100F2F1FD /* JSQMessagesMediaPlaceholderView.m in Sources */,
@@ -1521,28 +1525,24 @@
 				83B407941D86AB2E00CAD8CF /* LJVideoMediaItem.m in Sources */,
 				83303C1F1D87892F00A99C20 /* GJGCChatInputTextView.m in Sources */,
 				838BAA8C1D51EE8100F2F1FD /* JSQAudioMediaItem.m in Sources */,
-				838BAC7E1D51F0CB00F2F1FD /* FLAnimatedImageView.m in Sources */,
 				838BAAAD1D51EED300F2F1FD /* NSString+LJEmojiParser.m in Sources */,
 				83303C1A1D87892F00A99C20 /* GJGCChatInputExpandMenuPanelItem.m in Sources */,
 				8329A70E1D66D9020081FDD5 /* LJMovieDecoder.m in Sources */,
-				838BAC851D51F0CB00F2F1FD /* GJCFAudioRecordSettings.m in Sources */,
-				838BAC821D51F0CB00F2F1FD /* GJCFAudioModel.m in Sources */,
 				83303C0F1D87892F00A99C20 /* GJGCChatInputConst.m in Sources */,
-				838BAC871D51F0CB00F2F1FD /* UIView+GJCFViewFrameUitil.m in Sources */,
 				838BAA101D51EE6000F2F1FD /* AppDelegate.m in Sources */,
-				838BAC861D51F0CB00F2F1FD /* GJCFCachePathManager.m in Sources */,
 				83303C211D87892F00A99C20 /* GJGCIconSeprateImageView.m in Sources */,
 				838BAA831D51EE8100F2F1FD /* JSQMessagesAvatarImageFactory.m in Sources */,
 				838BAA7D1D51EE8100F2F1FD /* NSString+JSQMessages.m in Sources */,
-				838BAAAA1D51EEC000F2F1FD /* NSUserDefaults+DemoSettings.m in Sources */,
-				838BAC7D1D51F0CB00F2F1FD /* FLAnimatedImage.m in Sources */,
 				83303C0E1D87892F00A99C20 /* GJGCChatInputBarItem.m in Sources */,
 				83303C1E1D87892F00A99C20 /* GJGCChatInputRecordAudioTipView.m in Sources */,
 				83303C131D87892F00A99C20 /* GJGCChatInputExpandEmojiPanelMenuBar.m in Sources */,
 				838BAA9C1D51EE8100F2F1FD /* JSQMessagesLoadEarlierHeaderView.m in Sources */,
+				83303CD91D878B5500A99C20 /* GJCFAudioPlayer.m in Sources */,
 				838BAA921D51EE8100F2F1FD /* JSQPhotoMediaItem.m in Sources */,
 				838BAA7E1D51EE8100F2F1FD /* UIColor+JSQMessages.m in Sources */,
-				838BAC811D51F0CB00F2F1FD /* GJCFAudioManager.m in Sources */,
+				83303CD71D878B5500A99C20 /* GJCFAudioManager.m in Sources */,
+				83303CDA1D878B5500A99C20 /* GJCFAudioRecord.m in Sources */,
+				83303CDC1D878B5500A99C20 /* GJCFCachePathManager.m in Sources */,
 				838BAA881D51EE8100F2F1FD /* JSQMessagesBubblesSizeCalculator.m in Sources */,
 				838BAA0D1D51EE6000F2F1FD /* main.m in Sources */,
 				83B4078E1D869A0500CAD8CF /* LJRoundProgressView.m in Sources */,

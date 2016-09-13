@@ -10,7 +10,6 @@
 #import "JSQMessages.h"
 
 #import "DemoModelData.h"
-#import "NSUserDefaults+DemoSettings.h"
 
 
 @class DemoMessagesViewController;

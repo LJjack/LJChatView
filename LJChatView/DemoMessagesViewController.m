@@ -19,6 +19,7 @@
 
 #import "UIImage+LJVideo.h"
 #import "LJRecordVideoView.h"
+#import "LJFullVideoView.h"
 
 #define GJCFSystemScreenHeight [UIScreen mainScreen].bounds.size.height
 #define GJCFSystemScreenWidth [UIScreen mainScreen].bounds.size.width
@@ -79,16 +80,6 @@
      */
     self.collectionView.accessoryDelegate = self;
 
-    /**
-     *  You can set custom avatar sizes
-     */
-    if (![NSUserDefaults incomingAvatarSetting]) {
-        self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
-    }
-    
-    if (![NSUserDefaults outgoingAvatarSetting]) {
-        self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
-    }
     
     self.showLoadEarlierMessagesHeader = YES;
     
@@ -130,7 +121,7 @@
      *  You must set this from `viewDidAppear:`
      *  Note: this feature is mostly stable, but still experimental
      */
-    self.collectionView.collectionViewLayout.springinessEnabled = [NSUserDefaults springinessSetting];
+//    self.collectionView.collectionViewLayout.springinessEnabled = [NSUserDefaults springinessSetting];
 }
 
 //========================   输入键盘工具 开始  ================================
@@ -827,14 +818,10 @@
     JSQMessage *message = [self.demoData.messages objectAtIndex:indexPath.item];
     
     if ([message.senderId isEqualToString:self.senderId]) {
-        if (![NSUserDefaults outgoingAvatarSetting]) {
-            return nil;
-        }
+        
     }
     else {
-        if (![NSUserDefaults incomingAvatarSetting]) {
-            return nil;
-        }
+        
     }
     
     
@@ -934,7 +921,7 @@
 
 - (BOOL)shouldShowAccessoryButtonForMessage:(id<JSQMessageData>)message
 {
-    return ([message isMediaMessage] && [NSUserDefaults accessoryButtonForMediaMessages]);
+    return [message isMediaMessage];
 }
 
 
@@ -1050,6 +1037,10 @@
         NSLog(@"点击音频!");
     } else if ([message.media isKindOfClass:[LJShortVideoMediaItem class]]) {
         NSLog(@"点击 微 视频!");
+        LJShortVideoMediaItem *videoMediaItem = (LJShortVideoMediaItem *)message.media;
+        LJFullVideoView *fullVideoView = [[LJFullVideoView alloc] initWithVideoPath:videoMediaItem.videoPath coverImage:videoMediaItem.aFrameImage];
+        [fullVideoView showFullVideoView];
+        
     } else if ([message.media isKindOfClass:[LJVideoMediaItem class]]) {
         NSLog(@"点击视频!");
     } else if ([message.media isKindOfClass:[JSQLocationMediaItem class]]) {
