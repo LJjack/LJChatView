@@ -36,24 +36,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (UIImage *)jsq_bubbleCompactImage;
 
 /**
- *  @return The default input toolbar accessory image.
+ *  @return 返回失败状态的图片
  */
-+ (UIImage *)jsq_defaultAccessoryImage;
-
-/**
- *  @return The default typing indicator image.
- */
-+ (UIImage *)jsq_defaultTypingIndicatorImage;
-
-/**
- *  @return The default play icon image.
- */
-+ (UIImage *)jsq_defaultPlayImage;
-
-/**
- *  @return The default pause icon image.
- */
-+ (UIImage *)jsq_defaultPauseImage;
++ (UIImage *)jsq_failedStateImage;
 
 /**
  *  @return The standard share icon image.

@@ -116,15 +116,6 @@
     
     [self addPhotoMediaMessageWithImage:[UIImage imageNamed:@"goldengate"]];
     
-    /**
-     *  Setting to load extra messages for testing/demo
-     */
-    if (/* DISABLES CODE */ (NO)) {
-        NSArray *copyOfMessages = [self.messages copy];
-        for (NSUInteger i = 0; i < 4; i++) {
-            [self.messages addObjectsFromArray:copyOfMessages];
-        }
-    }
     
 }
 

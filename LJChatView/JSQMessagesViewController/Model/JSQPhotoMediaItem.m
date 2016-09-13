@@ -54,20 +54,22 @@
 
 - (CGSize)mediaViewDisplaySize {
     CGSize size = [super mediaViewDisplaySize];
-    
-    CGSize imgSize = self.image.size;
-    CGFloat maxWidth = size.width;
-    if (imgSize.width > maxWidth) {
-        CGFloat height = (maxWidth / imgSize.width) * imgSize.height;
-        if (height < 100) {
-            maxWidth = size.height;
-            height = (maxWidth / imgSize.width) * imgSize.height;
+    if (self.image) {
+        CGSize imgSize = self.image.size;
+        CGFloat maxWidth = size.width;
+        if (imgSize.width > maxWidth) {
+            CGFloat height = (maxWidth / imgSize.width) * imgSize.height;
+            if (height < 100) {
+                maxWidth = size.height;
+                height = (maxWidth / imgSize.width) * imgSize.height;
+            }
+            size.width = ceil(maxWidth);
+            size.height = ceil(height);
         }
-        imgSize.width = ceil(maxWidth);
-        imgSize.height = ceil(height);
     }
     
-    return imgSize;
+    
+    return size;
 }
 #pragma mark - JSQMessageMediaData protocol
 

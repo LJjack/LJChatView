@@ -187,6 +187,7 @@
 		83303CDC1D878B5500A99C20 /* GJCFCachePathManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83303CCF1D878B5500A99C20 /* GJCFCachePathManager.m */; };
 		83303CDD1D878B5500A99C20 /* UIView+GJCFViewFrameUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = 83303CD21D878B5500A99C20 /* UIView+GJCFViewFrameUitil.m */; };
 		83303CE31D878DCC00A99C20 /* LJFullVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83303CE21D878DCC00A99C20 /* LJFullVideoView.m */; };
+		83303CE61D87E4EB00A99C20 /* LJMessageStateBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 83303CE51D87E4EB00A99C20 /* LJMessageStateBtn.m */; };
 		8339CDC01D646FE600D54476 /* LJVideoSource.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8339CDBF1D646FE600D54476 /* LJVideoSource.xcassets */; };
 		836B0C901D65432300D665FF /* LJRecordVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836B0C8F1D65432300D665FF /* LJRecordVideoView.m */; };
 		838BAA0D1D51EE6000F2F1FD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BAA0C1D51EE6000F2F1FD /* main.m */; };
@@ -466,6 +467,8 @@
 		83303CD21D878B5500A99C20 /* UIView+GJCFViewFrameUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+GJCFViewFrameUitil.m"; sourceTree = "<group>"; };
 		83303CE11D878DCC00A99C20 /* LJFullVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJFullVideoView.h; sourceTree = "<group>"; };
 		83303CE21D878DCC00A99C20 /* LJFullVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJFullVideoView.m; sourceTree = "<group>"; };
+		83303CE41D87E4EB00A99C20 /* LJMessageStateBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJMessageStateBtn.h; sourceTree = "<group>"; };
+		83303CE51D87E4EB00A99C20 /* LJMessageStateBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJMessageStateBtn.m; sourceTree = "<group>"; };
 		8339CDBF1D646FE600D54476 /* LJVideoSource.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = LJVideoSource.xcassets; sourceTree = "<group>"; };
 		836B0C8E1D65432300D665FF /* LJRecordVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJRecordVideoView.h; sourceTree = "<group>"; };
 		836B0C8F1D65432300D665FF /* LJRecordVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJRecordVideoView.m; sourceTree = "<group>"; };
@@ -972,6 +975,8 @@
 				830A06331D828EA0002965E6 /* LJShortVideoMediaItem.m */,
 				83B407921D86AB2E00CAD8CF /* LJVideoMediaItem.h */,
 				83B407931D86AB2E00CAD8CF /* LJVideoMediaItem.m */,
+				83303CE41D87E4EB00A99C20 /* LJMessageStateBtn.h */,
+				83303CE51D87E4EB00A99C20 /* LJMessageStateBtn.m */,
 				830A06291D826164002965E6 /* LJShowFPS.h */,
 				830A062A1D826164002965E6 /* LJShowFPS.m */,
 				830A061D1D8256BC002965E6 /* 123.mp4 */,
@@ -1470,6 +1475,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83303CE61D87E4EB00A99C20 /* LJMessageStateBtn.m in Sources */,
 				838BAA851D51EE8100F2F1FD /* JSQMessagesMediaViewBubbleImageMasker.m in Sources */,
 				83303C171D87892F00A99C20 /* GJGCChatInputExpandMenuPanel.m in Sources */,
 				838BAAA11D51EE8100F2F1FD /* JSQMessagesTypingView.m in Sources */,

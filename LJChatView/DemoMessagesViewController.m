@@ -83,10 +83,7 @@
     
     self.showLoadEarlierMessagesHeader = YES;
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage jsq_defaultTypingIndicatorImage]
-                                                                              style:UIBarButtonItemStylePlain
-                                                                             target:self
-                                                                             action:@selector(receiveMessagePressed:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"更多" style:UIBarButtonItemStylePlain target:self action:@selector(receiveMessagePressed:)];
 
     /**
      *  Register custom menu actions for cells.
@@ -375,9 +372,23 @@
 // photos数组里的UIImage对象，默认是828像素宽，你可以通过设置photoWidth属性的值来改变它
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto {
     for (UIImage *image in photos) {
-        [self.demoData addPhotoMediaMessageWithImage:image];
+//        [self.demoData addPhotoMediaMessageWithImage:image];
+        
+        JSQPhotoMediaItem *photoItem = [[JSQPhotoMediaItem alloc] initWithImage:nil];
+
+        JSQMessage *photoMessage = [JSQMessage messageWithSenderId:kJSQDemoAvatarIdSquires
+                                                       displayName:kJSQDemoAvatarDisplayNameSquires
+                                                             media:photoItem];
+        [self.demoData.messages addObject:photoMessage];
+        [self finishSendingMessage];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            photoItem.image = image;
+            [self.collectionView reloadData];
+        });
     }
-    [self finishSendingMessage];
+    
+    
+    
 }
 
 // 如果用户选择了一个视频，下面的handle会被执行
@@ -1058,7 +1069,7 @@
 }
 
 #pragma mark - JSQMessagesViewAccessoryDelegate methods
-
+//发送和接受状态的代理
 - (void)messageView:(JSQMessagesCollectionView *)view didTapAccessoryButtonAtIndexPath:(NSIndexPath *)path
 {
     NSLog(@"Tapped accessory button!");

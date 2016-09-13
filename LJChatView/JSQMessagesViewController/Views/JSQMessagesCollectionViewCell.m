@@ -25,6 +25,7 @@
 #import "UIView+JSQMessages.h"
 #import "UIImage+JSQMessages.h"
 
+#import "LJMessageStateBtn.h"
 
 static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
 
@@ -42,7 +43,7 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIView *avatarContainerView;
 
-@property (weak, nonatomic) IBOutlet UIButton *accessoryButton;
+@property (weak, nonatomic) IBOutlet LJMessageStateBtn *accessoryButton;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageBubbleContainerWidthConstraint;
 
@@ -131,8 +132,6 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
     self.cellBottomLabel.textColor = [UIColor lightGrayColor];
     self.cellBottomLabel.numberOfLines = 0;
 
-    [self configureAccessoryButton];
-
     self.cellTopLabelHeightConstraint.constant = topLabelFont.pointSize;
     self.messageBubbleTopLabelHeightConstraint.constant = messageBubbleTopLabelFont.pointSize;
     self.cellBottomLabelHeightConstraint.constant = bottomLabelFont.pointSize;
@@ -140,13 +139,6 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(jsq_handleTapGesture:)];
     [self addGestureRecognizer:tap];
     self.tapGestureRecognizer = tap;
-}
-
-- (void)configureAccessoryButton
-{
-    UIColor *tintColor = [UIColor redColor];
-    UIImage *shareActionImage = [[UIImage jsq_shareActionImage] jsq_imageMaskedWithColor:tintColor];
-    [self.accessoryButton setImage:shareActionImage forState:UIControlStateNormal];
 }
 
 - (void)dealloc
@@ -409,8 +401,15 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
     return NO;
 }
 
-- (IBAction)didTapAccessoryButton:(UIButton *)accessoryButton
+- (IBAction)didTapAccessoryButton:(LJMessageStateBtn *)sender
 {
+    if ([sender isAnimating]) {
+        [sender stopAnimating];
+    } else {
+        [sender startAnimating];
+    }
+    
+    
     [self.delegate messagesCollectionViewCellDidTapAccessoryButton:self];
 }
 

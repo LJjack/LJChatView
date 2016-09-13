@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  The image for the photo media item. The default value is `nil`.
  */
-@property (copy, nonatomic, nullable) UIImage *image;
+@property (strong, nonatomic, nullable) UIImage *image;
 
 /**
  *  Initializes and returns a photo media item object having the given image.

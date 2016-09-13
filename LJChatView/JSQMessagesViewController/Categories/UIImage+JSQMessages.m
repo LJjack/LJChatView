@@ -61,26 +61,9 @@
     return [UIImage jsq_bubbleImageFromBundleWithName:@"bubble_min"];
 }
 
-
-+ (UIImage *)jsq_defaultAccessoryImage
++ (UIImage *)jsq_failedStateImage
 {
-    return [UIImage jsq_bubbleImageFromBundleWithName:@"clip"];
-}
-
-+ (UIImage *)jsq_defaultTypingIndicatorImage
-{
-    return [UIImage jsq_bubbleImageFromBundleWithName:@"typing"];
-}
-
-+ (UIImage *)jsq_defaultPlayImage
-{
-    
-    return [UIImage jsq_bubbleImageFromBundleWithName:@"play"];
-}
-
-+ (UIImage *)jsq_defaultPauseImage
-{
-    return [UIImage jsq_bubbleImageFromBundleWithName:@"pause"];
+    return [UIImage jsq_bubbleImageFromBundleWithName:@"fail"];
 }
 
 + (UIImage *)jsq_shareActionImage

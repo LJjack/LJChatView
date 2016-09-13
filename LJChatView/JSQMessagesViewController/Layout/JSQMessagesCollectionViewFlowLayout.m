@@ -428,9 +428,8 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
 - (void)jsq_configureMessageCellLayoutAttributes:(JSQMessagesCollectionViewLayoutAttributes *)layoutAttributes
 {
     NSIndexPath *indexPath = layoutAttributes.indexPath;
-    
     CGSize messageBubbleSize = [self messageBubbleSizeForItemAtIndexPath:indexPath];
-    
+    NSLog(@"==== %@",NSStringFromCGSize(messageBubbleSize));
     layoutAttributes.messageBubbleContainerViewWidth = messageBubbleSize.width;
     
     layoutAttributes.textViewFrameInsets = self.messageBubbleTextViewFrameInsets;
