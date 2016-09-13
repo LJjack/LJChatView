@@ -25,11 +25,11 @@
 }
 
 - (void)setupUI {
-    [self addSubview:self.indicatorView];
-    
+//    [self addSubview:self.indicatorView];
+    [self insertSubview:self.indicatorView atIndex:0];
     
     [self setImage:[UIImage imageNamed:@"Sendfailed"] forState:UIControlStateNormal];
-    self.imageView.hidden = YES;
+    
 }
 
 - (void)layoutSubviews {
@@ -48,11 +48,10 @@
 - (BOOL)isAnimating {
     return [self.indicatorView isAnimating];
 }
-
 - (UIActivityIndicatorView *)indicatorView {
     if (!_indicatorView) {
         _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        _indicatorView.userInteractionEnabled = YES;
+        _indicatorView.userInteractionEnabled = NO;
         _indicatorView.hidesWhenStopped = YES;
         
     }
