@@ -7,16 +7,9 @@
 #import <UIKit/UIKit.h>
 
 #import "JSQMessageMediaData.h"
+#import "LJMessageDataStateDefine.h"
 
 NS_ASSUME_NONNULL_BEGIN
-
-//消息状态
-typedef NS_ENUM(NSUInteger, JSQMessageDataState) {
-    JSQMessageDataStateRuning,
-    JSQMessageDataStateCompleted,
-    JSQMessageDataStateFailed,
-    JSQMessageDataStateStop,//停止状态是运行状态转到失败状态
-};
 
 /**
  *  The `JSQMessageData` protocol defines the common interface through which 
@@ -79,9 +72,9 @@ typedef NS_ENUM(NSUInteger, JSQMessageDataState) {
  */
 - (NSUInteger)messageHash;
 
-- (JSQMessageDataState)state;
+- (LJMessageDataState)dataState;
 
-- (void)setState:(JSQMessageDataState)state;
+- (void)setDataState:(LJMessageDataState)dataState;
 
 @optional
 

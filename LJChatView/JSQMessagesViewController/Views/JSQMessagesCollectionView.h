@@ -25,7 +25,8 @@
 
 @class JSQMessagesTypingIndicatorFooterView;
 @class JSQMessagesLoadEarlierHeaderView;
-@protocol JSQMessagesViewAccessoryButtonDelegate;
+
+@protocol LJMessageViewStateBtnDelegate;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -48,10 +49,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic, nullable) id<JSQMessagesCollectionViewDelegateFlowLayout> delegate;
 
 /**
- *  The object that handles accessory actions for the collection view.
- *  It must adopt the `JSQMessagesViewAccessoryButtonDelegate` protocol.
+ *  为collectionView 处理状态事件
+ *  必须遵守 `LJMessageViewStateBtnDelegate` 协议。
  */
-@property (weak, nonatomic, nullable) id<JSQMessagesViewAccessoryButtonDelegate> accessoryDelegate;
+@property (weak, nonatomic, nullable) id<LJMessageViewStateBtnDelegate> stateDelegate;
 
 /**
  *  The layout used to organize the collection view’s items.

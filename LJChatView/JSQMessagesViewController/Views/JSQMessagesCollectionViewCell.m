@@ -401,12 +401,6 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
 
 - (IBAction)didTapAccessoryButton:(LJMessageStateBtn *)sender
 {
-    if ([sender isAnimating]) {
-        [sender stopAnimating];
-    } else {
-        [sender startAnimating];
-    }
-    
     
     [self.delegate messagesCollectionViewCellDidTapAccessoryButton:self];
 }

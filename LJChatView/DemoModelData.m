@@ -86,11 +86,12 @@
                        senderDisplayName:kJSQDemoAvatarDisplayNameSquires
                                     date:[NSDate distantPast]
                                                       text:NSLocalizedString(@"It even has data detectors. You can call me tonight. My cell number is 123-456-7890. My website is www.hexedbits.com.", nil)];
-    [msg1 setState:JSQMessageDataStateCompleted];
+    [msg1 setDataState:LJMessageDataStateCompleted];
     self.messages = [NSMutableArray arrayWithObject:msg1];
     
     [self addPhotoMediaMessageWithImage:[UIImage imageNamed:@"goldengate"]];
-    [self.messages[1] setState:JSQMessageDataStateCompleted];
+    
+    [self.messages[1] setDataState:LJMessageDataStateFailed];
     
     
 }

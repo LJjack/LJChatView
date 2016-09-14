@@ -18,7 +18,7 @@
 
 #import "JSQMessagesCollectionView.h"
 
-#import "JSQMessagesViewAccessoryButtonDelegate.h"
+#import "LJMessageViewStateBtnDelegate.h"
 
 #import "JSQMessagesCollectionViewCellIncoming.h"
 #import "JSQMessagesCollectionViewCellOutgoing.h"
@@ -187,11 +187,23 @@ forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
 - (void)messagesCollectionViewCellDidTapAccessoryButton:(JSQMessagesCollectionViewCell *)cell
 {
     NSIndexPath *indexPath = [self indexPathForCell:cell];
-    if (indexPath == nil) {
-        return;
+    if (indexPath == nil) return;
+    
+    LJMessageDataState dataState = cell.cellStateBtn.dataState;
+    
+    if (dataState == LJMessageDataStateRuning) {
+        if ([self.stateDelegate respondsToSelector:@selector(messageView:didTapCellStateBtnStopAtIndexPath:)]) {
+            [self.stateDelegate messageView:self didTapCellStateBtnStopAtIndexPath:indexPath];
+        }
+    } else if (dataState == LJMessageDataStateFailed || dataState == LJMessageDataStateFailed) {
+        if ([self.stateDelegate respondsToSelector:@selector(messageView:didTapCellStateBtnRuningAtIndexPath:)]) {
+            [self.stateDelegate messageView:self didTapCellStateBtnRuningAtIndexPath:indexPath];
+        }
     }
+    
+    
 
-    [self.accessoryDelegate messageView:self didTapAccessoryButtonAtIndexPath:indexPath];
+    
 }
 
 @end

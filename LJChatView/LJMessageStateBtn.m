@@ -12,7 +12,6 @@
 
 @property (nonatomic, strong) UIActivityIndicatorView *indicatorView;
 
-
 @end
 
 @implementation LJMessageStateBtn
@@ -53,6 +52,31 @@
 - (void)failedState {
     [self setImage:[UIImage imageNamed:@"Sendfailed"] forState:UIControlStateNormal];
 }
+
+#pragma mark - Setters
+
+- (void)setDataState:(LJMessageDataState)dataState {
+    _dataState = dataState;
+    switch (dataState) {
+        case LJMessageDataStateRuning: {
+            [self startAnimating];
+        } break;
+        case LJMessageDataStateCompleted: {
+            [self completedState];
+        } break;
+        case LJMessageDataStateFailed: {
+            [self failedState];
+        } break;
+        case LJMessageDataStateStop: {
+            [self stopAnimating];
+        } break;
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - Getters
 
 - (UIActivityIndicatorView *)indicatorView {
     if (!_indicatorView) {

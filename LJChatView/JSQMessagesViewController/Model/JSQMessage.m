@@ -76,7 +76,7 @@
         _date = [date copy];
         _isMediaMessage = isMedia;
         //默认是运行状态
-        _state = JSQMessageDataStateRuning;
+        _dataState = LJMessageDataStateRuning;
     }
     return self;
 }
@@ -86,8 +86,8 @@
     return self.hash;
 }
 
-- (void)setState:(JSQMessageDataState)state {
-    _state = state;
+- (void)setDataState:(LJMessageDataState)dataState {
+    _dataState = dataState;
 }
 
 #pragma mark - NSObject

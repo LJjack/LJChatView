@@ -45,7 +45,6 @@
 #import "JSQMessageBubbleImageDataSource.h"
 #import "JSQMessagesCollectionViewDataSource.h"
 #import "JSQMessagesCollectionViewDelegateFlowLayout.h"
-#import "JSQMessagesViewAccessoryButtonDelegate.h"
 
 //  Factories
 #import "JSQMessagesAvatarImageFactory.h"

@@ -6,7 +6,7 @@
 //
 
 #import "DemoMessagesViewController.h"
-#import "JSQMessagesViewAccessoryButtonDelegate.h"
+#import "LJMessageViewStateBtnDelegate.h"
 #import "UIView+GJCFViewFrameUitil.h"
 #import "GJGCChatInputPanel.h"
 #import "GJCFAudioPlayer.h"
@@ -24,7 +24,7 @@
 #define GJCFSystemScreenHeight [UIScreen mainScreen].bounds.size.height
 #define GJCFSystemScreenWidth [UIScreen mainScreen].bounds.size.width
 
-@interface DemoMessagesViewController ()<JSQMessagesViewAccessoryButtonDelegate, GJGCChatInputPanelDelegate , TZImagePickerControllerDelegate, GJCFAudioPlayerDelegate, LJRecordVideoViewDelegate>
+@interface DemoMessagesViewController ()<LJMessageViewStateBtnDelegate, GJGCChatInputPanelDelegate , TZImagePickerControllerDelegate, GJCFAudioPlayerDelegate, LJRecordVideoViewDelegate>
 
 @property (strong, nonatomic) GJGCChatInputPanel *inputPanel;
 
@@ -78,7 +78,7 @@
     /**
      *  Set up message accessory button delegate and configuration
      */
-    self.collectionView.accessoryDelegate = self;
+    self.collectionView.stateDelegate = self;
 
     
     self.showLoadEarlierMessagesHeader = YES;
@@ -356,7 +356,7 @@
     // 3. 设置是否可以选择视频/图片/原图
     imagePickerVc.allowPickingVideo = YES;
     imagePickerVc.allowPickingImage = YES;
-    imagePickerVc.allowPickingOriginalPhoto = YES;
+    imagePickerVc.allowPickingOriginalPhoto = NO;
     
     // 4. 照片排列按修改时间升序
     imagePickerVc.sortAscendingByModificationDate = YES;
@@ -386,7 +386,7 @@
         
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [photoMessage setState:JSQMessageDataStateCompleted];
+            [photoMessage setDataState:LJMessageDataStateCompleted];
             [self.collectionView reloadData];
         });
     }
@@ -930,23 +930,7 @@
     }
 
     cell.cellStateBtn.hidden = NO;//![self shouldShowCellStateBtnForMessage:msg];
-    switch ([msg state]) {
-        case JSQMessageDataStateRuning: {
-            [cell.cellStateBtn startAnimating];
-        } break;
-        case JSQMessageDataStateCompleted: {
-            [cell.cellStateBtn completedState];
-        } break;
-        case JSQMessageDataStateFailed: {
-            [cell.cellStateBtn failedState];
-        } break;
-        case JSQMessageDataStateStop: {
-            [cell.cellStateBtn stopAnimating];
-        } break;
-            
-        default:
-            break;
-    }
+    cell.cellStateBtn.dataState = [msg dataState];
     
     return cell;
 }
@@ -1092,11 +1076,29 @@
     NSLog(@"Tapped cell at %@!", NSStringFromCGPoint(touchLocation));
 }
 
-#pragma mark - JSQMessagesViewAccessoryDelegate methods
-//发送和接受状态的代理
-- (void)messageView:(JSQMessagesCollectionView *)view didTapAccessoryButtonAtIndexPath:(NSIndexPath *)path
-{
-    NSLog(@"Tapped accessory button!");
+#pragma mark - LJMessageViewStateBtnDelegate
+
+/**
+ *  运行
+ */
+- (void)messageView:(JSQMessagesCollectionView *)messageView didTapCellStateBtnRuningAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [self.demoData.messages[indexPath.row] setDataState:LJMessageDataStateRuning];
+    [self.collectionView reloadData];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.demoData.messages[indexPath.row] setDataState:LJMessageDataStateCompleted];
+        [self.collectionView reloadData];
+    });
+    
+}
+
+/**
+ *  停止
+ */
+- (void)messageView:(JSQMessagesCollectionView *)messageView didTapCellStateBtnStopAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [self.demoData.messages[indexPath.row] setDataState:LJMessageDataStateFailed];
+    [self.collectionView reloadData];
 }
 
 @end
