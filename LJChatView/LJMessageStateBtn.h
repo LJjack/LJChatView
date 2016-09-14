@@ -13,7 +13,13 @@
 @interface LJMessageStateBtn : UIButton
 
 - (void)startAnimating;
+
 - (void)stopAnimating;
+
 - (BOOL)isAnimating;
+
+- (void)completedState;
+
+- (void)failedState;
 
 @end

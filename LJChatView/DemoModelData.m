@@ -82,39 +82,15 @@
      *
      *  You should have a mutable array or orderedSet, or something.
      */
-    self.messages = [[NSMutableArray alloc] initWithObjects:
-                     [[JSQMessage alloc] initWithSenderId:kJSQDemoAvatarIdSquires
-                                        senderDisplayName:kJSQDemoAvatarDisplayNameSquires
-                                                     date:[NSDate distantPast]
-                                                     text:@"Welcome to JSQMessages: A messaging UI framework for iOS."],
-                     
-                     [[JSQMessage alloc] initWithSenderId:kJSQDemoAvatarIdWoz
-                                        senderDisplayName:kJSQDemoAvatarDisplayNameWoz
-                                                     date:[NSDate distantPast]
-                                                     text:NSLocalizedString(@"It is simple, elegant, and easy to use. There are super sweet default settings, but you can customize like crazy.", nil)],
-                     
-                     [[JSQMessage alloc] initWithSenderId:kJSQDemoAvatarIdSquires
-                                        senderDisplayName:kJSQDemoAvatarDisplayNameSquires
-                                                     date:[NSDate distantPast]
-                                                     text:NSLocalizedString(@"It even has data detectors. You can call me tonight. My cell number is 123-456-7890. My website is www.hexedbits.com.", nil)],
-                     
-                     [[JSQMessage alloc] initWithSenderId:kJSQDemoAvatarIdJobs
-                                        senderDisplayName:kJSQDemoAvatarDisplayNameJobs
-                                                     date:[NSDate date]
-                                                     text:NSLocalizedString(@"JSQMessagesViewController is nearly an exact replica of the iOS Messages App. And perhaps, better.", nil)],
-                     
-                     [[JSQMessage alloc] initWithSenderId:kJSQDemoAvatarIdCook
-                                        senderDisplayName:kJSQDemoAvatarDisplayNameCook
-                                                     date:[NSDate date]
-                                                     text:NSLocalizedString(@"It is unit-tested, free, open-source, and documented.", nil)],
-                     
-                     [[JSQMessage alloc] initWithSenderId:kJSQDemoAvatarIdSquires
-                                        senderDisplayName:kJSQDemoAvatarDisplayNameSquires
-                                                     date:[NSDate date]
-                                                     text:@"Now with media messages!"],
-                     nil];
+   JSQMessage *msg1 = [[JSQMessage alloc] initWithSenderId:kJSQDemoAvatarIdSquires
+                       senderDisplayName:kJSQDemoAvatarDisplayNameSquires
+                                    date:[NSDate distantPast]
+                                                      text:NSLocalizedString(@"It even has data detectors. You can call me tonight. My cell number is 123-456-7890. My website is www.hexedbits.com.", nil)];
+    [msg1 setState:JSQMessageDataStateCompleted];
+    self.messages = [NSMutableArray arrayWithObject:msg1];
     
     [self addPhotoMediaMessageWithImage:[UIImage imageNamed:@"goldengate"]];
+    [self.messages[1] setState:JSQMessageDataStateCompleted];
     
     
 }

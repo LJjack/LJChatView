@@ -379,10 +379,14 @@
         JSQMessage *photoMessage = [JSQMessage messageWithSenderId:kJSQDemoAvatarIdSquires
                                                        displayName:kJSQDemoAvatarDisplayNameSquires
                                                              media:photoItem];
+        photoItem.image = image;
         [self.demoData.messages addObject:photoMessage];
         [self finishSendingMessage];
+        
+        
+        
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            photoItem.image = image;
+            [photoMessage setState:JSQMessageDataStateCompleted];
             [self.collectionView reloadData];
         });
     }
@@ -925,15 +929,35 @@
         
     }
 
-    cell.accessoryButton.hidden = ![self shouldShowAccessoryButtonForMessage:msg];
+    cell.cellStateBtn.hidden = NO;//![self shouldShowCellStateBtnForMessage:msg];
+    switch ([msg state]) {
+        case JSQMessageDataStateRuning: {
+            [cell.cellStateBtn startAnimating];
+        } break;
+        case JSQMessageDataStateCompleted: {
+            [cell.cellStateBtn completedState];
+        } break;
+        case JSQMessageDataStateFailed: {
+            [cell.cellStateBtn failedState];
+        } break;
+        case JSQMessageDataStateStop: {
+            [cell.cellStateBtn stopAnimating];
+        } break;
+            
+        default:
+            break;
+    }
     
     return cell;
 }
 
-- (BOOL)shouldShowAccessoryButtonForMessage:(id<JSQMessageData>)message
+
+- (BOOL)shouldShowCellStateBtnForMessage:(id<JSQMessageData>)message
 {
     return [message isMediaMessage];
 }
+
+
 
 
 #pragma mark - UICollectionView Delegate

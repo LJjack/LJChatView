@@ -25,8 +25,6 @@
 #import "UIView+JSQMessages.h"
 #import "UIImage+JSQMessages.h"
 
-#import "LJMessageStateBtn.h"
-
 static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
 
 
@@ -43,7 +41,7 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIView *avatarContainerView;
 
-@property (weak, nonatomic) IBOutlet LJMessageStateBtn *accessoryButton;
+@property (weak, nonatomic) IBOutlet LJMessageStateBtn *cellStateBtn;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageBubbleContainerWidthConstraint;
 
@@ -176,7 +174,7 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
     self.avatarImageView.image = nil;
     self.avatarImageView.highlightedImage = nil;
     
-    self.accessoryButton.hidden = YES;
+    self.cellStateBtn.hidden = YES;
 }
 
 - (UICollectionViewLayoutAttributes *)preferredLayoutAttributesFittingAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes

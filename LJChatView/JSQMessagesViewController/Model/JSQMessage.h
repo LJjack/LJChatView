@@ -9,6 +9,7 @@
 
 #import "JSQMessageData.h"
 
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -58,6 +59,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  That is, if `isMediaMessage` is equal to `NO` then this value will be `nil`.
  */
 @property (copy, nonatomic, readonly, null_unspecified) id<JSQMessageMediaData> media;
+
+@property (assign, nonatomic, readonly) JSQMessageDataState state;
 
 
 #pragma mark - Initialization

@@ -10,6 +10,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+//消息状态
+typedef NS_ENUM(NSUInteger, JSQMessageDataState) {
+    JSQMessageDataStateRuning,
+    JSQMessageDataStateCompleted,
+    JSQMessageDataStateFailed,
+    JSQMessageDataStateStop,//停止状态是运行状态转到失败状态
+};
+
 /**
  *  The `JSQMessageData` protocol defines the common interface through which 
  *  a `JSQMessagesViewController` and `JSQMessagesCollectionView` interact with message model objects.
@@ -70,6 +78,10 @@ NS_ASSUME_NONNULL_BEGIN
  *  This value is used to cache layout information in the collection view.
  */
 - (NSUInteger)messageHash;
+
+- (JSQMessageDataState)state;
+
+- (void)setState:(JSQMessageDataState)state;
 
 @optional
 

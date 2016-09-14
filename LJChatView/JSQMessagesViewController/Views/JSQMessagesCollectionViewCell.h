@@ -20,6 +20,7 @@
 
 #import "JSQMessagesLabel.h"
 #import "JSQMessagesCellTextView.h"
+#import "LJMessageStateBtn.h"
 
 @class JSQMessagesCollectionViewCell;
 
@@ -164,9 +165,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic, readonly, nullable) UIView *avatarContainerView;
 
 /**
- *  Returns the accessory button of the cell.
+ *  cell 状态按钮
  */
-@property (weak, nonatomic, readonly, nullable) UIButton *accessoryButton;
+@property (weak, nonatomic, readonly, nullable) LJMessageStateBtn *cellStateBtn;
 
 /**
  *  The media view of the cell. This view displays the contents of a media message.

@@ -75,6 +75,8 @@
         _senderDisplayName = [senderDisplayName copy];
         _date = [date copy];
         _isMediaMessage = isMedia;
+        //默认是运行状态
+        _state = JSQMessageDataStateRuning;
     }
     return self;
 }
@@ -82,6 +84,10 @@
 - (NSUInteger)messageHash
 {
     return self.hash;
+}
+
+- (void)setState:(JSQMessageDataState)state {
+    _state = state;
 }
 
 #pragma mark - NSObject
