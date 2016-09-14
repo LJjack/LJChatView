@@ -1,0 +1,21 @@
+//
+//  LJChatView-Prefix.pch
+//  LJChatView
+//
+//  Created by 刘俊杰 on 16/9/14.
+//  Copyright © 2016年 刘俊杰. All rights reserved.
+//
+
+#ifndef LJChatView_Prefix_pch
+#define LJChatView_Prefix_pch
+
+
+
+    #ifdef __OBJC__
+
+
+        #import "LJChatViewDebugDefine.h"
+
+    #endif
+
+#endif /* LJChatView_Prefix_pch */

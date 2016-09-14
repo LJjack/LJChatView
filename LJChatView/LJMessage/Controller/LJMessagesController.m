@@ -1,11 +1,17 @@
 //
-//  Created by Jesse Squires
-
-//  License
-//  Copyright (c) 2014 Jesse Squires
+//  LJMessagesController.m
+//  LJChatView
+//
+//  Created by 刘俊杰 on 16/9/14.
+//  Copyright © 2016年 刘俊杰. All rights reserved.
 //
 
-#import "DemoMessagesViewController.h"
+#import "LJMessagesController.h"
+
+#import "JSQMessages.h"
+
+#import "LJMessagesModel.h"
+
 #import "LJMessageViewStateBtnDelegate.h"
 #import "UIView+GJCFViewFrameUitil.h"
 #import "GJGCChatInputPanel.h"
@@ -13,7 +19,6 @@
 #import "NSString+LJEmojiParser.h"
 
 #import <TZImagePickerController/TZImagePickerController.h>
-
 #import <TZImagePickerController/TZImageManager.h>
 #import <TZImagePickerController/TZVideoPlayerController.h>
 
@@ -24,7 +29,7 @@
 #define GJCFSystemScreenHeight [UIScreen mainScreen].bounds.size.height
 #define GJCFSystemScreenWidth [UIScreen mainScreen].bounds.size.width
 
-@interface DemoMessagesViewController ()<LJMessageViewStateBtnDelegate, GJGCChatInputPanelDelegate , TZImagePickerControllerDelegate, GJCFAudioPlayerDelegate, LJRecordVideoViewDelegate>
+@interface LJMessagesController ()<LJMessageViewStateBtnDelegate, GJGCChatInputPanelDelegate , TZImagePickerControllerDelegate, GJCFAudioPlayerDelegate, LJRecordVideoViewDelegate>
 
 @property (strong, nonatomic) GJGCChatInputPanel *inputPanel;
 
@@ -38,8 +43,7 @@
 
 @end
 
-@implementation DemoMessagesViewController
-
+@implementation LJMessagesController
 #pragma mark - View lifecycle
 
 - (void)dealloc {
@@ -64,49 +68,47 @@
     /**
      *  Load up our fake data for the demo
      */
-    self.demoData = [[DemoModelData alloc] init];
+    self.demoData = [[LJMessagesModel alloc] init];
     
     /* 语音播放工具 */
     self.audioPlayer = [[GJCFAudioPlayer alloc]init];
     self.audioPlayer.delegate = self;
     
     /* 观察录音工具开始录音 */
-//    NSString *formateNoti = [GJGCChatInputConst panelNoti:GJGCChatInputPanelBeginRecordNoti formateWithIdentifier:self.inputPanel.panelIndentifier];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(observeChatInputPanelBeginRecord:) name:formateNoti object:nil];
+    //    NSString *formateNoti = [GJGCChatInputConst panelNoti:GJGCChatInputPanelBeginRecordNoti formateWithIdentifier:self.inputPanel.panelIndentifier];
+    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(observeChatInputPanelBeginRecord:) name:formateNoti object:nil];
     
     
     /**
      *  Set up message accessory button delegate and configuration
      */
     self.collectionView.stateDelegate = self;
-
+    
     
     self.showLoadEarlierMessagesHeader = YES;
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"更多" style:UIBarButtonItemStylePlain target:self action:@selector(receiveMessagePressed:)];
-
+    
     /**
      *  Register custom menu actions for cells.
      */
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(customAction:)];
-
-	
+    
+    
     /**
      *  OPT-IN: allow cells to be deleted
      */
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
-
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    if (self.delegateModal) {
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
-                                                                                              target:self
-                                                                                              action:@selector(closePressed:)];
-    }
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
+                                                                                          target:self
+                                                                                          action:@selector(closePressed:)];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -118,7 +120,7 @@
      *  You must set this from `viewDidAppear:`
      *  Note: this feature is mostly stable, but still experimental
      */
-//    self.collectionView.collectionViewLayout.springinessEnabled = [NSUserDefaults springinessSetting];
+    //    self.collectionView.collectionViewLayout.springinessEnabled = [NSUserDefaults springinessSetting];
 }
 
 //========================   输入键盘工具 开始  ================================
@@ -128,7 +130,7 @@
     /* 输入面板 */
     self.inputPanel = [[GJGCChatInputPanel alloc] initWithPanelDelegate:self];
     self.inputPanel.frame = (CGRect){0,GJCFSystemScreenHeight - self.inputPanel.inputBarHeight-originY,GJCFSystemScreenWidth,self.inputPanel.inputBarHeight+216};
-
+    
     __weak typeof(self) weakSelf = self;
     [self.inputPanel configInputPanelKeyboardFrameChange:^(GJGCChatInputPanel *panel,CGRect keyboardBeginFrame, CGRect keyboardEndFrame, NSTimeInterval duration,BOOL isPanelReserve) {
         /* 不要影响其他不带输入面板的系统视图对话 */
@@ -153,14 +155,14 @@
             }
         }];
     }];
-
+    
     [self.inputPanel configInputPanelRecordStateChange:^(GJGCChatInputPanel *panel, BOOL isRecording) {
         NSLog(@"=======");
         if (isRecording) {
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-//                [weakSelf stopPlayCurrentAudio];
+                //                [weakSelf stopPlayCurrentAudio];
                 
                 
                 
@@ -175,20 +177,20 @@
             });
         }
     }];
-
+    
     [self.inputPanel configInputPanelInputTextViewHeightChangedBlock:^(GJGCChatInputPanel *panel, CGFloat changeDelta) {
         panel.gjcf_top = panel.gjcf_top - changeDelta;
-
+        
         panel.gjcf_height = panel.gjcf_height + changeDelta;
-
+        
     }];
-
+    
     /* 动作变化 */
     [self.inputPanel setActionChangeBlock:^(GJGCChatInputBar *inputBar, GJGCChatInputBarActionType toActionType) {
         [weakSelf inputBar:inputBar changeToAction:toActionType];
     }];
     [self.view addSubview:self.inputPanel];
-
+    
     /* 观察输入面板变化 */
     [self.inputPanel addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:nil];
 }
@@ -229,18 +231,18 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"frame"] && object == self.inputPanel) {
-
+        
         CGRect newFrame = [[change objectForKey:NSKeyValueChangeNewKey] CGRectValue];
-
+        
         CGFloat originY = 0;
-
+        
         //50.f 高度是输入条在底部的时候显示的高度，在录音状态下就是50
         if (newFrame.origin.y < GJCFSystemScreenHeight - 50.f - originY) {
-
+            
             self.inputPanel.isFullState = YES;
-
+            
         }else{
-
+            
             self.inputPanel.isFullState = NO;
         }
     }
@@ -252,14 +254,14 @@
 - (void)inputBar:(GJGCChatInputBar *)inputBar changeToAction:(GJGCChatInputBarActionType)actionType
 {
     CGFloat originY = 0;
-
+    
     switch (actionType) {
         case GJGCChatInputBarActionTypeRecordAudio:
         {
             if (self.inputPanel.isFullState) {
-
+                
                 [UIView animateWithDuration:0.26 animations:^{
-
+                    
                     self.inputPanel.gjcf_top = GJCFSystemScreenHeight - self.inputPanel.inputBarHeight - originY;
                     self.collectionView.transform = CGAffineTransformIdentity;
                 }];
@@ -270,16 +272,16 @@
         case GJGCChatInputBarActionTypeExpandPanel:
         {
             if (!self.inputPanel.isFullState) {
-
+                
                 [UIView animateWithDuration:0.26 animations:^{
-
+                    
                     self.inputPanel.gjcf_top = GJCFSystemScreenHeight - (self.inputPanel.inputBarHeight + 216 + originY);
                     self.collectionView.transform = CGAffineTransformMakeTranslation(0, -(216 + originY));
                 }];
             }
         }
             break;
-
+            
         default:
             break;
     }
@@ -297,7 +299,7 @@
     [self.demoData.messages addObject:message];
     
     [self finishSendingMessageAnimated:YES];
-
+    
 }
 
 - (void)chatInputPanel:(GJGCChatInputPanel *)panel didFinishRecord:(GJCFAudioModel *)audioFile
@@ -372,10 +374,10 @@
 // photos数组里的UIImage对象，默认是828像素宽，你可以通过设置photoWidth属性的值来改变它
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto {
     for (UIImage *image in photos) {
-//        [self.demoData addPhotoMediaMessageWithImage:image];
+        //        [self.demoData addPhotoMediaMessageWithImage:image];
         
         JSQPhotoMediaItem *photoItem = [[JSQPhotoMediaItem alloc] initWithImage:nil];
-
+        
         JSQMessage *photoMessage = [JSQMessage messageWithSenderId:kJSQDemoAvatarIdSquires
                                                        displayName:kJSQDemoAvatarDisplayNameSquires
                                                              media:photoItem];
@@ -406,7 +408,7 @@
         [weakSelf.demoData addVideoMediaMessageWithVideoPath:outputPath showImage:coverImage];
         [weakSelf finishSendingMessage];
     }];
-
+    
 }
 //拍摄图片
 - (void)shootCamera {
@@ -421,14 +423,14 @@
         AVAuthorizationStatus videoStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
         if (videoStatus == 	AVAuthorizationStatusRestricted || videoStatus == AVAuthorizationStatusDenied) {
             // 没有权限
-//            [HUDHelper alertTitle:@"提示" message:@"请在设备的\"设置-隐私-相机\"中允许访问相机。" cancel:@"确定"];
+            //            [HUDHelper alertTitle:@"提示" message:@"请在设备的\"设置-隐私-相机\"中允许访问相机。" cancel:@"确定"];
             return;
         }
         
         AVAuthorizationStatus audioStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio];
         if (audioStatus == 	AVAuthorizationStatusRestricted || audioStatus == AVAuthorizationStatusDenied) {
             // 没有权限
-//            [HUDHelper alertTitle:@"提示" message:@"请在设备的\"设置-隐私-麦克风\"中允许访问麦克风。" cancel:@"确定"];
+            //            [HUDHelper alertTitle:@"提示" message:@"请在设备的\"设置-隐私-麦克风\"中允许访问麦克风。" cancel:@"确定"];
             return;
         }
         __weak typeof(self) weakSelf = self;
@@ -491,16 +493,16 @@
     NSData* data = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:savePath] options:NSDataReadingMappedIfSafe error:&err];
     //文件最大不超过28MB
     if(data.length < 28 * 1024 * 1024) {
-//        IMAMsg *msg = [IMAMsg msgWithVideoPath:savePath];
-//        [self sendMsg:msg];
+        //        IMAMsg *msg = [IMAMsg msgWithVideoPath:savePath];
+        //        [self sendMsg:msg];
         UIImage *showImage = [UIImage lj_imageVideoCaptureVideoPath:savePath];
-
+        
         UISaveVideoAtPathToSavedPhotosAlbum(savePath, nil, nil, nil);
         [self.demoData addShortVideoMediaMessageWithVideoPath:savePath showImage:showImage];
         [self finishSendingMessage];
         NSLog(@"==== %@", savePath);
     } else {
-//        [[HUDHelper sharedInstance] tipMessage:@"发送的文件过大"];
+        //        [[HUDHelper sharedInstance] tipMessage:@"发送的文件过大"];
         NSLog(@"发送的文件过大");
     }
 }
@@ -653,13 +655,13 @@
                 JSQAudioMediaItem *audioItemCopy = [((JSQAudioMediaItem *)copyMediaData) copy];
                 audioItemCopy.appliesMediaViewMaskAsOutgoing = NO;
                 newMediaAttachmentCopy = @(audioItemCopy.audioTime);
-//
-//                /**
-//                 *  Reset audio item to simulate "downloading" the audio
-//                 */
+                //
+                //                /**
+                //                 *  Reset audio item to simulate "downloading" the audio
+                //                 */
                 audioItemCopy.audioTime = 10;
                 audioItemCopy.audioPath = [[NSBundle mainBundle] pathForResource:@"jsq_messages_sample" ofType:@"m4a"];
-//
+                //
                 newMediaData = audioItemCopy;
             }
             else {
@@ -686,9 +688,9 @@
          *  2. Add new id<JSQMessageData> object to your data source
          *  3. Call `finishReceivingMessage`
          */
-
+        
         // [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
-
+        
         [self.demoData.messages addObject:newMessage];
         [self finishReceivingMessageAnimated:YES];
         
@@ -736,7 +738,7 @@
 
 - (void)closePressed:(UIBarButtonItem *)sender
 {
-    [self.delegateModal didDismissJSQDemoViewController:self];
+    
 }
 
 
@@ -757,7 +759,7 @@
      *  2. Add new id<JSQMessageData> object to your data source
      *  3. Call `finishSendingMessage`
      */
-
+    
     // [JSQSystemSoundPlayer jsq_playMessageSentSound];
     
     JSQMessage *message = [[JSQMessage alloc] initWithSenderId:senderId
@@ -928,7 +930,7 @@
         }
         
     }
-
+    
     cell.cellStateBtn.hidden = NO;//![self shouldShowCellStateBtnForMessage:msg];
     cell.cellStateBtn.dataState = [msg dataState];
     
@@ -953,7 +955,7 @@
     if (action == @selector(customAction:)) {
         return YES;
     }
-
+    
     return [super collectionView:collectionView canPerformAction:action forItemAtIndexPath:indexPath withSender:sender];
 }
 
@@ -963,14 +965,14 @@
         [self customAction:sender];
         return;
     }
-
+    
     [super collectionView:collectionView performAction:action forItemAtIndexPath:indexPath withSender:sender];
 }
 
 - (void)customAction:(id)sender
 {
     NSLog(@"Custom action received! Sender: %@", sender);
-
+    
     [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Custom Action", nil)
                                 message:nil
                                delegate:nil

@@ -1,19 +1,29 @@
 //
-//  Created by Jesse Squires
-//  License
-//  Copyright (c) 2014 Jesse Squires
+//  LJMessagesModel.m
+//  LJChatView
+//
+//  Created by 刘俊杰 on 16/9/14.
+//  Copyright © 2016年 刘俊杰. All rights reserved.
 //
 
-#import "DemoModelData.h"
+#import "LJMessagesModel.h"
 
+#import "JSQMessage.h"
+#import "JSQMessagesAvatarImage.h"
+#import "JSQMessagesAvatarImageFactory.h"
+#import "JSQMessagesCollectionViewFlowLayout.h"
+#import "JSQMessagesBubbleImageFactory.h"
 
-/**
- *  This is for demo/testing purposes only.
- *  This object sets up some fake model data.
- *  Do not actually do anything like this.
- */
+#import "JSQAudioMediaItem.h"
+#import "JSQPhotoMediaItem.h"
+#import "LJVideoMediaItem.h"
+#import "LJShortVideoMediaItem.h"
 
-@implementation DemoModelData
+#import <CoreLocation/CoreLocation.h>
+
+#import "UIColor+JSQMessages.h"
+
+@implementation LJMessagesModel
 
 - (instancetype)init
 {
@@ -82,10 +92,10 @@
      *
      *  You should have a mutable array or orderedSet, or something.
      */
-   JSQMessage *msg1 = [[JSQMessage alloc] initWithSenderId:kJSQDemoAvatarIdSquires
-                       senderDisplayName:kJSQDemoAvatarDisplayNameSquires
-                                    date:[NSDate distantPast]
-                                                      text:NSLocalizedString(@"It even has data detectors. You can call me tonight. My cell number is 123-456-7890. My website is www.hexedbits.com.", nil)];
+    JSQMessage *msg1 = [[JSQMessage alloc] initWithSenderId:kJSQDemoAvatarIdSquires
+                                          senderDisplayName:kJSQDemoAvatarDisplayNameSquires
+                                                       date:[NSDate distantPast]
+                                                       text:NSLocalizedString(@"It even has data detectors. You can call me tonight. My cell number is 123-456-7890. My website is www.hexedbits.com.", nil)];
     [msg1 setDataState:LJMessageDataStateCompleted];
     self.messages = [NSMutableArray arrayWithObject:msg1];
     

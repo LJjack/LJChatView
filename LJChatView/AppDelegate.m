@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 
 #import "LJShowFPS.h"
+#import "TestTim.h"
+
 
 @interface AppDelegate ()
 
@@ -19,6 +21,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [LJShowFPS sharedInstance];
+    TestTim *test = [[TestTim alloc] init];
+    [test startTestTim];
+    
     return YES;
 }
 
