@@ -20,3 +20,13 @@ LJChatView.xcworkspace/xcuserdata/liujunjie.xcuserdatad/xcdebugger/Breakpoints_v
 .DS_Store
 
 LJChatView/GJGCChatInputPanel/.svn/wc.db
+
+Library/Tim_IM_2.3.0/TLSSDK.framework/TLSSDK
+
+*.h
+
+Library/Tim_IM_2.3.0/IMCore.framework/IMCore
+
+Library/Tim_IM_2.3.0/QALSDK.framework/QALSDK
+
+Library/Tim_IM_2.3.0/ImSDK.framework/ImSDK

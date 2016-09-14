@@ -31,10 +31,10 @@
 		839D0D0C1D89497200E2A101 /* TIMConnListenerImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D0D0B1D89497200E2A101 /* TIMConnListenerImpl.m */; };
 		839D0D0F1D894C4600E2A101 /* TIMUserStatusListenerImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D0D0E1D894C4600E2A101 /* TIMUserStatusListenerImpl.m */; };
 		839D0D121D8951F600E2A101 /* LJLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D0D111D8951F600E2A101 /* LJLoginController.m */; };
-		839D0D241D89555200E2A101 /* IMCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839D0D201D89555200E2A101 /* IMCore.framework */; };
-		839D0D251D89555200E2A101 /* ImSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839D0D211D89555200E2A101 /* ImSDK.framework */; };
-		839D0D261D89555200E2A101 /* QALSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839D0D221D89555200E2A101 /* QALSDK.framework */; };
-		839D0D271D89555200E2A101 /* TLSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839D0D231D89555200E2A101 /* TLSSDK.framework */; };
+		839D0D2C1D8955E500E2A101 /* IMCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839D0D291D8955E500E2A101 /* IMCore.framework */; };
+		839D0D2D1D8955E500E2A101 /* ImSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839D0D2A1D8955E500E2A101 /* ImSDK.framework */; };
+		839D0D2E1D8955E500E2A101 /* TLSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839D0D2B1D8955E500E2A101 /* TLSSDK.framework */; };
+		839D0D301D89569100E2A101 /* QALSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839D0D2F1D89569100E2A101 /* QALSDK.framework */; };
 		83AB74AC1D892117008DD6CF /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83AB74AB1D892117008DD6CF /* CoreTelephony.framework */; };
 		83AB74AE1D89211F008DD6CF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83AB74AD1D89211F008DD6CF /* SystemConfiguration.framework */; };
 		83AB74B01D89212E008DD6CF /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 83AB74AF1D89212E008DD6CF /* libc++.tbd */; };
@@ -308,6 +308,10 @@
 		839D0D211D89555200E2A101 /* ImSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImSDK.framework; path = ../../Tim_IM_2.3.0/ImSDK.framework; sourceTree = "<group>"; };
 		839D0D221D89555200E2A101 /* QALSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QALSDK.framework; path = ../../Tim_IM_2.3.0/QALSDK.framework; sourceTree = "<group>"; };
 		839D0D231D89555200E2A101 /* TLSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TLSSDK.framework; path = ../../Tim_IM_2.3.0/TLSSDK.framework; sourceTree = "<group>"; };
+		839D0D291D8955E500E2A101 /* IMCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IMCore.framework; sourceTree = "<group>"; };
+		839D0D2A1D8955E500E2A101 /* ImSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ImSDK.framework; sourceTree = "<group>"; };
+		839D0D2B1D8955E500E2A101 /* TLSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TLSSDK.framework; sourceTree = "<group>"; };
+		839D0D2F1D89569100E2A101 /* QALSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QALSDK.framework; sourceTree = "<group>"; };
 		83AB74AB1D892117008DD6CF /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		83AB74AD1D89211F008DD6CF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		83AB74AF1D89212E008DD6CF /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
@@ -614,18 +618,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				839D0D241D89555200E2A101 /* IMCore.framework in Frameworks */,
-				839D0D251D89555200E2A101 /* ImSDK.framework in Frameworks */,
-				839D0D261D89555200E2A101 /* QALSDK.framework in Frameworks */,
-				839D0D271D89555200E2A101 /* TLSSDK.framework in Frameworks */,
+				839D0D301D89569100E2A101 /* QALSDK.framework in Frameworks */,
 				83AB74B41D892144008DD6CF /* libsqlite3.tbd in Frameworks */,
 				83AB74B21D89213A008DD6CF /* libz.tbd in Frameworks */,
 				83AB74B01D89212E008DD6CF /* libc++.tbd in Frameworks */,
 				83AB74AE1D89211F008DD6CF /* SystemConfiguration.framework in Frameworks */,
+				839D0D2C1D8955E500E2A101 /* IMCore.framework in Frameworks */,
 				83AB74AC1D892117008DD6CF /* CoreTelephony.framework in Frameworks */,
+				839D0D2E1D8955E500E2A101 /* TLSSDK.framework in Frameworks */,
 				83917AEE1D533ADF00C92C12 /* libz.1.2.5.tbd in Frameworks */,
 				83917AEC1D533ACE00C92C12 /* Reveal.framework in Frameworks */,
 				A7355649B836919B6F0C8AD8 /* libPods-LJChatView.a in Frameworks */,
+				839D0D2D1D8955E500E2A101 /* ImSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -644,6 +648,7 @@
 		8329AB511D88FD49005F9BDD /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				839D0D281D8955E500E2A101 /* Tim_IM_2.3.0 */,
 				83AB74B71D89294E008DD6CF /* GJGCChatInputPanel */,
 				83AB75731D89294E008DD6CF /* GJGCChatInputPanel-Depend */,
 				83AB75961D89294E008DD6CF /* JSQMessagesViewController */,
@@ -771,6 +776,17 @@
 				83AB74B61D892897008DD6CF /* LJChatViewDebugDefine.h */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		839D0D281D8955E500E2A101 /* Tim_IM_2.3.0 */ = {
+			isa = PBXGroup;
+			children = (
+				839D0D2F1D89569100E2A101 /* QALSDK.framework */,
+				839D0D291D8955E500E2A101 /* IMCore.framework */,
+				839D0D2A1D8955E500E2A101 /* ImSDK.framework */,
+				839D0D2B1D8955E500E2A101 /* TLSSDK.framework */,
+			);
+			path = Tim_IM_2.3.0;
 			sourceTree = "<group>";
 		};
 		83AB74B71D89294E008DD6CF /* GJGCChatInputPanel */ = {
