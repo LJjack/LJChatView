@@ -27,10 +27,6 @@
 		838BAAB01D51F03E00F2F1FD /* jsq_messages_sample.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 838BAAAE1D51F03E00F2F1FD /* jsq_messages_sample.m4a */; };
 		83917AEC1D533ACE00C92C12 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83917AEB1D533ACE00C92C12 /* Reveal.framework */; };
 		83917AEE1D533ADF00C92C12 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 83917AED1D533ADF00C92C12 /* libz.1.2.5.tbd */; };
-		839D0D091D89441C00E2A101 /* TIMMessageListenerImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D0D081D89441C00E2A101 /* TIMMessageListenerImpl.m */; };
-		839D0D0C1D89497200E2A101 /* TIMConnListenerImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D0D0B1D89497200E2A101 /* TIMConnListenerImpl.m */; };
-		839D0D0F1D894C4600E2A101 /* TIMUserStatusListenerImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D0D0E1D894C4600E2A101 /* TIMUserStatusListenerImpl.m */; };
-		839D0D121D8951F600E2A101 /* LJLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D0D111D8951F600E2A101 /* LJLoginController.m */; };
 		839D0D2C1D8955E500E2A101 /* IMCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839D0D291D8955E500E2A101 /* IMCore.framework */; };
 		839D0D2D1D8955E500E2A101 /* ImSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839D0D2A1D8955E500E2A101 /* ImSDK.framework */; };
 		839D0D2E1D8955E500E2A101 /* TLSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839D0D2B1D8955E500E2A101 /* TLSSDK.framework */; };
@@ -253,7 +249,12 @@
 		83AB76BC1D89294E008DD6CF /* JSQMessagesTypingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AB75E91D89294E008DD6CF /* JSQMessagesTypingView.m */; };
 		83B4078E1D869A0500CAD8CF /* LJRoundProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B4078D1D869A0500CAD8CF /* LJRoundProgressView.m */; };
 		83B407911D869A6700CAD8CF /* LJShortVideoPlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B407901D869A6700CAD8CF /* LJShortVideoPlayView.m */; };
-		83EE59821D89403800208557 /* TestTim.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EE59811D89403800208557 /* TestTim.m */; };
+		83DBAE121D8E2C2200D98400 /* LJLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DBAE091D8E2C2200D98400 /* LJLoginController.m */; };
+		83DBAE191D8E2DEE00D98400 /* LJIMManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DBAE181D8E2DEE00D98400 /* LJIMManager.m */; };
+		83DBAE1C1D8E313A00D98400 /* LJIMManagerListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DBAE1B1D8E313A00D98400 /* LJIMManagerListener.m */; };
+		83DBAE1F1D8E344E00D98400 /* LJIMLoginParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DBAE1E1D8E344E00D98400 /* LJIMLoginParam.m */; };
+		83DBAE251D8E3F0C00D98400 /* LJIMManager+AppConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DBAE241D8E3F0C00D98400 /* LJIMManager+AppConfig.m */; };
+		83DBAE2F1D8E48C300D98400 /* LJIMManager+Chat.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DBAE2E1D8E48C300D98400 /* LJIMManager+Chat.m */; };
 		A7355649B836919B6F0C8AD8 /* libPods-LJChatView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD64963A411C9DF679A3139 /* libPods-LJChatView.a */; };
 /* End PBXBuildFile section */
 
@@ -296,14 +297,6 @@
 		838BAAAE1D51F03E00F2F1FD /* jsq_messages_sample.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = jsq_messages_sample.m4a; sourceTree = "<group>"; };
 		83917AEB1D533ACE00C92C12 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 		83917AED1D533ADF00C92C12 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
-		839D0D071D89441C00E2A101 /* TIMMessageListenerImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TIMMessageListenerImpl.h; sourceTree = "<group>"; };
-		839D0D081D89441C00E2A101 /* TIMMessageListenerImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TIMMessageListenerImpl.m; sourceTree = "<group>"; };
-		839D0D0A1D89497200E2A101 /* TIMConnListenerImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TIMConnListenerImpl.h; sourceTree = "<group>"; };
-		839D0D0B1D89497200E2A101 /* TIMConnListenerImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TIMConnListenerImpl.m; sourceTree = "<group>"; };
-		839D0D0D1D894C4600E2A101 /* TIMUserStatusListenerImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TIMUserStatusListenerImpl.h; sourceTree = "<group>"; };
-		839D0D0E1D894C4600E2A101 /* TIMUserStatusListenerImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TIMUserStatusListenerImpl.m; sourceTree = "<group>"; };
-		839D0D101D8951F600E2A101 /* LJLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJLoginController.h; sourceTree = "<group>"; };
-		839D0D111D8951F600E2A101 /* LJLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJLoginController.m; sourceTree = "<group>"; };
 		839D0D201D89555200E2A101 /* IMCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IMCore.framework; path = ../../Tim_IM_2.3.0/IMCore.framework; sourceTree = "<group>"; };
 		839D0D211D89555200E2A101 /* ImSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImSDK.framework; path = ../../Tim_IM_2.3.0/ImSDK.framework; sourceTree = "<group>"; };
 		839D0D221D89555200E2A101 /* QALSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QALSDK.framework; path = ../../Tim_IM_2.3.0/QALSDK.framework; sourceTree = "<group>"; };
@@ -608,8 +601,18 @@
 		83B4078D1D869A0500CAD8CF /* LJRoundProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJRoundProgressView.m; sourceTree = "<group>"; };
 		83B4078F1D869A6700CAD8CF /* LJShortVideoPlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJShortVideoPlayView.h; sourceTree = "<group>"; };
 		83B407901D869A6700CAD8CF /* LJShortVideoPlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJShortVideoPlayView.m; sourceTree = "<group>"; };
-		83EE59801D89403800208557 /* TestTim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestTim.h; sourceTree = "<group>"; };
-		83EE59811D89403800208557 /* TestTim.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestTim.m; sourceTree = "<group>"; };
+		83DBAE081D8E2C2200D98400 /* LJLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJLoginController.h; sourceTree = "<group>"; };
+		83DBAE091D8E2C2200D98400 /* LJLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJLoginController.m; sourceTree = "<group>"; };
+		83DBAE171D8E2DEE00D98400 /* LJIMManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJIMManager.h; sourceTree = "<group>"; };
+		83DBAE181D8E2DEE00D98400 /* LJIMManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJIMManager.m; sourceTree = "<group>"; };
+		83DBAE1A1D8E313A00D98400 /* LJIMManagerListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJIMManagerListener.h; sourceTree = "<group>"; };
+		83DBAE1B1D8E313A00D98400 /* LJIMManagerListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJIMManagerListener.m; sourceTree = "<group>"; };
+		83DBAE1D1D8E344E00D98400 /* LJIMLoginParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJIMLoginParam.h; sourceTree = "<group>"; };
+		83DBAE1E1D8E344E00D98400 /* LJIMLoginParam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJIMLoginParam.m; sourceTree = "<group>"; };
+		83DBAE231D8E3F0C00D98400 /* LJIMManager+AppConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LJIMManager+AppConfig.h"; sourceTree = "<group>"; };
+		83DBAE241D8E3F0C00D98400 /* LJIMManager+AppConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LJIMManager+AppConfig.m"; sourceTree = "<group>"; };
+		83DBAE2D1D8E48C300D98400 /* LJIMManager+Chat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LJIMManager+Chat.h"; sourceTree = "<group>"; };
+		83DBAE2E1D8E48C300D98400 /* LJIMManager+Chat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LJIMManager+Chat.m"; sourceTree = "<group>"; };
 		937BF3A65342DE7FF73FCFD7 /* Pods-LJChatView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LJChatView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LJChatView/Pods-LJChatView.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -755,9 +758,9 @@
 				8339CDB61D646F9000D54476 /* LJVideo */,
 				838BAA0E1D51EE6000F2F1FD /* AppDelegate.h */,
 				838BAA0F1D51EE6000F2F1FD /* AppDelegate.m */,
+				83DBAE071D8E2C2200D98400 /* LJIMAdapter */,
 				830A06291D826164002965E6 /* LJShowFPS.h */,
 				830A062A1D826164002965E6 /* LJShowFPS.m */,
-				83EE597F1D893FFE00208557 /* TIM */,
 				838BAAAE1D51F03E00F2F1FD /* jsq_messages_sample.m4a */,
 				838BAA141D51EE6000F2F1FD /* Main.storyboard */,
 				838BAA171D51EE6000F2F1FD /* Assets.xcassets */,
@@ -1256,21 +1259,23 @@
 			path = LJRoundProgressView;
 			sourceTree = "<group>";
 		};
-		83EE597F1D893FFE00208557 /* TIM */ = {
+		83DBAE071D8E2C2200D98400 /* LJIMAdapter */ = {
 			isa = PBXGroup;
 			children = (
-				83EE59801D89403800208557 /* TestTim.h */,
-				83EE59811D89403800208557 /* TestTim.m */,
-				839D0D071D89441C00E2A101 /* TIMMessageListenerImpl.h */,
-				839D0D081D89441C00E2A101 /* TIMMessageListenerImpl.m */,
-				839D0D0A1D89497200E2A101 /* TIMConnListenerImpl.h */,
-				839D0D0B1D89497200E2A101 /* TIMConnListenerImpl.m */,
-				839D0D0D1D894C4600E2A101 /* TIMUserStatusListenerImpl.h */,
-				839D0D0E1D894C4600E2A101 /* TIMUserStatusListenerImpl.m */,
-				839D0D101D8951F600E2A101 /* LJLoginController.h */,
-				839D0D111D8951F600E2A101 /* LJLoginController.m */,
+				83DBAE081D8E2C2200D98400 /* LJLoginController.h */,
+				83DBAE091D8E2C2200D98400 /* LJLoginController.m */,
+				83DBAE171D8E2DEE00D98400 /* LJIMManager.h */,
+				83DBAE181D8E2DEE00D98400 /* LJIMManager.m */,
+				83DBAE2D1D8E48C300D98400 /* LJIMManager+Chat.h */,
+				83DBAE2E1D8E48C300D98400 /* LJIMManager+Chat.m */,
+				83DBAE231D8E3F0C00D98400 /* LJIMManager+AppConfig.h */,
+				83DBAE241D8E3F0C00D98400 /* LJIMManager+AppConfig.m */,
+				83DBAE1D1D8E344E00D98400 /* LJIMLoginParam.h */,
+				83DBAE1E1D8E344E00D98400 /* LJIMLoginParam.m */,
+				83DBAE1A1D8E313A00D98400 /* LJIMManagerListener.h */,
+				83DBAE1B1D8E313A00D98400 /* LJIMManagerListener.m */,
 			);
-			name = TIM;
+			path = LJIMAdapter;
 			sourceTree = "<group>";
 		};
 		ADFF93DA912AF8D797369362 /* Frameworks */ = {
@@ -1323,6 +1328,7 @@
 		838BAA001D51EE6000F2F1FD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = LJ;
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "刘俊杰";
 				TargetAttributes = {
@@ -1615,16 +1621,17 @@
 				83AB76AB1D89294E008DD6CF /* JSQMessage.m in Sources */,
 				83AB769A1D89294E008DD6CF /* NSString+JSQMessages.m in Sources */,
 				8329AB771D88FFE5005F9BDD /* LJMessageStateBtn.m in Sources */,
+				83DBAE121D8E2C2200D98400 /* LJLoginController.m in Sources */,
 				83AB769E1D89294E008DD6CF /* JSQMessagesViewController.m in Sources */,
 				83AB76A21D89294E008DD6CF /* JSQMessagesMediaViewBubbleImageMasker.m in Sources */,
 				83AB76AA1D89294E008DD6CF /* JSQMediaItem.m in Sources */,
 				8329AB7D1D8900BA005F9BDD /* LJMessagesModel.m in Sources */,
 				83AB75EB1D89294E008DD6CF /* GJGCChatInputBarItem.m in Sources */,
-				839D0D091D89441C00E2A101 /* TIMMessageListenerImpl.m in Sources */,
 				83AB769C1D89294E008DD6CF /* UIImage+JSQMessages.m in Sources */,
 				83AB76A91D89294E008DD6CF /* JSQLocationMediaItem.m in Sources */,
 				83B407911D869A6700CAD8CF /* LJShortVideoPlayView.m in Sources */,
 				83AB76AD1D89294E008DD6CF /* JSQMessagesBubbleImage.m in Sources */,
+				83DBAE1F1D8E344E00D98400 /* LJIMLoginParam.m in Sources */,
 				83AB75F01D89294E008DD6CF /* GJGCChatInputExpandEmojiPanelMenuBar.m in Sources */,
 				83AB76A01D89294E008DD6CF /* JSQMessagesAvatarImageFactory.m in Sources */,
 				8329A70F1D66D9020081FDD5 /* UIImage+LJVideo.m in Sources */,
@@ -1635,21 +1642,22 @@
 				83AB76B01D89294E008DD6CF /* JSQMessagesCollectionView.m in Sources */,
 				83AB76AE1D89294E008DD6CF /* JSQPhotoMediaItem.m in Sources */,
 				836B0C901D65432300D665FF /* LJRecordVideoView.m in Sources */,
-				839D0D121D8951F600E2A101 /* LJLoginController.m in Sources */,
 				8329AB751D88FFE5005F9BDD /* LJShortVideoMediaItem.m in Sources */,
 				830A062B1D826164002965E6 /* LJShowFPS.m in Sources */,
+				83DBAE1C1D8E313A00D98400 /* LJIMManagerListener.m in Sources */,
 				8329AB761D88FFE5005F9BDD /* LJVideoMediaItem.m in Sources */,
 				83AB76B61D89294E008DD6CF /* JSQMessagesLabel.m in Sources */,
 				83AB76B91D89294E008DD6CF /* JSQMessagesMediaPlaceholderView.m in Sources */,
 				83AB76A41D89294E008DD6CF /* JSQMessagesBubblesSizeCalculator.m in Sources */,
+				83DBAE2F1D8E48C300D98400 /* LJIMManager+Chat.m in Sources */,
 				8329A70E1D66D9020081FDD5 /* LJMovieDecoder.m in Sources */,
 				83AB769B1D89294E008DD6CF /* UIColor+JSQMessages.m in Sources */,
 				83AB76971D89294E008DD6CF /* UIView+GJCFViewFrameUitil.m in Sources */,
 				8329AB721D88FFE5005F9BDD /* NSString+LJEmojiParser.m in Sources */,
 				83AB75FE1D89294E008DD6CF /* GJGCIconSeprateImageView.m in Sources */,
 				83AB75EF1D89294E008DD6CF /* GJGCChatInputExpandEmojiPanelGifSubItem.m in Sources */,
+				83DBAE251D8E3F0C00D98400 /* LJIMManager+AppConfig.m in Sources */,
 				83AB75F11D89294E008DD6CF /* GJGCChatInputExpandEmojiPanelMenuBarDataSource.m in Sources */,
-				839D0D0C1D89497200E2A101 /* TIMConnListenerImpl.m in Sources */,
 				83AB76A81D89294E008DD6CF /* JSQAudioMediaItem.m in Sources */,
 				83AB76BC1D89294E008DD6CF /* JSQMessagesTypingView.m in Sources */,
 				83AB76A71D89294E008DD6CF /* JSQMessagesCollectionViewLayoutAttributes.m in Sources */,
@@ -1664,6 +1672,7 @@
 				838BAA101D51EE6000F2F1FD /* AppDelegate.m in Sources */,
 				83AB75F61D89294E008DD6CF /* GJGCChatInputExpandMenuPanelDataSource.m in Sources */,
 				83AB76B41D89294E008DD6CF /* JSQMessagesCollectionViewCellOutgoing.m in Sources */,
+				83DBAE191D8E2DEE00D98400 /* LJIMManager.m in Sources */,
 				83AB75F21D89294E008DD6CF /* GJGCChatInputExpandEmojiPanelMenuBarDataSourceItem.m in Sources */,
 				83AB76AC1D89294E008DD6CF /* JSQMessagesAvatarImage.m in Sources */,
 				83AB76961D89294E008DD6CF /* GJCFCachePathManager.m in Sources */,
@@ -1684,12 +1693,10 @@
 				838BAA0D1D51EE6000F2F1FD /* main.m in Sources */,
 				83AB75F41D89294E008DD6CF /* GJGCChatInputExpandMenuPanel.m in Sources */,
 				83AB76A51D89294E008DD6CF /* JSQMessagesCollectionViewFlowLayout.m in Sources */,
-				839D0D0F1D894C4600E2A101 /* TIMUserStatusListenerImpl.m in Sources */,
 				83AB76911D89294E008DD6CF /* GJCFAudioManager.m in Sources */,
 				83AB76901D89294E008DD6CF /* GJCFAudioFileUitil.m in Sources */,
 				83AB768F1D89294E008DD6CF /* GJCFEncodeAndDecode.m in Sources */,
 				83AB75EE1D89294E008DD6CF /* GJGCChatInputExpandEmojiPanelGifPageItem.m in Sources */,
-				83EE59821D89403800208557 /* TestTim.m in Sources */,
 				83B4078E1D869A0500CAD8CF /* LJRoundProgressView.m in Sources */,
 				83AB75FB1D89294E008DD6CF /* GJGCChatInputRecordAudioTipView.m in Sources */,
 				83AB75FD1D89294E008DD6CF /* GJGCIconSeprateButton.m in Sources */,
