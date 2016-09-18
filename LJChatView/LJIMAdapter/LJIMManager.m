@@ -8,13 +8,10 @@
 
 #import "LJIMManager.h"
 
-#import "LJIMManagerListener.h"
-
 #define kSdkAppId       1400012698
 #define kSdkAccountType @"6588"
 
 @implementation LJIMManager
-
 
 + (instancetype)sharedInstance {
     static LJIMManager *_instance;
@@ -28,10 +25,10 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        LJIMManagerListener * listener = [[LJIMManagerListener alloc] init];
-        [[TIMManager sharedInstance] setMessageListener:listener];
-        [[TIMManager sharedInstance] setConnListener:listener];
-        [[TIMManager sharedInstance] setUserStatusListener:listener];
+        _listener = [[LJIMManagerListener alloc] init];
+        [[TIMManager sharedInstance] setMessageListener:_listener];
+        [[TIMManager sharedInstance] setConnListener:_listener];
+        [[TIMManager sharedInstance] setUserStatusListener:_listener];
         //禁用Crash上报，由用户自己上报，如果需要，必须在initSdk之前调用
         [[TIMManager sharedInstance] disableCrashReport];
         

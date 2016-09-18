@@ -18,10 +18,15 @@
 		8329AB7D1D8900BA005F9BDD /* LJMessagesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8329AB7C1D8900BA005F9BDD /* LJMessagesModel.m */; };
 		83303CE31D878DCC00A99C20 /* LJFullVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83303CE21D878DCC00A99C20 /* LJFullVideoView.m */; };
 		8339CDC01D646FE600D54476 /* LJVideoSource.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8339CDBF1D646FE600D54476 /* LJVideoSource.xcassets */; };
+		83465C021D8E9A4400045013 /* LJChatController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83465BFD1D8E9A4400045013 /* LJChatController.m */; };
+		83465C031D8E9A4400045013 /* LJChatTopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83465BFF1D8E9A4400045013 /* LJChatTopCell.m */; };
+		83465C041D8E9A4400045013 /* LJLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83465C011D8E9A4400045013 /* LJLoginController.m */; };
+		83465C071D8E9A6200045013 /* LJChatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83465C061D8E9A6200045013 /* LJChatCell.m */; };
+		83465C0A1D8E9D5D00045013 /* LJChatTopModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83465C091D8E9D5D00045013 /* LJChatTopModel.m */; };
 		836B0C901D65432300D665FF /* LJRecordVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836B0C8F1D65432300D665FF /* LJRecordVideoView.m */; };
 		838BAA0D1D51EE6000F2F1FD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BAA0C1D51EE6000F2F1FD /* main.m */; };
 		838BAA101D51EE6000F2F1FD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 838BAA0F1D51EE6000F2F1FD /* AppDelegate.m */; };
-		838BAA161D51EE6000F2F1FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 838BAA141D51EE6000F2F1FD /* Main.storyboard */; };
+		838BAA161D51EE6000F2F1FD /* ChatMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 838BAA141D51EE6000F2F1FD /* ChatMain.storyboard */; };
 		838BAA181D51EE6000F2F1FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 838BAA171D51EE6000F2F1FD /* Assets.xcassets */; };
 		838BAA1B1D51EE6000F2F1FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 838BAA191D51EE6000F2F1FD /* LaunchScreen.storyboard */; };
 		838BAAB01D51F03E00F2F1FD /* jsq_messages_sample.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 838BAAAE1D51F03E00F2F1FD /* jsq_messages_sample.m4a */; };
@@ -249,7 +254,6 @@
 		83AB76BC1D89294E008DD6CF /* JSQMessagesTypingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AB75E91D89294E008DD6CF /* JSQMessagesTypingView.m */; };
 		83B4078E1D869A0500CAD8CF /* LJRoundProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B4078D1D869A0500CAD8CF /* LJRoundProgressView.m */; };
 		83B407911D869A6700CAD8CF /* LJShortVideoPlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B407901D869A6700CAD8CF /* LJShortVideoPlayView.m */; };
-		83DBAE121D8E2C2200D98400 /* LJLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DBAE091D8E2C2200D98400 /* LJLoginController.m */; };
 		83DBAE191D8E2DEE00D98400 /* LJIMManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DBAE181D8E2DEE00D98400 /* LJIMManager.m */; };
 		83DBAE1C1D8E313A00D98400 /* LJIMManagerListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DBAE1B1D8E313A00D98400 /* LJIMManagerListener.m */; };
 		83DBAE1F1D8E344E00D98400 /* LJIMLoginParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DBAE1E1D8E344E00D98400 /* LJIMLoginParam.m */; };
@@ -284,13 +288,23 @@
 		83303CE11D878DCC00A99C20 /* LJFullVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJFullVideoView.h; sourceTree = "<group>"; };
 		83303CE21D878DCC00A99C20 /* LJFullVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJFullVideoView.m; sourceTree = "<group>"; };
 		8339CDBF1D646FE600D54476 /* LJVideoSource.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = LJVideoSource.xcassets; sourceTree = "<group>"; };
+		83465BFC1D8E9A4400045013 /* LJChatController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJChatController.h; sourceTree = "<group>"; };
+		83465BFD1D8E9A4400045013 /* LJChatController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJChatController.m; sourceTree = "<group>"; };
+		83465BFE1D8E9A4400045013 /* LJChatTopCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJChatTopCell.h; sourceTree = "<group>"; };
+		83465BFF1D8E9A4400045013 /* LJChatTopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJChatTopCell.m; sourceTree = "<group>"; };
+		83465C001D8E9A4400045013 /* LJLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJLoginController.h; sourceTree = "<group>"; };
+		83465C011D8E9A4400045013 /* LJLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJLoginController.m; sourceTree = "<group>"; };
+		83465C051D8E9A6200045013 /* LJChatCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJChatCell.h; sourceTree = "<group>"; };
+		83465C061D8E9A6200045013 /* LJChatCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJChatCell.m; sourceTree = "<group>"; };
+		83465C081D8E9D5D00045013 /* LJChatTopModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJChatTopModel.h; sourceTree = "<group>"; };
+		83465C091D8E9D5D00045013 /* LJChatTopModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJChatTopModel.m; sourceTree = "<group>"; };
 		836B0C8E1D65432300D665FF /* LJRecordVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJRecordVideoView.h; sourceTree = "<group>"; };
 		836B0C8F1D65432300D665FF /* LJRecordVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJRecordVideoView.m; sourceTree = "<group>"; };
 		838BAA081D51EE6000F2F1FD /* LJChatView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LJChatView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		838BAA0C1D51EE6000F2F1FD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		838BAA0E1D51EE6000F2F1FD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		838BAA0F1D51EE6000F2F1FD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		838BAA151D51EE6000F2F1FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		838BAA151D51EE6000F2F1FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ChatMain.storyboard; sourceTree = "<group>"; };
 		838BAA171D51EE6000F2F1FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		838BAA1A1D51EE6000F2F1FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		838BAA1C1D51EE6000F2F1FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -601,8 +615,6 @@
 		83B4078D1D869A0500CAD8CF /* LJRoundProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJRoundProgressView.m; sourceTree = "<group>"; };
 		83B4078F1D869A6700CAD8CF /* LJShortVideoPlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJShortVideoPlayView.h; sourceTree = "<group>"; };
 		83B407901D869A6700CAD8CF /* LJShortVideoPlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJShortVideoPlayView.m; sourceTree = "<group>"; };
-		83DBAE081D8E2C2200D98400 /* LJLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJLoginController.h; sourceTree = "<group>"; };
-		83DBAE091D8E2C2200D98400 /* LJLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJLoginController.m; sourceTree = "<group>"; };
 		83DBAE171D8E2DEE00D98400 /* LJIMManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJIMManager.h; sourceTree = "<group>"; };
 		83DBAE181D8E2DEE00D98400 /* LJIMManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJIMManager.m; sourceTree = "<group>"; };
 		83DBAE1A1D8E313A00D98400 /* LJIMManagerListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJIMManagerListener.h; sourceTree = "<group>"; };
@@ -758,11 +770,21 @@
 				8339CDB61D646F9000D54476 /* LJVideo */,
 				838BAA0E1D51EE6000F2F1FD /* AppDelegate.h */,
 				838BAA0F1D51EE6000F2F1FD /* AppDelegate.m */,
+				83465BFC1D8E9A4400045013 /* LJChatController.h */,
+				83465BFD1D8E9A4400045013 /* LJChatController.m */,
+				83465BFE1D8E9A4400045013 /* LJChatTopCell.h */,
+				83465BFF1D8E9A4400045013 /* LJChatTopCell.m */,
+				83465C081D8E9D5D00045013 /* LJChatTopModel.h */,
+				83465C091D8E9D5D00045013 /* LJChatTopModel.m */,
+				83465C051D8E9A6200045013 /* LJChatCell.h */,
+				83465C061D8E9A6200045013 /* LJChatCell.m */,
+				83465C001D8E9A4400045013 /* LJLoginController.h */,
+				83465C011D8E9A4400045013 /* LJLoginController.m */,
 				83DBAE071D8E2C2200D98400 /* LJIMAdapter */,
 				830A06291D826164002965E6 /* LJShowFPS.h */,
 				830A062A1D826164002965E6 /* LJShowFPS.m */,
 				838BAAAE1D51F03E00F2F1FD /* jsq_messages_sample.m4a */,
-				838BAA141D51EE6000F2F1FD /* Main.storyboard */,
+				838BAA141D51EE6000F2F1FD /* ChatMain.storyboard */,
 				838BAA171D51EE6000F2F1FD /* Assets.xcassets */,
 				838BAA191D51EE6000F2F1FD /* LaunchScreen.storyboard */,
 				838BAA1C1D51EE6000F2F1FD /* Info.plist */,
@@ -1262,8 +1284,6 @@
 		83DBAE071D8E2C2200D98400 /* LJIMAdapter */ = {
 			isa = PBXGroup;
 			children = (
-				83DBAE081D8E2C2200D98400 /* LJLoginController.h */,
-				83DBAE091D8E2C2200D98400 /* LJLoginController.m */,
 				83DBAE171D8E2DEE00D98400 /* LJIMManager.h */,
 				83DBAE181D8E2DEE00D98400 /* LJIMManager.m */,
 				83DBAE2D1D8E48C300D98400 /* LJIMManager+Chat.h */,
@@ -1498,7 +1518,7 @@
 				83AB76391D89294E008DD6CF /* 058[月亮]@2x.png in Resources */,
 				83AB76521D89294E008DD6CF /* 083[冷汗]@2x.png in Resources */,
 				83AB760C1D89294E008DD6CF /* 014[抓狂]@2x.png in Resources */,
-				838BAA161D51EE6000F2F1FD /* Main.storyboard in Resources */,
+				838BAA161D51EE6000F2F1FD /* ChatMain.storyboard in Resources */,
 				83AB762A1D89294E008DD6CF /* 043[可怜]@2x.png in Resources */,
 				83AB763C1D89294E008DD6CF /* 061[OK]@2x.png in Resources */,
 				83AB76831D89294E008DD6CF /* 聊天键盘-icon-选择帖子@2x.png in Resources */,
@@ -1621,7 +1641,6 @@
 				83AB76AB1D89294E008DD6CF /* JSQMessage.m in Sources */,
 				83AB769A1D89294E008DD6CF /* NSString+JSQMessages.m in Sources */,
 				8329AB771D88FFE5005F9BDD /* LJMessageStateBtn.m in Sources */,
-				83DBAE121D8E2C2200D98400 /* LJLoginController.m in Sources */,
 				83AB769E1D89294E008DD6CF /* JSQMessagesViewController.m in Sources */,
 				83AB76A21D89294E008DD6CF /* JSQMessagesMediaViewBubbleImageMasker.m in Sources */,
 				83AB76AA1D89294E008DD6CF /* JSQMediaItem.m in Sources */,
@@ -1629,6 +1648,7 @@
 				83AB75EB1D89294E008DD6CF /* GJGCChatInputBarItem.m in Sources */,
 				83AB769C1D89294E008DD6CF /* UIImage+JSQMessages.m in Sources */,
 				83AB76A91D89294E008DD6CF /* JSQLocationMediaItem.m in Sources */,
+				83465C071D8E9A6200045013 /* LJChatCell.m in Sources */,
 				83B407911D869A6700CAD8CF /* LJShortVideoPlayView.m in Sources */,
 				83AB76AD1D89294E008DD6CF /* JSQMessagesBubbleImage.m in Sources */,
 				83DBAE1F1D8E344E00D98400 /* LJIMLoginParam.m in Sources */,
@@ -1636,6 +1656,8 @@
 				83AB76A01D89294E008DD6CF /* JSQMessagesAvatarImageFactory.m in Sources */,
 				8329A70F1D66D9020081FDD5 /* UIImage+LJVideo.m in Sources */,
 				83303CE31D878DCC00A99C20 /* LJFullVideoView.m in Sources */,
+				83465C021D8E9A4400045013 /* LJChatController.m in Sources */,
+				83465C0A1D8E9D5D00045013 /* LJChatTopModel.m in Sources */,
 				83AB76A31D89294E008DD6CF /* JSQMessagesTimestampFormatter.m in Sources */,
 				83AB76A11D89294E008DD6CF /* JSQMessagesBubbleImageFactory.m in Sources */,
 				8329AB7A1D890048005F9BDD /* LJMessagesController.m in Sources */,
@@ -1643,6 +1665,7 @@
 				83AB76AE1D89294E008DD6CF /* JSQPhotoMediaItem.m in Sources */,
 				836B0C901D65432300D665FF /* LJRecordVideoView.m in Sources */,
 				8329AB751D88FFE5005F9BDD /* LJShortVideoMediaItem.m in Sources */,
+				83465C031D8E9A4400045013 /* LJChatTopCell.m in Sources */,
 				830A062B1D826164002965E6 /* LJShowFPS.m in Sources */,
 				83DBAE1C1D8E313A00D98400 /* LJIMManagerListener.m in Sources */,
 				8329AB761D88FFE5005F9BDD /* LJVideoMediaItem.m in Sources */,
@@ -1690,6 +1713,7 @@
 				83AB76B21D89294E008DD6CF /* JSQMessagesCollectionViewCellIncoming.m in Sources */,
 				83AB769D1D89294E008DD6CF /* UIView+JSQMessages.m in Sources */,
 				83AB75EA1D89294E008DD6CF /* GJGCChatInputBar.m in Sources */,
+				83465C041D8E9A4400045013 /* LJLoginController.m in Sources */,
 				838BAA0D1D51EE6000F2F1FD /* main.m in Sources */,
 				83AB75F41D89294E008DD6CF /* GJGCChatInputExpandMenuPanel.m in Sources */,
 				83AB76A51D89294E008DD6CF /* JSQMessagesCollectionViewFlowLayout.m in Sources */,
@@ -1706,12 +1730,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		838BAA141D51EE6000F2F1FD /* Main.storyboard */ = {
+		838BAA141D51EE6000F2F1FD /* ChatMain.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				838BAA151D51EE6000F2F1FD /* Base */,
 			);
-			name = Main.storyboard;
+			name = ChatMain.storyboard;
 			sourceTree = "<group>";
 		};
 		838BAA191D51EE6000F2F1FD /* LaunchScreen.storyboard */ = {
