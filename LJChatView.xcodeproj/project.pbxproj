@@ -32,6 +32,29 @@
 		838BAAB01D51F03E00F2F1FD /* jsq_messages_sample.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 838BAAAE1D51F03E00F2F1FD /* jsq_messages_sample.m4a */; };
 		83917AEC1D533ACE00C92C12 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83917AEB1D533ACE00C92C12 /* Reveal.framework */; };
 		83917AEE1D533ADF00C92C12 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 83917AED1D533ADF00C92C12 /* libz.1.2.5.tbd */; };
+		839720F01D8F812D00BB6875 /* LJChatSocialAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 839720EF1D8F812D00BB6875 /* LJChatSocialAPI.m */; };
+		839721831D8FC37500BB6875 /* LDSynchroniser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8397214D1D8FC37500BB6875 /* LDSynchroniser.m */; };
+		839721841D8FC37500BB6875 /* LDResourceDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 839721501D8FC37500BB6875 /* LDResourceDataSet.m */; };
+		839721851D8FC37500BB6875 /* LDResourcePackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 839721521D8FC37500BB6875 /* LDResourcePackage.m */; };
+		839721861D8FC37500BB6875 /* LDResourceRef.m in Sources */ = {isa = PBXBuildFile; fileRef = 839721541D8FC37500BB6875 /* LDResourceRef.m */; };
+		839721871D8FC37500BB6875 /* NSObject+LDPropertyIterator.m in Sources */ = {isa = PBXBuildFile; fileRef = 839721571D8FC37500BB6875 /* NSObject+LDPropertyIterator.m */; };
+		839721881D8FC37500BB6875 /* LDFmdbProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 8397215B1D8FC37500BB6875 /* LDFmdbProvider.m */; };
+		839721891D8FC37500BB6875 /* LDDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8397215D1D8FC37500BB6875 /* LDDataSource.m */; };
+		8397218A1D8FC37500BB6875 /* LDRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8397215F1D8FC37500BB6875 /* LDRequest.m */; };
+		8397218B1D8FC37500BB6875 /* LDRequestBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 839721611D8FC37500BB6875 /* LDRequestBuilder.m */; };
+		8397218C1D8FC37500BB6875 /* LDRequestStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 839721631D8FC37500BB6875 /* LDRequestStorage.m */; };
+		8397218D1D8FC37500BB6875 /* LDSilentHttpCaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 839721651D8FC37500BB6875 /* LDSilentHttpCaller.m */; };
+		8397218E1D8FC37500BB6875 /* NSObject+LDPropertyIterator.m in Sources */ = {isa = PBXBuildFile; fileRef = 839721691D8FC37500BB6875 /* NSObject+LDPropertyIterator.m */; };
+		8397218F1D8FC37500BB6875 /* LDHttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8397216B1D8FC37500BB6875 /* LDHttpClient.m */; };
+		839721901D8FC37500BB6875 /* BJURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 8397216F1D8FC37500BB6875 /* BJURLRequestSerialization.m */; };
+		839721911D8FC37500BB6875 /* LDStateFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 839721731D8FC37500BB6875 /* LDStateFactory.m */; };
+		839721921D8FC37500BB6875 /* LDStateJob.m in Sources */ = {isa = PBXBuildFile; fileRef = 839721751D8FC37500BB6875 /* LDStateJob.m */; };
+		839721931D8FC37500BB6875 /* LDStateJobManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 839721771D8FC37500BB6875 /* LDStateJobManager.m */; };
+		839721941D8FC37500BB6875 /* LDCancelState.m in Sources */ = {isa = PBXBuildFile; fileRef = 8397217A1D8FC37500BB6875 /* LDCancelState.m */; };
+		839721951D8FC37500BB6875 /* LDDoneState.m in Sources */ = {isa = PBXBuildFile; fileRef = 8397217C1D8FC37500BB6875 /* LDDoneState.m */; };
+		839721961D8FC37500BB6875 /* LDPrepareState.m in Sources */ = {isa = PBXBuildFile; fileRef = 8397217E1D8FC37500BB6875 /* LDPrepareState.m */; };
+		839721971D8FC37500BB6875 /* LDRunState.m in Sources */ = {isa = PBXBuildFile; fileRef = 839721801D8FC37500BB6875 /* LDRunState.m */; };
+		839721981D8FC37500BB6875 /* LDState.m in Sources */ = {isa = PBXBuildFile; fileRef = 839721821D8FC37500BB6875 /* LDState.m */; };
 		839D0D2C1D8955E500E2A101 /* IMCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839D0D291D8955E500E2A101 /* IMCore.framework */; };
 		839D0D2D1D8955E500E2A101 /* ImSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839D0D2A1D8955E500E2A101 /* ImSDK.framework */; };
 		839D0D2E1D8955E500E2A101 /* TLSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839D0D2B1D8955E500E2A101 /* TLSSDK.framework */; };
@@ -311,6 +334,56 @@
 		838BAAAE1D51F03E00F2F1FD /* jsq_messages_sample.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = jsq_messages_sample.m4a; sourceTree = "<group>"; };
 		83917AEB1D533ACE00C92C12 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 		83917AED1D533ADF00C92C12 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
+		839720991D8F7A9B00BB6875 /* LJNetworkDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LJNetworkDefine.h; sourceTree = "<group>"; };
+		839720EE1D8F812D00BB6875 /* LJChatSocialAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJChatSocialAPI.h; sourceTree = "<group>"; };
+		839720EF1D8F812D00BB6875 /* LJChatSocialAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJChatSocialAPI.m; sourceTree = "<group>"; };
+		8397214C1D8FC37500BB6875 /* LDSynchroniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDSynchroniser.h; sourceTree = "<group>"; };
+		8397214D1D8FC37500BB6875 /* LDSynchroniser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDSynchroniser.m; sourceTree = "<group>"; };
+		8397214F1D8FC37500BB6875 /* LDResourceDataSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDResourceDataSet.h; sourceTree = "<group>"; };
+		839721501D8FC37500BB6875 /* LDResourceDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDResourceDataSet.m; sourceTree = "<group>"; };
+		839721511D8FC37500BB6875 /* LDResourcePackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDResourcePackage.h; sourceTree = "<group>"; };
+		839721521D8FC37500BB6875 /* LDResourcePackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDResourcePackage.m; sourceTree = "<group>"; };
+		839721531D8FC37500BB6875 /* LDResourceRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDResourceRef.h; sourceTree = "<group>"; };
+		839721541D8FC37500BB6875 /* LDResourceRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDResourceRef.m; sourceTree = "<group>"; };
+		839721561D8FC37500BB6875 /* NSObject+LDPropertyIterator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+LDPropertyIterator.h"; sourceTree = "<group>"; };
+		839721571D8FC37500BB6875 /* NSObject+LDPropertyIterator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+LDPropertyIterator.m"; sourceTree = "<group>"; };
+		839721591D8FC37500BB6875 /* LDDbSemanticProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDDbSemanticProtocol.h; sourceTree = "<group>"; };
+		8397215A1D8FC37500BB6875 /* LDFmdbProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDFmdbProvider.h; sourceTree = "<group>"; };
+		8397215B1D8FC37500BB6875 /* LDFmdbProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDFmdbProvider.m; sourceTree = "<group>"; };
+		8397215C1D8FC37500BB6875 /* LDDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDDataSource.h; sourceTree = "<group>"; };
+		8397215D1D8FC37500BB6875 /* LDDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDDataSource.m; sourceTree = "<group>"; };
+		8397215E1D8FC37500BB6875 /* LDRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDRequest.h; sourceTree = "<group>"; };
+		8397215F1D8FC37500BB6875 /* LDRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDRequest.m; sourceTree = "<group>"; };
+		839721601D8FC37500BB6875 /* LDRequestBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDRequestBuilder.h; sourceTree = "<group>"; };
+		839721611D8FC37500BB6875 /* LDRequestBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDRequestBuilder.m; sourceTree = "<group>"; };
+		839721621D8FC37500BB6875 /* LDRequestStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDRequestStorage.h; sourceTree = "<group>"; };
+		839721631D8FC37500BB6875 /* LDRequestStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDRequestStorage.m; sourceTree = "<group>"; };
+		839721641D8FC37500BB6875 /* LDSilentHttpCaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDSilentHttpCaller.h; sourceTree = "<group>"; };
+		839721651D8FC37500BB6875 /* LDSilentHttpCaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDSilentHttpCaller.m; sourceTree = "<group>"; };
+		839721681D8FC37500BB6875 /* NSObject+LDPropertyIterator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+LDPropertyIterator.h"; sourceTree = "<group>"; };
+		839721691D8FC37500BB6875 /* NSObject+LDPropertyIterator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+LDPropertyIterator.m"; sourceTree = "<group>"; };
+		8397216A1D8FC37500BB6875 /* LDHttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDHttpClient.h; sourceTree = "<group>"; };
+		8397216B1D8FC37500BB6875 /* LDHttpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDHttpClient.m; sourceTree = "<group>"; };
+		8397216C1D8FC37500BB6875 /* LDHttpConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDHttpConsts.h; sourceTree = "<group>"; };
+		8397216E1D8FC37500BB6875 /* BJURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BJURLRequestSerialization.h; sourceTree = "<group>"; };
+		8397216F1D8FC37500BB6875 /* BJURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BJURLRequestSerialization.m; sourceTree = "<group>"; };
+		839721711D8FC37500BB6875 /* LDStateConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDStateConsts.h; sourceTree = "<group>"; };
+		839721721D8FC37500BB6875 /* LDStateFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDStateFactory.h; sourceTree = "<group>"; };
+		839721731D8FC37500BB6875 /* LDStateFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDStateFactory.m; sourceTree = "<group>"; };
+		839721741D8FC37500BB6875 /* LDStateJob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDStateJob.h; sourceTree = "<group>"; };
+		839721751D8FC37500BB6875 /* LDStateJob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDStateJob.m; sourceTree = "<group>"; };
+		839721761D8FC37500BB6875 /* LDStateJobManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDStateJobManager.h; sourceTree = "<group>"; };
+		839721771D8FC37500BB6875 /* LDStateJobManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDStateJobManager.m; sourceTree = "<group>"; };
+		839721791D8FC37500BB6875 /* LDCancelState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDCancelState.h; sourceTree = "<group>"; };
+		8397217A1D8FC37500BB6875 /* LDCancelState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDCancelState.m; sourceTree = "<group>"; };
+		8397217B1D8FC37500BB6875 /* LDDoneState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDDoneState.h; sourceTree = "<group>"; };
+		8397217C1D8FC37500BB6875 /* LDDoneState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDDoneState.m; sourceTree = "<group>"; };
+		8397217D1D8FC37500BB6875 /* LDPrepareState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDPrepareState.h; sourceTree = "<group>"; };
+		8397217E1D8FC37500BB6875 /* LDPrepareState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDPrepareState.m; sourceTree = "<group>"; };
+		8397217F1D8FC37500BB6875 /* LDRunState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDRunState.h; sourceTree = "<group>"; };
+		839721801D8FC37500BB6875 /* LDRunState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDRunState.m; sourceTree = "<group>"; };
+		839721811D8FC37500BB6875 /* LDState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDState.h; sourceTree = "<group>"; };
+		839721821D8FC37500BB6875 /* LDState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDState.m; sourceTree = "<group>"; };
 		839D0D201D89555200E2A101 /* IMCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IMCore.framework; path = ../../Tim_IM_2.3.0/IMCore.framework; sourceTree = "<group>"; };
 		839D0D211D89555200E2A101 /* ImSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImSDK.framework; path = ../../Tim_IM_2.3.0/ImSDK.framework; sourceTree = "<group>"; };
 		839D0D221D89555200E2A101 /* QALSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QALSDK.framework; path = ../../Tim_IM_2.3.0/QALSDK.framework; sourceTree = "<group>"; };
@@ -325,7 +398,7 @@
 		83AB74B11D89213A008DD6CF /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		83AB74B31D892144008DD6CF /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		83AB74B51D892793008DD6CF /* LJChatView-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LJChatView-Prefix.pch"; sourceTree = "<group>"; };
-		83AB74B61D892897008DD6CF /* LJChatViewDebugDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJChatViewDebugDefine.h; sourceTree = "<group>"; };
+		83AB74B61D892897008DD6CF /* LJDebugDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJDebugDefine.h; sourceTree = "<group>"; };
 		83AB74B81D89294E008DD6CF /* GJGCChatInputBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJGCChatInputBar.h; sourceTree = "<group>"; };
 		83AB74B91D89294E008DD6CF /* GJGCChatInputBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJGCChatInputBar.m; sourceTree = "<group>"; };
 		83AB74BA1D89294E008DD6CF /* GJGCChatInputBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJGCChatInputBarItem.h; sourceTree = "<group>"; };
@@ -663,6 +736,7 @@
 		8329AB511D88FD49005F9BDD /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				8397214A1D8FC37500BB6875 /* Linda */,
 				839D0D281D8955E500E2A101 /* Tim_IM_2.3.0 */,
 				83AB74B71D89294E008DD6CF /* GJGCChatInputPanel */,
 				83AB75731D89294E008DD6CF /* GJGCChatInputPanel-Depend */,
@@ -780,6 +854,7 @@
 				83465C061D8E9A6200045013 /* LJChatCell.m */,
 				83465C001D8E9A4400045013 /* LJLoginController.h */,
 				83465C011D8E9A4400045013 /* LJLoginController.m */,
+				839720ED1D8F80EB00BB6875 /* ChatAPI */,
 				83DBAE071D8E2C2200D98400 /* LJIMAdapter */,
 				830A06291D826164002965E6 /* LJShowFPS.h */,
 				830A062A1D826164002965E6 /* LJShowFPS.m */,
@@ -798,9 +873,145 @@
 			children = (
 				838BAA0C1D51EE6000F2F1FD /* main.m */,
 				83AB74B51D892793008DD6CF /* LJChatView-Prefix.pch */,
-				83AB74B61D892897008DD6CF /* LJChatViewDebugDefine.h */,
+				83AB74B61D892897008DD6CF /* LJDebugDefine.h */,
+				839720991D8F7A9B00BB6875 /* LJNetworkDefine.h */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		839720ED1D8F80EB00BB6875 /* ChatAPI */ = {
+			isa = PBXGroup;
+			children = (
+				839720EE1D8F812D00BB6875 /* LJChatSocialAPI.h */,
+				839720EF1D8F812D00BB6875 /* LJChatSocialAPI.m */,
+			);
+			path = ChatAPI;
+			sourceTree = "<group>";
+		};
+		8397214A1D8FC37500BB6875 /* Linda */ = {
+			isa = PBXGroup;
+			children = (
+				8397214B1D8FC37500BB6875 /* cache */,
+				839721551D8FC37500BB6875 /* category */,
+				839721581D8FC37500BB6875 /* db */,
+				8397215C1D8FC37500BB6875 /* LDDataSource.h */,
+				8397215D1D8FC37500BB6875 /* LDDataSource.m */,
+				8397215E1D8FC37500BB6875 /* LDRequest.h */,
+				8397215F1D8FC37500BB6875 /* LDRequest.m */,
+				839721601D8FC37500BB6875 /* LDRequestBuilder.h */,
+				839721611D8FC37500BB6875 /* LDRequestBuilder.m */,
+				839721621D8FC37500BB6875 /* LDRequestStorage.h */,
+				839721631D8FC37500BB6875 /* LDRequestStorage.m */,
+				839721641D8FC37500BB6875 /* LDSilentHttpCaller.h */,
+				839721651D8FC37500BB6875 /* LDSilentHttpCaller.m */,
+				839721661D8FC37500BB6875 /* network */,
+				8397216D1D8FC37500BB6875 /* Serialization */,
+				839721701D8FC37500BB6875 /* statejob */,
+			);
+			path = Linda;
+			sourceTree = "<group>";
+		};
+		8397214B1D8FC37500BB6875 /* cache */ = {
+			isa = PBXGroup;
+			children = (
+				8397214C1D8FC37500BB6875 /* LDSynchroniser.h */,
+				8397214D1D8FC37500BB6875 /* LDSynchroniser.m */,
+				8397214E1D8FC37500BB6875 /* model */,
+			);
+			path = cache;
+			sourceTree = "<group>";
+		};
+		8397214E1D8FC37500BB6875 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				8397214F1D8FC37500BB6875 /* LDResourceDataSet.h */,
+				839721501D8FC37500BB6875 /* LDResourceDataSet.m */,
+				839721511D8FC37500BB6875 /* LDResourcePackage.h */,
+				839721521D8FC37500BB6875 /* LDResourcePackage.m */,
+				839721531D8FC37500BB6875 /* LDResourceRef.h */,
+				839721541D8FC37500BB6875 /* LDResourceRef.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		839721551D8FC37500BB6875 /* category */ = {
+			isa = PBXGroup;
+			children = (
+				839721561D8FC37500BB6875 /* NSObject+LDPropertyIterator.h */,
+				839721571D8FC37500BB6875 /* NSObject+LDPropertyIterator.m */,
+			);
+			path = category;
+			sourceTree = "<group>";
+		};
+		839721581D8FC37500BB6875 /* db */ = {
+			isa = PBXGroup;
+			children = (
+				839721591D8FC37500BB6875 /* LDDbSemanticProtocol.h */,
+				8397215A1D8FC37500BB6875 /* LDFmdbProvider.h */,
+				8397215B1D8FC37500BB6875 /* LDFmdbProvider.m */,
+			);
+			path = db;
+			sourceTree = "<group>";
+		};
+		839721661D8FC37500BB6875 /* network */ = {
+			isa = PBXGroup;
+			children = (
+				839721671D8FC37500BB6875 /* category */,
+				8397216A1D8FC37500BB6875 /* LDHttpClient.h */,
+				8397216B1D8FC37500BB6875 /* LDHttpClient.m */,
+				8397216C1D8FC37500BB6875 /* LDHttpConsts.h */,
+			);
+			path = network;
+			sourceTree = "<group>";
+		};
+		839721671D8FC37500BB6875 /* category */ = {
+			isa = PBXGroup;
+			children = (
+				839721681D8FC37500BB6875 /* NSObject+LDPropertyIterator.h */,
+				839721691D8FC37500BB6875 /* NSObject+LDPropertyIterator.m */,
+			);
+			path = category;
+			sourceTree = "<group>";
+		};
+		8397216D1D8FC37500BB6875 /* Serialization */ = {
+			isa = PBXGroup;
+			children = (
+				8397216E1D8FC37500BB6875 /* BJURLRequestSerialization.h */,
+				8397216F1D8FC37500BB6875 /* BJURLRequestSerialization.m */,
+			);
+			path = Serialization;
+			sourceTree = "<group>";
+		};
+		839721701D8FC37500BB6875 /* statejob */ = {
+			isa = PBXGroup;
+			children = (
+				839721711D8FC37500BB6875 /* LDStateConsts.h */,
+				839721721D8FC37500BB6875 /* LDStateFactory.h */,
+				839721731D8FC37500BB6875 /* LDStateFactory.m */,
+				839721741D8FC37500BB6875 /* LDStateJob.h */,
+				839721751D8FC37500BB6875 /* LDStateJob.m */,
+				839721761D8FC37500BB6875 /* LDStateJobManager.h */,
+				839721771D8FC37500BB6875 /* LDStateJobManager.m */,
+				839721781D8FC37500BB6875 /* state */,
+			);
+			path = statejob;
+			sourceTree = "<group>";
+		};
+		839721781D8FC37500BB6875 /* state */ = {
+			isa = PBXGroup;
+			children = (
+				839721791D8FC37500BB6875 /* LDCancelState.h */,
+				8397217A1D8FC37500BB6875 /* LDCancelState.m */,
+				8397217B1D8FC37500BB6875 /* LDDoneState.h */,
+				8397217C1D8FC37500BB6875 /* LDDoneState.m */,
+				8397217D1D8FC37500BB6875 /* LDPrepareState.h */,
+				8397217E1D8FC37500BB6875 /* LDPrepareState.m */,
+				8397217F1D8FC37500BB6875 /* LDRunState.h */,
+				839721801D8FC37500BB6875 /* LDRunState.m */,
+				839721811D8FC37500BB6875 /* LDState.h */,
+				839721821D8FC37500BB6875 /* LDState.m */,
+			);
+			path = state;
 			sourceTree = "<group>";
 		};
 		839D0D281D8955E500E2A101 /* Tim_IM_2.3.0 */ = {
@@ -1636,13 +1847,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				839721841D8FC37500BB6875 /* LDResourceDataSet.m in Sources */,
 				83AB75FA1D89294E008DD6CF /* GJGCChatInputPanelStyle.m in Sources */,
 				83AB768D1D89294E008DD6CF /* FLAnimatedImage.m in Sources */,
 				83AB76AB1D89294E008DD6CF /* JSQMessage.m in Sources */,
 				83AB769A1D89294E008DD6CF /* NSString+JSQMessages.m in Sources */,
+				839721831D8FC37500BB6875 /* LDSynchroniser.m in Sources */,
+				8397218A1D8FC37500BB6875 /* LDRequest.m in Sources */,
 				8329AB771D88FFE5005F9BDD /* LJMessageStateBtn.m in Sources */,
 				83AB769E1D89294E008DD6CF /* JSQMessagesViewController.m in Sources */,
+				839720F01D8F812D00BB6875 /* LJChatSocialAPI.m in Sources */,
 				83AB76A21D89294E008DD6CF /* JSQMessagesMediaViewBubbleImageMasker.m in Sources */,
+				839721861D8FC37500BB6875 /* LDResourceRef.m in Sources */,
 				83AB76AA1D89294E008DD6CF /* JSQMediaItem.m in Sources */,
 				8329AB7D1D8900BA005F9BDD /* LJMessagesModel.m in Sources */,
 				83AB75EB1D89294E008DD6CF /* GJGCChatInputBarItem.m in Sources */,
@@ -1659,6 +1875,7 @@
 				83465C021D8E9A4400045013 /* LJChatController.m in Sources */,
 				83465C0A1D8E9D5D00045013 /* LJChatTopModel.m in Sources */,
 				83AB76A31D89294E008DD6CF /* JSQMessagesTimestampFormatter.m in Sources */,
+				8397218E1D8FC37500BB6875 /* NSObject+LDPropertyIterator.m in Sources */,
 				83AB76A11D89294E008DD6CF /* JSQMessagesBubbleImageFactory.m in Sources */,
 				8329AB7A1D890048005F9BDD /* LJMessagesController.m in Sources */,
 				83AB76B01D89294E008DD6CF /* JSQMessagesCollectionView.m in Sources */,
@@ -1666,43 +1883,58 @@
 				836B0C901D65432300D665FF /* LJRecordVideoView.m in Sources */,
 				8329AB751D88FFE5005F9BDD /* LJShortVideoMediaItem.m in Sources */,
 				83465C031D8E9A4400045013 /* LJChatTopCell.m in Sources */,
+				8397218B1D8FC37500BB6875 /* LDRequestBuilder.m in Sources */,
 				830A062B1D826164002965E6 /* LJShowFPS.m in Sources */,
 				83DBAE1C1D8E313A00D98400 /* LJIMManagerListener.m in Sources */,
 				8329AB761D88FFE5005F9BDD /* LJVideoMediaItem.m in Sources */,
+				8397218F1D8FC37500BB6875 /* LDHttpClient.m in Sources */,
 				83AB76B61D89294E008DD6CF /* JSQMessagesLabel.m in Sources */,
+				839721871D8FC37500BB6875 /* NSObject+LDPropertyIterator.m in Sources */,
 				83AB76B91D89294E008DD6CF /* JSQMessagesMediaPlaceholderView.m in Sources */,
 				83AB76A41D89294E008DD6CF /* JSQMessagesBubblesSizeCalculator.m in Sources */,
 				83DBAE2F1D8E48C300D98400 /* LJIMManager+Chat.m in Sources */,
 				8329A70E1D66D9020081FDD5 /* LJMovieDecoder.m in Sources */,
 				83AB769B1D89294E008DD6CF /* UIColor+JSQMessages.m in Sources */,
+				839721851D8FC37500BB6875 /* LDResourcePackage.m in Sources */,
 				83AB76971D89294E008DD6CF /* UIView+GJCFViewFrameUitil.m in Sources */,
 				8329AB721D88FFE5005F9BDD /* NSString+LJEmojiParser.m in Sources */,
 				83AB75FE1D89294E008DD6CF /* GJGCIconSeprateImageView.m in Sources */,
 				83AB75EF1D89294E008DD6CF /* GJGCChatInputExpandEmojiPanelGifSubItem.m in Sources */,
+				839721971D8FC37500BB6875 /* LDRunState.m in Sources */,
 				83DBAE251D8E3F0C00D98400 /* LJIMManager+AppConfig.m in Sources */,
+				839721981D8FC37500BB6875 /* LDState.m in Sources */,
 				83AB75F11D89294E008DD6CF /* GJGCChatInputExpandEmojiPanelMenuBarDataSource.m in Sources */,
+				8397218D1D8FC37500BB6875 /* LDSilentHttpCaller.m in Sources */,
 				83AB76A81D89294E008DD6CF /* JSQAudioMediaItem.m in Sources */,
 				83AB76BC1D89294E008DD6CF /* JSQMessagesTypingView.m in Sources */,
 				83AB76A71D89294E008DD6CF /* JSQMessagesCollectionViewLayoutAttributes.m in Sources */,
+				839721951D8FC37500BB6875 /* LDDoneState.m in Sources */,
 				83AB768E1D89294E008DD6CF /* FLAnimatedImageView.m in Sources */,
+				839721911D8FC37500BB6875 /* LDStateFactory.m in Sources */,
 				83AB75FC1D89294E008DD6CF /* GJGCChatInputTextView.m in Sources */,
 				83AB76B11D89294E008DD6CF /* JSQMessagesCollectionViewCell.m in Sources */,
 				83AB75F81D89294E008DD6CF /* GJGCChatInputGifFloatView.m in Sources */,
 				83AB75F71D89294E008DD6CF /* GJGCChatInputExpandMenuPanelItem.m in Sources */,
 				83AB76A61D89294E008DD6CF /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.m in Sources */,
+				839721901D8FC37500BB6875 /* BJURLRequestSerialization.m in Sources */,
+				839721961D8FC37500BB6875 /* LDPrepareState.m in Sources */,
 				83AB75EC1D89294E008DD6CF /* GJGCChatInputConst.m in Sources */,
+				839721881D8FC37500BB6875 /* LDFmdbProvider.m in Sources */,
+				8397218C1D8FC37500BB6875 /* LDRequestStorage.m in Sources */,
 				83AB76B71D89294E008DD6CF /* JSQMessagesLoadEarlierHeaderView.m in Sources */,
 				838BAA101D51EE6000F2F1FD /* AppDelegate.m in Sources */,
 				83AB75F61D89294E008DD6CF /* GJGCChatInputExpandMenuPanelDataSource.m in Sources */,
 				83AB76B41D89294E008DD6CF /* JSQMessagesCollectionViewCellOutgoing.m in Sources */,
 				83DBAE191D8E2DEE00D98400 /* LJIMManager.m in Sources */,
 				83AB75F21D89294E008DD6CF /* GJGCChatInputExpandEmojiPanelMenuBarDataSourceItem.m in Sources */,
+				839721891D8FC37500BB6875 /* LDDataSource.m in Sources */,
 				83AB76AC1D89294E008DD6CF /* JSQMessagesAvatarImage.m in Sources */,
 				83AB76961D89294E008DD6CF /* GJCFCachePathManager.m in Sources */,
 				83AB76991D89294E008DD6CF /* NSBundle+JSQMessages.m in Sources */,
 				83AB76AF1D89294E008DD6CF /* JSQMessagesCellTextView.m in Sources */,
 				83AB76941D89294E008DD6CF /* GJCFAudioRecord.m in Sources */,
 				83AB76931D89294E008DD6CF /* GJCFAudioPlayer.m in Sources */,
+				839721931D8FC37500BB6875 /* LDStateJobManager.m in Sources */,
 				83AB76BA1D89294E008DD6CF /* JSQMessagesTypingIndicatorFooterView.m in Sources */,
 				83AB75F91D89294E008DD6CF /* GJGCChatInputPanel.m in Sources */,
 				83AB76951D89294E008DD6CF /* GJCFAudioRecordSettings.m in Sources */,
@@ -1718,12 +1950,14 @@
 				83AB75F41D89294E008DD6CF /* GJGCChatInputExpandMenuPanel.m in Sources */,
 				83AB76A51D89294E008DD6CF /* JSQMessagesCollectionViewFlowLayout.m in Sources */,
 				83AB76911D89294E008DD6CF /* GJCFAudioManager.m in Sources */,
+				839721941D8FC37500BB6875 /* LDCancelState.m in Sources */,
 				83AB76901D89294E008DD6CF /* GJCFAudioFileUitil.m in Sources */,
 				83AB768F1D89294E008DD6CF /* GJCFEncodeAndDecode.m in Sources */,
 				83AB75EE1D89294E008DD6CF /* GJGCChatInputExpandEmojiPanelGifPageItem.m in Sources */,
 				83B4078E1D869A0500CAD8CF /* LJRoundProgressView.m in Sources */,
 				83AB75FB1D89294E008DD6CF /* GJGCChatInputRecordAudioTipView.m in Sources */,
 				83AB75FD1D89294E008DD6CF /* GJGCIconSeprateButton.m in Sources */,
+				839721921D8FC37500BB6875 /* LDStateJob.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

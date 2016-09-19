@@ -9,12 +9,10 @@
 #ifndef LJChatView_Prefix_pch
 #define LJChatView_Prefix_pch
 
-
-
     #ifdef __OBJC__
 
-
-        #import "LJChatViewDebugDefine.h"
+        #import "LJDebugDefine.h"
+        #import "LJNetworkDefine.h"
 
     #endif
 

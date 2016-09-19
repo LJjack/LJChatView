@@ -13,6 +13,7 @@
 
 #import "LJChatTopModel.h"
 
+
 @interface LJChatController ()
 
 @property (nonatomic, copy) NSArray<LJChatTopModel *> *topList;
@@ -23,6 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
 }
 
 - (void)didReceiveMemoryWarning {
