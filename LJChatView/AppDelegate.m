@@ -10,6 +10,7 @@
 
 #import "LJShowFPS.h"
 #import "LJIMManager.h"
+#import "LDFmdbProvider.h"
 
 @interface AppDelegate ()
 
@@ -20,7 +21,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [LJShowFPS sharedInstance];
-    
+    [[LDFmdbProvider sharedInstance] initWithDbName:@"test"];
     [LJIMManager sharedInstance];
     
     return YES;

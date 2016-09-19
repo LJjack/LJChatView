@@ -55,6 +55,7 @@
 		839721961D8FC37500BB6875 /* LDPrepareState.m in Sources */ = {isa = PBXBuildFile; fileRef = 8397217E1D8FC37500BB6875 /* LDPrepareState.m */; };
 		839721971D8FC37500BB6875 /* LDRunState.m in Sources */ = {isa = PBXBuildFile; fileRef = 839721801D8FC37500BB6875 /* LDRunState.m */; };
 		839721981D8FC37500BB6875 /* LDState.m in Sources */ = {isa = PBXBuildFile; fileRef = 839721821D8FC37500BB6875 /* LDState.m */; };
+		8397219B1D8FECEC00BB6875 /* LJFollowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8397219A1D8FECEC00BB6875 /* LJFollowModel.m */; };
 		839D0D2C1D8955E500E2A101 /* IMCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839D0D291D8955E500E2A101 /* IMCore.framework */; };
 		839D0D2D1D8955E500E2A101 /* ImSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839D0D2A1D8955E500E2A101 /* ImSDK.framework */; };
 		839D0D2E1D8955E500E2A101 /* TLSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839D0D2B1D8955E500E2A101 /* TLSSDK.framework */; };
@@ -384,6 +385,8 @@
 		839721801D8FC37500BB6875 /* LDRunState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDRunState.m; sourceTree = "<group>"; };
 		839721811D8FC37500BB6875 /* LDState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDState.h; sourceTree = "<group>"; };
 		839721821D8FC37500BB6875 /* LDState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDState.m; sourceTree = "<group>"; };
+		839721991D8FECEC00BB6875 /* LJFollowModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJFollowModel.h; sourceTree = "<group>"; };
+		8397219A1D8FECEC00BB6875 /* LJFollowModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJFollowModel.m; sourceTree = "<group>"; };
 		839D0D201D89555200E2A101 /* IMCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IMCore.framework; path = ../../Tim_IM_2.3.0/IMCore.framework; sourceTree = "<group>"; };
 		839D0D211D89555200E2A101 /* ImSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImSDK.framework; path = ../../Tim_IM_2.3.0/ImSDK.framework; sourceTree = "<group>"; };
 		839D0D221D89555200E2A101 /* QALSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QALSDK.framework; path = ../../Tim_IM_2.3.0/QALSDK.framework; sourceTree = "<group>"; };
@@ -884,6 +887,8 @@
 			children = (
 				839720EE1D8F812D00BB6875 /* LJChatSocialAPI.h */,
 				839720EF1D8F812D00BB6875 /* LJChatSocialAPI.m */,
+				839721991D8FECEC00BB6875 /* LJFollowModel.h */,
+				8397219A1D8FECEC00BB6875 /* LJFollowModel.m */,
 			);
 			path = ChatAPI;
 			sourceTree = "<group>";
@@ -1931,6 +1936,7 @@
 				83AB76AC1D89294E008DD6CF /* JSQMessagesAvatarImage.m in Sources */,
 				83AB76961D89294E008DD6CF /* GJCFCachePathManager.m in Sources */,
 				83AB76991D89294E008DD6CF /* NSBundle+JSQMessages.m in Sources */,
+				8397219B1D8FECEC00BB6875 /* LJFollowModel.m in Sources */,
 				83AB76AF1D89294E008DD6CF /* JSQMessagesCellTextView.m in Sources */,
 				83AB76941D89294E008DD6CF /* GJCFAudioRecord.m in Sources */,
 				83AB76931D89294E008DD6CF /* GJCFAudioPlayer.m in Sources */,

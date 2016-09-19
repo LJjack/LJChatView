@@ -160,8 +160,13 @@
 - (void)setInnerUploadFiles:(NSMutableDictionary *)files {
     _innerUploadFiles = files;
 }
+
 + (nonnull NSString *)dbPrimaryKey {
     return @"requestId";
+}
+
++ (nullable NSArray<NSString *> *)dbIgnoreProperty {
+    return @[@"innerUrlParams", @"innerFormDatas", @"innerUploadFiles"];
 }
 
 @end

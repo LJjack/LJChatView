@@ -589,7 +589,7 @@
 
 - (NSString *)getForeignKey:(Class)modelClass {
     NSString *foreignKey = [(id<LDFmdbProvider>)modelClass dbForeignKey];
-    NSAssert(foreignKey, @"主键不能为空");
+    NSAssert(foreignKey, @"外键不能为空");
     return foreignKey;
 }
 @end

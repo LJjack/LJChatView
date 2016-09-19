@@ -28,7 +28,7 @@
         client = [[LDHttpClient alloc] init];
         
         // TEST
-        client.apiAddr = @"http://192.168.1.19:8080/test/";
+        client.apiAddr = @"http://192.168.1.17:8081/api/";
     });
     
     return client;

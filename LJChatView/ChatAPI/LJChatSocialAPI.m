@@ -9,6 +9,7 @@
 #import "LJChatSocialAPI.h"
 
 #import "LDSilentHttpCaller.h"
+#import "LJFollowModel.h"
 
 @interface LJChatSocialAPI()
 
@@ -19,9 +20,19 @@
 
 @implementation LJChatSocialAPI
 
++ (instancetype)sharedInstance {
+    static LJChatSocialAPI *_instance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _instance = [[LJChatSocialAPI alloc] init];
+    });
+    
+    return _instance;
+}
+
 - (instancetype)init {
     if (self = [super init]) {
-        self.socialCaller = [[LDSilentHttpCaller alloc] initWithModelCls:nil hasDataSource:YES name:@"chatSocialCaller"];
+        self.socialCaller = [[LDSilentHttpCaller alloc] initWithModelCls:[LJFollowModel class] hasDataSource:YES name:@"chatSocialCaller"];
     }
     return self;
 }
@@ -87,7 +98,12 @@
  *  获取我关注的人
  */
 - (void)GETGetFollowees {
-    
+    LDRequest *request = [[[[[LDRequestBuilder alloc] init]
+                              addContextPath:@"social"]
+                             addMethodName:@"getFollowees"] build];
+    [self.socialCaller get:request block:^(LDRequest *request, NSData *response) {
+        BJLog(@"%@, %@",request, response);
+    }];
 }
 
 /**

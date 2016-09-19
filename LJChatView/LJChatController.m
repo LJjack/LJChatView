@@ -13,6 +13,7 @@
 
 #import "LJChatTopModel.h"
 
+#import "LJChatSocialAPI.h"
 
 @interface LJChatController ()
 
@@ -24,7 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [[LJChatSocialAPI sharedInstance] GETGetFollowees];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -60,9 +61,17 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return 44;
+        return 44.f;
     } else {
-        return 69;
+        return 69.f;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return 0.f;
+    } else {
+        return 12.f;
     }
 }
 
