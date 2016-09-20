@@ -8,6 +8,8 @@
 
 #import "LJChatCell.h"
 
+#import <ImSDK/ImSDK.h>
+
 @interface LJChatCell ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconView;
@@ -36,10 +38,31 @@
     }
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+- (void)setModel:(TIMConversation *)model {
+    _model = model;
+    
+    if ([model getType] == TIM_C2C) {
+        [model getMessage:1 last:nil succ:^(NSArray *msgs) {
+            TIMMessage *message = msgs[0];
+            self.titleLabel.text = [self showTitleWithMessage:message];
+            TIMElem *elem = [message getElem:0];
+            if ([elem isKindOfClass:[TIMTextElem class]]) {
+                self.destitleLabel.text = [(TIMTextElem *)elem text];
+            }
+            
+        } fail:^(int code, NSString *msg) {
+            
+        }];
+    }
+}
 
-    // Configure the view for the selected state
+- (NSString *)showTitleWithMessage:(TIMMessage *)message {
+    if ([message isSelf]) {
+        return @"我";
+    }
+    TIMUserProfile *userProfile = [message GetSenderProfile];
+    
+    return userProfile.remark ?: userProfile.nickname ?: userProfile.identifier;
 }
 
 @end

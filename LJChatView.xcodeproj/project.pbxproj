@@ -847,16 +847,8 @@
 				8339CDB61D646F9000D54476 /* LJVideo */,
 				838BAA0E1D51EE6000F2F1FD /* AppDelegate.h */,
 				838BAA0F1D51EE6000F2F1FD /* AppDelegate.m */,
-				83465BFC1D8E9A4400045013 /* LJChatController.h */,
-				83465BFD1D8E9A4400045013 /* LJChatController.m */,
-				83465BFE1D8E9A4400045013 /* LJChatTopCell.h */,
-				83465BFF1D8E9A4400045013 /* LJChatTopCell.m */,
-				83465C081D8E9D5D00045013 /* LJChatTopModel.h */,
-				83465C091D8E9D5D00045013 /* LJChatTopModel.m */,
-				83465C051D8E9A6200045013 /* LJChatCell.h */,
-				83465C061D8E9A6200045013 /* LJChatCell.m */,
-				83465C001D8E9A4400045013 /* LJLoginController.h */,
-				83465C011D8E9A4400045013 /* LJLoginController.m */,
+				83EBB3921D90DF1200F1DBB5 /* Login */,
+				83EBB3931D90DF2000F1DBB5 /* Chat */,
 				839720ED1D8F80EB00BB6875 /* ChatAPI */,
 				83DBAE071D8E2C2200D98400 /* LJIMAdapter */,
 				830A06291D826164002965E6 /* LJShowFPS.h */,
@@ -1512,6 +1504,54 @@
 				83DBAE1B1D8E313A00D98400 /* LJIMManagerListener.m */,
 			);
 			path = LJIMAdapter;
+			sourceTree = "<group>";
+		};
+		83EBB3921D90DF1200F1DBB5 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				83465C001D8E9A4400045013 /* LJLoginController.h */,
+				83465C011D8E9A4400045013 /* LJLoginController.m */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		83EBB3931D90DF2000F1DBB5 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				83EBB3941D90DF3900F1DBB5 /* Controller */,
+				83EBB3951D90DF4A00F1DBB5 /* View */,
+				83EBB3961D90DF5600F1DBB5 /* Model */,
+			);
+			name = Chat;
+			sourceTree = "<group>";
+		};
+		83EBB3941D90DF3900F1DBB5 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				83465BFC1D8E9A4400045013 /* LJChatController.h */,
+				83465BFD1D8E9A4400045013 /* LJChatController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		83EBB3951D90DF4A00F1DBB5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				83465BFE1D8E9A4400045013 /* LJChatTopCell.h */,
+				83465BFF1D8E9A4400045013 /* LJChatTopCell.m */,
+				83465C051D8E9A6200045013 /* LJChatCell.h */,
+				83465C061D8E9A6200045013 /* LJChatCell.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		83EBB3961D90DF5600F1DBB5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				83465C081D8E9D5D00045013 /* LJChatTopModel.h */,
+				83465C091D8E9D5D00045013 /* LJChatTopModel.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		ADFF93DA912AF8D797369362 /* Frameworks */ = {

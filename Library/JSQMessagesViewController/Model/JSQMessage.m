@@ -76,7 +76,7 @@
         _date = [date copy];
         _isMediaMessage = isMedia;
         //默认是运行状态
-        _dataState = LJMessageDataStateRuning;
+        _dataState = LJMessageDataStateCompleted;
     }
     return self;
 }

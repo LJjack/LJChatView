@@ -8,6 +8,8 @@
 
 #import "LJChatController.h"
 
+#import "LJMessagesController.h"
+
 #import "LJChatTopCell.h"
 #import "LJChatCell.h"
 
@@ -15,9 +17,15 @@
 
 #import "LJChatSocialAPI.h"
 
+#import "LJIMManager+Chat.h"
+
+#import "LJMessagesModel.h"
+
 @interface LJChatController ()
 
 @property (nonatomic, copy) NSArray<LJChatTopModel *> *topList;
+
+@property (nonatomic, copy) NSArray<TIMConversation *> *dataList;
 
 @end
 
@@ -25,7 +33,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[LJChatSocialAPI sharedInstance] GETGetFollowees];
+//    [[LJChatSocialAPI sharedInstance] GETGetFollowees];
+    
+    self.dataList =  [[LJIMManager sharedInstance] getConversationList];
+//    for (TIMConversation *conv in self.dataList) {
+//        BJLog(@"%@",conv);
+//    }
+    
+//    TIMConversation *newConv =[[LJIMManager sharedInstance] getConversation:TIM_C2C receiver:@"1470823510780"];
+//    
+//    TIMMessage *message = [[TIMMessage alloc] init];
+//    TIMTextElem *textElem = [[TIMTextElem alloc] init];
+//    textElem.text = @"我去打你了！！！";
+//    [message addElem:textElem];
+//    [newConv sendMessage:message succ:^{
+//        NSLog(@"发送 成功");
+//    } fail:^(int code, NSString *msg) {
+//        NSLog(@"发送 失败%@",msg);
+//    }];
+//    BJLog(@"%@",newConv);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -43,7 +69,7 @@
     if (section == 0) {
         return self.topList.count;
     }
-    return 8;
+    return self.dataList.count;
 }
 
 
@@ -54,8 +80,17 @@
         return cell;
     } else {
         LJChatCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LJChatCell" forIndexPath:indexPath];
+        cell.model = self.dataList[indexPath.row];
         
         return cell;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        
+    } else {
+        [self performSegueWithIdentifier:@"openMessage" sender:indexPath];
     }
 }
 
@@ -86,14 +121,18 @@
 }
 
 
-/*
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"openMessage"]) {
+        NSIndexPath *indexPath = sender;
+         LJMessagesController *msgC = segue.destinationViewController;
+        LJMessagesModel *model = [LJMessagesModel sharedInstance];
+        model.chatingConversation = self.dataList[indexPath.row];
+        msgC.msgModel = model;
+    }
 }
-*/
+
 
 @end

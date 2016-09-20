@@ -29,7 +29,7 @@
 #define GJCFSystemScreenHeight [UIScreen mainScreen].bounds.size.height
 #define GJCFSystemScreenWidth [UIScreen mainScreen].bounds.size.width
 
-@interface LJMessagesController ()<LJMessageViewStateBtnDelegate, GJGCChatInputPanelDelegate , TZImagePickerControllerDelegate, GJCFAudioPlayerDelegate, LJRecordVideoViewDelegate>
+@interface LJMessagesController ()<LJMessageViewStateBtnDelegate, GJGCChatInputPanelDelegate , TZImagePickerControllerDelegate, GJCFAudioPlayerDelegate, LJRecordVideoViewDelegate, LJMessagesModelDelegate>
 
 @property (strong, nonatomic) GJGCChatInputPanel *inputPanel;
 
@@ -63,12 +63,13 @@
 {
     [super viewDidLoad];
     
-    self.title = @"JSQMessages";
+    
     [self jsq_configureMessagesInputPanel];
-    /**
-     *  Load up our fake data for the demo
-     */
-    self.demoData = [[LJMessagesModel alloc] init];
+    
+    if (!self.msgModel) {
+        self.msgModel = [LJMessagesModel sharedInstance];
+    }
+    self.title = @"JSQMessages";
     
     /* 语音播放工具 */
     self.audioPlayer = [[GJCFAudioPlayer alloc]init];
@@ -296,22 +297,19 @@
                                                           date:[NSDate date]
                                                           text:text];
     
-    [self.demoData.messages addObject:message];
+    [self.msgModel.messages addObject:message];
     
     [self finishSendingMessageAnimated:YES];
     
 }
 
-- (void)chatInputPanel:(GJGCChatInputPanel *)panel didFinishRecord:(GJCFAudioModel *)audioFile
-{
+- (void)chatInputPanel:(GJGCChatInputPanel *)panel didFinishRecord:(GJCFAudioModel *)audioFile {
     self.currentRecordFile = audioFile;
-    
-    [self.demoData addAudioMediaMessageWithPath:audioFile.localStorePath audioTime:audioFile.duration];
+    [self.msgModel sendAudioMediaMessageWithPath:audioFile.localStorePath audioTime:audioFile.duration];
     [self finishSendingMessage];
 }
 
-- (void)chatInputPanel:(GJGCChatInputPanel *)panel didChooseMenuAction:(GJGCChatInputMenuPanelActionType)actionType
-{
+- (void)chatInputPanel:(GJGCChatInputPanel *)panel didChooseMenuAction:(GJGCChatInputMenuPanelActionType)actionType {
     switch (actionType) {
         case GJGCChatInputMenuPanelActionTypePhotoLibrary:
         {
@@ -374,15 +372,15 @@
 // photos数组里的UIImage对象，默认是828像素宽，你可以通过设置photoWidth属性的值来改变它
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto {
     for (UIImage *image in photos) {
-        //        [self.demoData addPhotoMediaMessageWithImage:image];
+        //        [self.msgModel addPhotoMediaMessageWithImage:image];
         
         JSQPhotoMediaItem *photoItem = [[JSQPhotoMediaItem alloc] initWithImage:nil];
         
-        JSQMessage *photoMessage = [JSQMessage messageWithSenderId:kJSQDemoAvatarIdSquires
-                                                       displayName:kJSQDemoAvatarDisplayNameSquires
+        JSQMessage *photoMessage = [JSQMessage messageWithSenderId:@"123"
+                                                       displayName:@"123"
                                                              media:photoItem];
         photoItem.image = image;
-        [self.demoData.messages addObject:photoMessage];
+        [self.msgModel.messages addObject:photoMessage];
         [self finishSendingMessage];
         
         
@@ -405,7 +403,7 @@
     [[TZImageManager manager] getVideoOutputPathWithAsset:asset completion:^(NSString *outputPath) {
         NSLog(@"视频导出到本地完成,沙盒路径为:%@",outputPath);
         //         导出完成，在这里写上传代码，通过路径或者通过NSData上传
-        [weakSelf.demoData addVideoMediaMessageWithVideoPath:outputPath showImage:coverImage];
+        [weakSelf.msgModel sendVideoMediaMessageWithVideoPath:outputPath showImage:coverImage];
         [weakSelf finishSendingMessage];
     }];
     
@@ -498,7 +496,7 @@
         UIImage *showImage = [UIImage lj_imageVideoCaptureVideoPath:savePath];
         
         UISaveVideoAtPathToSavedPhotosAlbum(savePath, nil, nil, nil);
-        [self.demoData addShortVideoMediaMessageWithVideoPath:savePath showImage:showImage];
+        [self.msgModel sendShortVideoMediaMessageWithVideoPath:savePath showImage:showImage];
         [self finishSendingMessage];
         NSLog(@"==== %@", savePath);
     } else {
@@ -510,7 +508,7 @@
 //获取当前位置
 - (void)obtainCurrentLocation {
     __weak typeof(self) weakSelf = self;
-    [self.demoData addLocationMediaMessageCompletion:^{
+    [self.msgModel sendLocationMediaMessageCompletion:^{
         [weakSelf finishSendingMessage];
     }];
     
@@ -547,6 +545,31 @@
     [self stopOldPlayAudio];
 }
 
+#pragma mark - LJMessagesModelDelegate
+
+- (void)messagesModelPrepareWillReveice:(LJMessagesModel *)messagesModel {
+    
+}
+
+- (void)messagesModelWillReveice:(LJMessagesModel *)messagesModel {
+    self.showTypingIndicator = !self.showTypingIndicator;
+    [self scrollToBottomAnimated:YES];
+    
+    [self finishReceivingMessage];
+    
+    // [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
+}
+
+- (void)messagesModelDidReveice:(LJMessagesModel *)messagesModel {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.collectionView reloadData];
+    });
+}
+
+- (void)messagesModelFailReveice:(LJMessagesModel *)messagesModel {
+    
+}
+
 #pragma mark - Custom menu actions for cells
 
 - (void)didReceiveMenuWillShowNotification:(NSNotification *)notification
@@ -563,182 +586,11 @@
 
 #pragma mark - Actions
 
-- (void)receiveMessagePressed:(UIBarButtonItem *)sender
-{
-    /**
-     *  DEMO ONLY
-     *
-     *  The following is simply to simulate received messages for the demo.
-     *  Do not actually do this.
-     */
-    
-    
-    /**
-     *  Show the typing indicator to be shown
-     */
-    self.showTypingIndicator = !self.showTypingIndicator;
-    
-    /**
-     *  Scroll to actually view the indicator
-     */
-    [self scrollToBottomAnimated:YES];
-    
-    /**
-     *  Copy last sent message, this will be the new "received" message
-     */
-    JSQMessage *copyMessage = [[self.demoData.messages lastObject] copy];
-    
-    if (!copyMessage) {
-        copyMessage = [JSQMessage messageWithSenderId:kJSQDemoAvatarIdJobs
-                                          displayName:kJSQDemoAvatarDisplayNameJobs
-                                                 text:@"First received!"];
-    }
-    
-    /**
-     *  Allow typing indicator to show
-     */
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        NSMutableArray *userIds = [[self.demoData.users allKeys] mutableCopy];
-        [userIds removeObject:self.senderId];
-        NSString *randomUserId = userIds[arc4random_uniform((int)[userIds count])];
-        
-        JSQMessage *newMessage = nil;
-        id<JSQMessageMediaData> newMediaData = nil;
-        id newMediaAttachmentCopy = nil;
-        
-        if (copyMessage.isMediaMessage) {
-            /**
-             *  Last message was a media message
-             */
-            id<JSQMessageMediaData> copyMediaData = copyMessage.media;
-            
-            if ([copyMediaData isKindOfClass:[JSQPhotoMediaItem class]]) {
-                JSQPhotoMediaItem *photoItemCopy = [((JSQPhotoMediaItem *)copyMediaData) copy];
-                photoItemCopy.appliesMediaViewMaskAsOutgoing = NO;
-                newMediaAttachmentCopy = [UIImage imageWithCGImage:photoItemCopy.image.CGImage];
-                
-                /**
-                 *  Set image to nil to simulate "downloading" the image
-                 *  and show the placeholder view
-                 */
-                photoItemCopy.image = nil;
-                
-                newMediaData = photoItemCopy;
-            }
-            else if ([copyMediaData isKindOfClass:[JSQLocationMediaItem class]]) {
-                JSQLocationMediaItem *locationItemCopy = [((JSQLocationMediaItem *)copyMediaData) copy];
-                locationItemCopy.appliesMediaViewMaskAsOutgoing = NO;
-                newMediaAttachmentCopy = [locationItemCopy.location copy];
-                
-                /**
-                 *  Set location to nil to simulate "downloading" the location data
-                 */
-                locationItemCopy.location = nil;
-                
-                newMediaData = locationItemCopy;
-            }
-            else if ([copyMediaData isKindOfClass:[LJShortVideoMediaItem class]]) {
-                LJShortVideoMediaItem *videoItemCopy = [((LJShortVideoMediaItem *)copyMediaData) copy];
-                videoItemCopy.appliesMediaViewMaskAsOutgoing = NO;
-                newMediaAttachmentCopy = [videoItemCopy.videoPath copy];
-                
-                /**
-                 *  Reset video item to simulate "downloading" the video
-                 */
-                videoItemCopy.videoPath = nil;
-                
-                
-                newMediaData = videoItemCopy;
-            }
-            else if ([copyMediaData isKindOfClass:[JSQAudioMediaItem class]]) {
-                JSQAudioMediaItem *audioItemCopy = [((JSQAudioMediaItem *)copyMediaData) copy];
-                audioItemCopy.appliesMediaViewMaskAsOutgoing = NO;
-                newMediaAttachmentCopy = @(audioItemCopy.audioTime);
-                //
-                //                /**
-                //                 *  Reset audio item to simulate "downloading" the audio
-                //                 */
-                audioItemCopy.audioTime = 10;
-                audioItemCopy.audioPath = [[NSBundle mainBundle] pathForResource:@"jsq_messages_sample" ofType:@"m4a"];
-                //
-                newMediaData = audioItemCopy;
-            }
-            else {
-                NSLog(@"%s error: unrecognized media item", __PRETTY_FUNCTION__);
-            }
-            
-            newMessage = [JSQMessage messageWithSenderId:randomUserId
-                                             displayName:self.demoData.users[randomUserId]
-                                                   media:newMediaData];
-        }
-        else {
-            /**
-             *  Last message was a text message
-             */
-            newMessage = [JSQMessage messageWithSenderId:randomUserId
-                                             displayName:self.demoData.users[randomUserId]
-                                                    text:copyMessage.text];
-        }
-        
-        /**
-         *  Upon receiving a message, you should:
-         *
-         *  1. Play sound (optional)
-         *  2. Add new id<JSQMessageData> object to your data source
-         *  3. Call `finishReceivingMessage`
-         */
-        
-        // [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
-        
-        [self.demoData.messages addObject:newMessage];
-        [self finishReceivingMessageAnimated:YES];
-        
-        
-        if (newMessage.isMediaMessage) {
-            /**
-             *  Simulate "downloading" media
-             */
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                /**
-                 *  Media is "finished downloading", re-display visible cells
-                 *
-                 *  If media cell is not visible, the next time it is dequeued the view controller will display its new attachment data
-                 *
-                 *  Reload the specific item, or simply call `reloadData`
-                 */
-                
-                if ([newMediaData isKindOfClass:[JSQPhotoMediaItem class]]) {
-                    ((JSQPhotoMediaItem *)newMediaData).image = newMediaAttachmentCopy;
-                    [self.collectionView reloadData];
-                }
-                else if ([newMediaData isKindOfClass:[JSQLocationMediaItem class]]) {
-                    [((JSQLocationMediaItem *)newMediaData)setLocation:newMediaAttachmentCopy withCompletionHandler:^{
-                        [self.collectionView reloadData];
-                    }];
-                }
-                else if ([newMediaData isKindOfClass:[LJShortVideoMediaItem class]]) {
-                    ((LJShortVideoMediaItem *)newMediaData).videoPath = newMediaAttachmentCopy;
-                    
-                    [self.collectionView reloadData];
-                }
-                else if ([newMediaData isKindOfClass:[JSQAudioMediaItem class]]) {
-                    ((JSQAudioMediaItem *)newMediaData).audioTime = [newMediaAttachmentCopy integerValue];
-                    [self.collectionView reloadData];
-                }
-                else {
-                    NSLog(@"%s error: unrecognized media item", __PRETTY_FUNCTION__);
-                }
-                
-            });
-        }
-        
-    });
+- (void)receiveMessagePressed:(UIBarButtonItem *)sender {
 }
 
-- (void)closePressed:(UIBarButtonItem *)sender
-{
-    
+- (void)closePressed:(UIBarButtonItem *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -767,7 +619,7 @@
                                                           date:date
                                                           text:text];
     
-    [self.demoData.messages addObject:message];
+    [self.msgModel.messages addObject:message];
     
     [self finishSendingMessageAnimated:YES];
 }
@@ -775,21 +627,21 @@
 #pragma mark - JSQMessages CollectionView DataSource
 
 - (NSString *)senderId {
-    return kJSQDemoAvatarIdSquires;
+    return @"123";
 }
 
 - (NSString *)senderDisplayName {
-    return kJSQDemoAvatarDisplayNameSquires;
+    return @"123";
 }
 
 - (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self.demoData.messages objectAtIndex:indexPath.item];
+    return [self.msgModel.messages objectAtIndex:indexPath.item];
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didDeleteMessageAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.demoData.messages removeObjectAtIndex:indexPath.item];
+    [self.msgModel.messages removeObjectAtIndex:indexPath.item];
 }
 
 - (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -801,13 +653,13 @@
      *  Otherwise, return your previously created bubble image data objects.
      */
     
-    JSQMessage *message = [self.demoData.messages objectAtIndex:indexPath.item];
+    JSQMessage *message = [self.msgModel.messages objectAtIndex:indexPath.item];
     
     if ([message.senderId isEqualToString:self.senderId]) {
-        return self.demoData.outgoingBubbleImageData;
+        return self.msgModel.outgoingBubbleImageData;
     }
     
-    return self.demoData.incomingBubbleImageData;
+    return self.msgModel.incomingBubbleImageData;
 }
 
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -832,17 +684,14 @@
      *
      *  Override the defaults in `viewDidLoad`
      */
-    JSQMessage *message = [self.demoData.messages objectAtIndex:indexPath.item];
+    JSQMessage *message = [self.msgModel.messages objectAtIndex:indexPath.item];
     
     if ([message.senderId isEqualToString:self.senderId]) {
-        
-    }
-    else {
-        
+        return self.msgModel.avatarImgSelf;
     }
     
     
-    return [self.demoData.avatars objectForKey:message.senderId];
+    return self.msgModel.avatarImgOther;
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
@@ -854,7 +703,7 @@
      *  Show a timestamp for every 3rd message
      */
     if (indexPath.item % 3 == 0) {
-        JSQMessage *message = [self.demoData.messages objectAtIndex:indexPath.item];
+        JSQMessage *message = [self.msgModel.messages objectAtIndex:indexPath.item];
         return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
     }
     
@@ -863,7 +712,7 @@
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath
 {
-    JSQMessage *message = [self.demoData.messages objectAtIndex:indexPath.item];
+    JSQMessage *message = [self.msgModel.messages objectAtIndex:indexPath.item];
     
     /**
      *  iOS7-style sender name labels
@@ -873,7 +722,7 @@
     }
     
     if (indexPath.item - 1 > 0) {
-        JSQMessage *previousMessage = [self.demoData.messages objectAtIndex:indexPath.item - 1];
+        JSQMessage *previousMessage = [self.msgModel.messages objectAtIndex:indexPath.item - 1];
         if ([[previousMessage senderId] isEqualToString:message.senderId]) {
             return nil;
         }
@@ -894,7 +743,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [self.demoData.messages count];
+    return [self.msgModel.messages count];
 }
 
 - (UICollectionViewCell *)collectionView:(JSQMessagesCollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -918,7 +767,7 @@
      *  Instead, override the properties you want on `self.collectionView.collectionViewLayout` from `viewDidLoad`
      */
     
-    JSQMessage *msg = [self.demoData.messages objectAtIndex:indexPath.item];
+    JSQMessage *msg = [self.msgModel.messages objectAtIndex:indexPath.item];
     
     if (!msg.isMediaMessage) {
         
@@ -938,8 +787,7 @@
 }
 
 
-- (BOOL)shouldShowCellStateBtnForMessage:(id<JSQMessageData>)message
-{
+- (BOOL)shouldShowCellStateBtnForMessage:(id<JSQMessageData>)message {
     return [message isMediaMessage];
 }
 
@@ -1013,13 +861,13 @@
     /**
      *  iOS7-style sender name labels
      */
-    JSQMessage *currentMessage = [self.demoData.messages objectAtIndex:indexPath.item];
+    JSQMessage *currentMessage = [self.msgModel.messages objectAtIndex:indexPath.item];
     if ([[currentMessage senderId] isEqualToString:self.senderId]) {
         return 0.0f;
     }
     
     if (indexPath.item - 1 > 0) {
-        JSQMessage *previousMessage = [self.demoData.messages objectAtIndex:indexPath.item - 1];
+        JSQMessage *previousMessage = [self.msgModel.messages objectAtIndex:indexPath.item - 1];
         if ([[previousMessage senderId] isEqualToString:[currentMessage senderId]]) {
             return 0.0f;
         }
@@ -1049,7 +897,7 @@
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath
 {
-    JSQMessage *message = [self.demoData.messages objectAtIndex:indexPath.row];
+    JSQMessage *message = [self.msgModel.messages objectAtIndex:indexPath.row];
     
     if ([message.media isKindOfClass:[JSQAudioMediaItem class]]) {
         self.audioMediaNewItem = (JSQAudioMediaItem *)message.media;
@@ -1085,10 +933,10 @@
  */
 - (void)messageView:(JSQMessagesCollectionView *)messageView didTapCellStateBtnRuningAtIndexPath:(NSIndexPath *)indexPath {
     
-    [self.demoData.messages[indexPath.row] setDataState:LJMessageDataStateRuning];
+    [self.msgModel.messages[indexPath.row] setDataState:LJMessageDataStateRuning];
     [self.collectionView reloadData];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.demoData.messages[indexPath.row] setDataState:LJMessageDataStateCompleted];
+        [self.msgModel.messages[indexPath.row] setDataState:LJMessageDataStateCompleted];
         [self.collectionView reloadData];
     });
     
@@ -1099,7 +947,7 @@
  */
 - (void)messageView:(JSQMessagesCollectionView *)messageView didTapCellStateBtnStopAtIndexPath:(NSIndexPath *)indexPath {
     
-    [self.demoData.messages[indexPath.row] setDataState:LJMessageDataStateFailed];
+    [self.msgModel.messages[indexPath.row] setDataState:LJMessageDataStateFailed];
     [self.collectionView reloadData];
 }
 

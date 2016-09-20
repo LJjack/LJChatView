@@ -10,45 +10,83 @@
 
 #import "JSQLocationMediaItem.h"
 
-@class JSQMessage;
+#import "LJMessageDataStateDefine.h"
 
-@class JSQMessagesBubbleImage;
+
+@class JSQMessage, JSQMessagesBubbleImage, JSQMessagesAvatarImage;
+
+@class TIMConversation, TIMMessage;
+
+@class LJMessagesModel;
 
 NS_ASSUME_NONNULL_BEGIN
 
-static NSString * const kJSQDemoAvatarDisplayNameSquires = @"Jesse Squires";
-static NSString * const kJSQDemoAvatarDisplayNameCook = @"Tim Cook";
-static NSString * const kJSQDemoAvatarDisplayNameJobs = @"Jobs";
-static NSString * const kJSQDemoAvatarDisplayNameWoz = @"Steve Wozniak";
+@protocol LJMessagesModelDelegate <NSObject>
 
-static NSString * const kJSQDemoAvatarIdSquires = @"053496-4509-289";
-static NSString * const kJSQDemoAvatarIdCook = @"468-768355-23123";
-static NSString * const kJSQDemoAvatarIdJobs = @"707-8956784-57";
-static NSString * const kJSQDemoAvatarIdWoz = @"309-41802-93823";
+@optional
+
+/**
+ *  准备将要接受消息
+ */
+- (void)messagesModelPrepareWillReveice:(LJMessagesModel *)messagesModel;
+
+/**
+ *  将要接受消息
+ */
+- (void)messagesModelWillReveice:(LJMessagesModel *)messagesModel;
+
+/**
+ *  完成接受消息
+ */
+- (void)messagesModelDidReveice:(LJMessagesModel *)messagesModel;
+
+/**
+ *  失败接受消息
+ */
+
+- (void)messagesModelFailReveice:(LJMessagesModel *)messagesModel;
+
+@end
 
 @interface LJMessagesModel : NSObject
 
-@property (strong, nonatomic) NSMutableArray<JSQMessage *> *messages;
+@property (nonatomic, strong) TIMConversation *chatingConversation; //<! 当前会话
 
-@property (strong, nonatomic) NSDictionary *avatars;
+@property (nonatomic, strong) NSMutableArray<JSQMessage *> *messages;
 
-@property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageData;
+@property (nonatomic, strong) JSQMessagesAvatarImage *avatarImgOther;
 
-@property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageData;
+@property (nonatomic, strong) JSQMessagesBubbleImage *outgoingBubbleImageData;
 
-@property (strong, nonatomic) NSDictionary *users;
+@property (nonatomic, strong) JSQMessagesBubbleImage *incomingBubbleImageData;
 
-- (void)addPhotoMediaMessageWithImagePath:(nonnull NSString *)imagePath;
+@property (nonatomic, strong) JSQMessagesAvatarImage *avatarImgSelf;
 
-- (void)addPhotoMediaMessageWithImage:(nonnull UIImage *)image;
-//
-- (void)addLocationMediaMessageCompletion:(JSQLocationMediaItemCompletionBlock)completion;
-//添加微视频
-- (void)addShortVideoMediaMessageWithVideoPath:(nonnull NSString *)videoPath showImage:(nonnull UIImage *)showImage;
-//添加视频
-- (void)addVideoMediaMessageWithVideoPath:(nonnull NSString *)videoPath showImage:(nonnull UIImage *)showImage;
-//
-- (void)addAudioMediaMessageWithPath:(nonnull NSString *)audioPath audioTime:(NSInteger)audioTime;
+@property (nonatomic, weak) id<LJMessagesModelDelegate> delegate;
+
+
++ (instancetype)sharedInstance;
+
+#pragma mark - 发送消息
+
+- (void)sendTextMediaMessageWithText:(NSString *)text;
+
+- (void)sendAudioMediaMessageWithPath:(nonnull NSString *)audioPath
+                            audioTime:(NSInteger)audioTime;
+
+- (void)sendPhotoMediaMessageWithImage:(nonnull id)image;
+
+- (void)sendLocationMediaMessageCompletion:(JSQLocationMediaItemCompletionBlock)completion;
+
+- (void)sendShortVideoMediaMessageWithVideoPath:(nonnull NSString *)videoPath
+                                      showImage:(nonnull UIImage *)showImage;
+
+- (void)sendVideoMediaMessageWithVideoPath:(nonnull NSString *)videoPath
+                                 showImage:(nonnull UIImage *)showImage;
+
+#pragma mark - 接受消息
+
+- (void)reveiceMessage:(TIMMessage *)message;
 
 @end
 

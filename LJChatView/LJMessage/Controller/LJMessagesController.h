@@ -12,7 +12,9 @@
 
 @interface LJMessagesController : JSQMessagesViewController
 
-@property (nonatomic, strong) LJMessagesModel *demoData;
+@property (nonatomic, strong) LJMessagesModel *msgModel;
+
+
 
 - (void)receiveMessagePressed:(UIBarButtonItem *)sender;
 

@@ -62,7 +62,7 @@
     }
     
     // TODO 签名
-    
+    [urlRequest setValue:@"58026cd447ba4bf689b3b4cf92fe8480" forHTTPHeaderField:@"accessToken"];
     NSURLSessionDataTask * dataTask = [[self createSession] dataTaskWithRequest:urlRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
         if (!data) {

@@ -150,6 +150,9 @@
                         </connections>
                     </tableView>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="openMessage" id="LGQ-uP-aRC"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bV1-LK-rci" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -9,9 +9,11 @@
 #ifndef LJMessageDataStateDefine_h
 #define LJMessageDataStateDefine_h
 
+#import <Foundation/Foundation.h>
+
 //消息状态
 typedef NS_ENUM(NSUInteger, LJMessageDataState) {
-    LJMessageDataStateRuning,
+    LJMessageDataStateRuning = 1,
     LJMessageDataStateCompleted,
     LJMessageDataStateFailed,
     LJMessageDataStateStop,//停止状态是运行状态转到失败状态

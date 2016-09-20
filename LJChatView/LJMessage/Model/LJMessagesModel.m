@@ -23,59 +23,57 @@
 
 #import "UIColor+JSQMessages.h"
 
+#import <ImSDK/ImSDK.h>
+
+/**
+ *  状态转化
+ *
+ *  @param status IM的状态
+ */
+LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
+    
+    LJMessageDataState state;
+    switch (status) {
+        case 1: { // 消息发送中
+            state = LJMessageDataStateRuning;
+        } break;
+        case 2: { //消息发送成功
+            state = LJMessageDataStateCompleted;
+        } break;
+        case 3: { //消息发送失败
+            state = LJMessageDataStateFailed;
+        } break;
+            
+        default:
+            break;
+    }
+    
+    return state;
+}
+
 @implementation LJMessagesModel
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        
-        if (/* DISABLES CODE */ (NO)) {
-            self.messages = [NSMutableArray new];
-        }
-        else {
-            [self loadFakeMessages];
-        }
-        
-        
-        /**
-         *  Create avatar images once.
-         *
-         *  Be sure to create your avatars one time and reuse them for good performance.
-         *
-         *  If you are not using avatars, ignore this.
-         */
++ (instancetype)sharedInstance {
+    static LJMessagesModel *_instance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _instance = [[LJMessagesModel alloc] init];
+    });
+    
+    return _instance;
+}
+
+- (instancetype)init {
+    if (self = [super init]) {
         JSQMessagesAvatarImageFactory *avatarFactory = [[JSQMessagesAvatarImageFactory alloc] initWithDiameter:kJSQMessagesCollectionViewAvatarSizeDefault];
         
-        JSQMessagesAvatarImage *jsqImage = [avatarFactory avatarImageWithUserInitials:@"JSQ"
+        self.avatarImgSelf = [avatarFactory avatarImageWithUserInitials:@"JSQ"
                                                                       backgroundColor:[UIColor colorWithWhite:0.85f alpha:1.0f]
                                                                             textColor:[UIColor colorWithWhite:0.60f alpha:1.0f]
                                                                                  font:[UIFont systemFontOfSize:14.0f]];
         
-        JSQMessagesAvatarImage *cookImage = [avatarFactory avatarImageWithImage:[UIImage imageNamed:@"demo_avatar_cook"]];
-        
-        JSQMessagesAvatarImage *jobsImage = [avatarFactory avatarImageWithImage:[UIImage imageNamed:@"demo_avatar_jobs"]];
-        
-        JSQMessagesAvatarImage *wozImage = [avatarFactory avatarImageWithImage:[UIImage imageNamed:@"demo_avatar_woz"]];
-        
-        self.avatars = @{ kJSQDemoAvatarIdSquires : jsqImage,
-                          kJSQDemoAvatarIdCook : cookImage,
-                          kJSQDemoAvatarIdJobs : jobsImage,
-                          kJSQDemoAvatarIdWoz : wozImage };
-        
-        
-        self.users = @{ kJSQDemoAvatarIdJobs : kJSQDemoAvatarDisplayNameJobs,
-                        kJSQDemoAvatarIdCook : kJSQDemoAvatarDisplayNameCook,
-                        kJSQDemoAvatarIdWoz : kJSQDemoAvatarDisplayNameWoz,
-                        kJSQDemoAvatarIdSquires : kJSQDemoAvatarDisplayNameSquires };
-        
-        
-        /**
-         *  Create message bubble images objects.
-         *
-         *  Be sure to create your bubble images one time and reuse them for good performance.
-         *
-         */
+        self.avatarImgOther = [avatarFactory avatarImageWithImage:[UIImage imageNamed:@"demo_avatar_cook"]];
+
         JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
         
         self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
@@ -85,82 +83,245 @@
     return self;
 }
 
-- (void)loadFakeMessages
-{
-    /**
-     *  Load some fake messages for demo.
-     *
-     *  You should have a mutable array or orderedSet, or something.
-     */
-    JSQMessage *msg1 = [[JSQMessage alloc] initWithSenderId:kJSQDemoAvatarIdSquires
-                                          senderDisplayName:kJSQDemoAvatarDisplayNameSquires
-                                                       date:[NSDate distantPast]
-                                                       text:NSLocalizedString(@"It even has data detectors. You can call me tonight. My cell number is 123-456-7890. My website is www.hexedbits.com.", nil)];
-    [msg1 setDataState:LJMessageDataStateCompleted];
-    self.messages = [NSMutableArray arrayWithObject:msg1];
+- (void)setChatingConversation:(TIMConversation *)chatingConversation {
+    _chatingConversation = chatingConversation;
     
-    [self addPhotoMediaMessageWithImage:[UIImage imageNamed:@"goldengate"]];
+    self.messages = [NSMutableArray array];
     
-    [self.messages[1] setDataState:LJMessageDataStateFailed];
+    NSArray<TIMMessage *> *msgs =  [chatingConversation getLastMsgs:10];
+    [msgs enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(TIMMessage * _Nonnull message, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self reveiceMessage:message];
+    }];
+}
+
+#pragma mark - 发送消息
+
+#pragma mark 发送文字
+- (void)sendTextMediaMessageWithText:(NSString *)text {
+    NSAssert(text || text.length , @"文字不能为 nil 或长度为 0");
+    TIMMessage *message = [[TIMMessage alloc] init];
+    TIMTextElem *textElem = [[TIMTextElem alloc] init];
+    textElem.text = text;
+    
+    JSQMessage *textMessage = [JSQMessage messageWithSenderId:@"123" displayName:@"123" text:text];
+    [textMessage setDataState:LJMessageDataStateRuning];
+    [self.messages addObject:textMessage];
+    
+    [self.chatingConversation sendMessage:message succ:^{
+        [textMessage setDataState:LJMessageDataStateRuning];
+    } fail:^(int code, NSString *msg) {
+        [textMessage setDataState:LJMessageDataStateFailed];
+    }];
     
     
 }
 
-#pragma mark 添加音频
-- (void)addAudioMediaMessageWithPath:(nonnull NSString *)audioPath audioTime:(NSInteger)audioTime {
+#pragma mark 发送音频
+- (void)sendAudioMediaMessageWithPath:(nonnull NSString *)audioPath audioTime:(NSInteger)audioTime {
     NSAssert(audioPath || audioPath.length , @"音频路径不能为 nil 或长度为 0");
     
     
     JSQAudioMediaItem *audioItem = [[JSQAudioMediaItem alloc] initWithPath:audioPath audioTime:audioTime];
-    JSQMessage *audioMessage = [JSQMessage messageWithSenderId:kJSQDemoAvatarIdSquires
-                                                   displayName:kJSQDemoAvatarDisplayNameSquires
+    JSQMessage *audioMessage = [JSQMessage messageWithSenderId:@"123"
+                                                   displayName:@"123"
                                                          media:audioItem];
     [self.messages addObject:audioMessage];
 }
 
-#pragma mark 添加照片
-- (void)addPhotoMediaMessageWithImagePath:(nonnull NSString *)imagePath {
-    NSAssert(imagePath || imagePath.length , @"照片路径不能为 nil 或长度为 0");
-    UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
-    [self addPhotoMediaMessageWithImage:image];
-}
+#pragma mark 发送照片
 
-- (void)addPhotoMediaMessageWithImage:(nonnull UIImage *)image {
+- (void)sendPhotoMediaMessageWithImage:(nonnull id)image {
+    if ([image isKindOfClass:[NSString class]]) {
+        image = [UIImage imageWithContentsOfFile:image];
+    }
+    if (![image isKindOfClass:[UIImage class]]) {
+        NSAssert(NO , @"image获得不了图片或image路径下获得不了图片");
+    }
+    
     JSQPhotoMediaItem *photoItem = [[JSQPhotoMediaItem alloc] initWithImage:image];
-    JSQMessage *photoMessage = [JSQMessage messageWithSenderId:kJSQDemoAvatarIdSquires
-                                                   displayName:kJSQDemoAvatarDisplayNameSquires
+    JSQMessage *photoMessage = [JSQMessage messageWithSenderId:@"123"
+                                                   displayName:@"123"
                                                          media:photoItem];
     [self.messages addObject:photoMessage];
 }
 
-#pragma mark 添加当前位置
-- (void)addLocationMediaMessageCompletion:(JSQLocationMediaItemCompletionBlock)completion
+#pragma mark 发送当前位置
+- (void)sendLocationMediaMessageCompletion:(JSQLocationMediaItemCompletionBlock)completion
 {
     CLLocation *ferryBuildingInSF = [[CLLocation alloc] initWithLatitude:37.795313 longitude:-122.393757];
     
     JSQLocationMediaItem *locationItem = [[JSQLocationMediaItem alloc] init];
     [locationItem setLocation:ferryBuildingInSF withCompletionHandler:completion];
     
-    JSQMessage *locationMessage = [JSQMessage messageWithSenderId:kJSQDemoAvatarIdSquires
-                                                      displayName:kJSQDemoAvatarDisplayNameSquires
+    JSQMessage *locationMessage = [JSQMessage messageWithSenderId:@"123"
+                                                      displayName:@"123"
                                                             media:locationItem];
     [self.messages addObject:locationMessage];
 }
 
-#pragma mark 添加微视频
-- (void)addShortVideoMediaMessageWithVideoPath:(nonnull NSString *)videoPath showImage:(nonnull UIImage *)showImage {
+#pragma mark 发送微视频
+- (void)sendShortVideoMediaMessageWithVideoPath:(nonnull NSString *)videoPath showImage:(nonnull UIImage *)showImage {
     LJShortVideoMediaItem *videoItem = [[LJShortVideoMediaItem alloc] initWithVideoPath:videoPath aFrameImage:showImage];
-    JSQMessage *videoMessage = [JSQMessage messageWithSenderId:kJSQDemoAvatarIdSquires
-                                                   displayName:kJSQDemoAvatarDisplayNameSquires
+    JSQMessage *videoMessage = [JSQMessage messageWithSenderId:@"123"
+                                                   displayName:@"123"
                                                          media:videoItem];
     [self.messages addObject:videoMessage];
 }
 
-#pragma mark 添加视频
-- (void)addVideoMediaMessageWithVideoPath:(nonnull NSString *)videoPath showImage:(nonnull UIImage *)showImage {
+#pragma mark 发送视频
+- (void)sendVideoMediaMessageWithVideoPath:(nonnull NSString *)videoPath showImage:(nonnull UIImage *)showImage {
     LJVideoMediaItem *videoItem = [[LJVideoMediaItem alloc] initWithVideoPath:videoPath aFrameImage:showImage];
-    JSQMessage *videoMessage = [JSQMessage messageWithSenderId:kJSQDemoAvatarIdSquires
-                                                   displayName:kJSQDemoAvatarDisplayNameSquires
+    JSQMessage *videoMessage = [JSQMessage messageWithSenderId:@"123"
+                                                   displayName:@"123"
+                                                         media:videoItem];
+    [self.messages addObject:videoMessage];
+}
+
+#pragma mark - 接受消息
+
+- (void)reveiceMessage:(TIMMessage *)message {
+    
+    [self willReveiceMessage];
+    
+    int elemCount = [message elemCount];
+    TIMUserProfile *user = [message GetSenderProfile];
+    
+    for (int i = 0 ; i < elemCount; i ++) {
+        
+        TIMElem *elem = [message getElem:i];
+        if ([elem isKindOfClass:[TIMTextElem class]]) {
+            TIMTextElem *textElem = (TIMTextElem *)elem;
+            JSQMessage *textMessage = [JSQMessage messageWithSenderId:user.identifier
+                                             displayName:user.nickname
+                                                    text:[textElem text]];
+            [self.messages addObject:textMessage];
+            [self didReveiceMessage];
+            
+        } else if ([elem isKindOfClass:[TIMImageElem class]]) {
+            TIMImageElem *imageElem = (TIMImageElem *)elem;
+            JSQPhotoMediaItem *photoItem = [[JSQPhotoMediaItem alloc] initWithImage:nil];
+            JSQMessage *imageMessage = [JSQMessage messageWithSenderId:user.identifier
+                                                           displayName:user.nickname
+                                                                 media:photoItem];
+            [self.messages addObject:imageMessage];
+            
+            if (imageElem && imageElem.imageList && imageElem.imageList.count) {
+                for (TIMImage *imageModel in imageElem.imageList) {
+                    if (imageModel.type == TIM_IMAGE_TYPE_ORIGIN) {
+                        if (!(imageModel.uuid && imageModel.uuid.length > 0)) {
+                            break;
+                        }
+                        
+                        NSFileManager *fileManager = [NSFileManager defaultManager];
+                        NSString *nsTmpDir = NSTemporaryDirectory();
+                        NSString *imagePath = [NSString stringWithFormat:@"%@/image_%@", nsTmpDir, imageModel.uuid];
+                        BOOL isDirectory;
+                        
+                        if ([fileManager fileExistsAtPath:imagePath isDirectory:&isDirectory]
+                            && isDirectory == NO) {
+                            NSData *data = [fileManager contentsAtPath:imagePath];
+                            if (data) {
+                                photoItem.image = [UIImage imageWithData:data];
+                                [self didReveiceMessage];
+                            }
+                        } else {
+                            [imageModel getImage:imagePath succ:^{
+                                NSData *data = [fileManager contentsAtPath:imagePath];
+                                if (data) {
+                                    photoItem.image = [UIImage imageWithData:data];
+                                    [self didReveiceMessage];
+                                } else {
+                                    [self failReviceMessage];
+                                    BJLog(@"下载的图片是空的");
+                                }
+                                
+                            } fail:^(int code, NSString *err) {
+                                [self failReviceMessage];
+                                BJLog(@"下载原图失败");
+                            }];
+                        }
+                        break;
+                    }
+                }
+            }
+            
+            
+            
+        } else if ([elem isKindOfClass:[TIMLocationElem class]]) {
+            
+        } else if ([elem isKindOfClass:[TIMSoundElem class]]) {
+            
+        } else if ([elem isKindOfClass:[TIMVideoElem class]]) {
+            
+        }
+        
+    }
+}
+
+- (void)prepareWillReveiceMessage {
+    if ([self.delegate respondsToSelector:@selector(messagesModelPrepareWillReveice:)]) {
+        [self.delegate messagesModelPrepareWillReveice:self];
+    }
+}
+
+- (void)willReveiceMessage {
+    if ([self.delegate respondsToSelector:@selector(messagesModelWillReveice:)]) {
+        [self.delegate messagesModelWillReveice:self];
+    }
+}
+
+- (void)didReveiceMessage {
+    if ([self.delegate respondsToSelector:@selector(messagesModelDidReveice:)]) {
+        [self.delegate messagesModelDidReveice:self];
+    }
+}
+
+- (void)failReviceMessage {
+    if ([self.delegate respondsToSelector:@selector(messagesModelFailReveice:)]) {
+        [self.delegate messagesModelFailReveice:self];
+    }
+}
+
+#pragma mark 接受音频
+- (void)reveiceAudioMediaMessageWithPath:(nonnull NSString *)audioPath audioTime:(NSInteger)audioTime {
+    NSAssert(audioPath || audioPath.length , @"音频路径不能为 nil 或长度为 0");
+    
+    
+    JSQAudioMediaItem *audioItem = [[JSQAudioMediaItem alloc] initWithPath:audioPath audioTime:audioTime];
+    JSQMessage *audioMessage = [JSQMessage messageWithSenderId:@"456"
+                                                   displayName:@"456"
+                                                         media:audioItem];
+    [self.messages addObject:audioMessage];
+}
+
+#pragma mark 接受当前位置
+- (void)reveiceLocationMediaMessageCompletion:(JSQLocationMediaItemCompletionBlock)completion
+{
+    CLLocation *ferryBuildingInSF = [[CLLocation alloc] initWithLatitude:37.795313 longitude:-122.393757];
+    
+    JSQLocationMediaItem *locationItem = [[JSQLocationMediaItem alloc] init];
+    [locationItem setLocation:ferryBuildingInSF withCompletionHandler:completion];
+    
+    JSQMessage *locationMessage = [JSQMessage messageWithSenderId:@"456"
+                                                      displayName:@"456"
+                                                            media:locationItem];
+    [self.messages addObject:locationMessage];
+}
+
+#pragma mark 接受微视频
+- (void)reveiceShortVideoMediaMessageWithVideoPath:(nonnull NSString *)videoPath showImage:(nonnull UIImage *)showImage {
+    LJShortVideoMediaItem *videoItem = [[LJShortVideoMediaItem alloc] initWithVideoPath:videoPath aFrameImage:showImage];
+    JSQMessage *videoMessage = [JSQMessage messageWithSenderId:@"456"
+                                                   displayName:@"456"
+                                                         media:videoItem];
+    [self.messages addObject:videoMessage];
+}
+
+#pragma mark 接受视频
+- (void)reveiceVideoMediaMessageWithVideoPath:(nonnull NSString *)videoPath showImage:(nonnull UIImage *)showImage {
+    LJVideoMediaItem *videoItem = [[LJVideoMediaItem alloc] initWithVideoPath:videoPath aFrameImage:showImage];
+    JSQMessage *videoMessage = [JSQMessage messageWithSenderId:@"456"
+                                                   displayName:@"456"
                                                          media:videoItem];
     [self.messages addObject:videoMessage];
 }
