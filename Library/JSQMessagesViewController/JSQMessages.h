@@ -29,9 +29,9 @@
 
 #import "JSQMediaItem.h"
 #import "JSQAudioMediaItem.h"
-#import "JSQPhotoMediaItem.h"
 #import "JSQLocationMediaItem.h"
 //  === 自己写的 ===
+#import "LJImageMediaItem.h"
 #import "LJShortVideoMediaItem.h"
 #import "LJVideoMediaItem.h"
 

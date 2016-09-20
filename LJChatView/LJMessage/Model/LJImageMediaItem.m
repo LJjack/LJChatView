@@ -1,29 +1,25 @@
 //
-//  Created by Jesse Squires
-//  License
-//  Copyright (c) 2014 Jesse Squires
+//  LJImageMediaItem.m
+//  LJChatView
+//
+//  Created by 刘俊杰 on 16/9/20.
+//  Copyright © 2016年 刘俊杰. All rights reserved.
 //
 
-#import "JSQPhotoMediaItem.h"
-
-#import "JSQMessagesMediaPlaceholderView.h"
+#import "LJImageMediaItem.h"
 #import "JSQMessagesMediaViewBubbleImageMasker.h"
 
 #import <MobileCoreServices/UTCoreTypes.h>
 
-@interface JSQPhotoMediaItem ()
+@interface LJImageMediaItem ()
 
 @property (strong, nonatomic) UIImageView *cachedImageView;
 
 @end
 
+@implementation LJImageMediaItem
 
-@implementation JSQPhotoMediaItem
-
-#pragma mark - Initialization
-
-- (instancetype)initWithImage:(UIImage *)image
-{
+- (instancetype)initWithImage:(UIImage *)image {
     self = [super init];
     if (self) {
         _image = [image copy];
@@ -32,22 +28,19 @@
     return self;
 }
 
-- (void)clearCachedMediaViews
-{
+- (void)clearCachedMediaViews {
     [super clearCachedMediaViews];
     _cachedImageView = nil;
 }
 
 #pragma mark - Setters
 
-- (void)setImage:(UIImage *)image
-{
+- (void)setImage:(UIImage *)image {
     _image = [image copy];
     _cachedImageView = nil;
 }
 
-- (void)setAppliesMediaViewMaskAsOutgoing:(BOOL)appliesMediaViewMaskAsOutgoing
-{
+- (void)setAppliesMediaViewMaskAsOutgoing:(BOOL)appliesMediaViewMaskAsOutgoing {
     [super setAppliesMediaViewMaskAsOutgoing:appliesMediaViewMaskAsOutgoing];
     _cachedImageView = nil;
 }
@@ -73,11 +66,8 @@
 }
 #pragma mark - JSQMessageMediaData protocol
 
-- (UIView *)mediaView
-{
-    if (self.image == nil) {
-        return nil;
-    }
+- (UIView *)mediaView {
+    if (self.image == nil) return nil;
     
     if (self.cachedImageView == nil) {
         CGSize size = [self mediaViewDisplaySize];
@@ -92,38 +82,32 @@
     return self.cachedImageView;
 }
 
-- (NSUInteger)mediaHash
-{
+- (NSUInteger)mediaHash {
     return self.hash;
 }
 
-- (NSString *)mediaDataType
-{
+- (NSString *)mediaDataType {
     return (NSString *)kUTTypeJPEG;
 }
 
-- (id)mediaData
-{
-    return UIImageJPEGRepresentation(self.image, 1);
+- (id)mediaData {
+    return UIImageJPEGRepresentation(self.image, 0.75);
 }
 
 #pragma mark - NSObject
 
-- (NSUInteger)hash
-{
+- (NSUInteger)hash {
     return super.hash ^ self.image.hash;
 }
 
-- (NSString *)description
-{
+- (NSString *)description {
     return [NSString stringWithFormat:@"<%@: image=%@, appliesMediaViewMaskAsOutgoing=%@>",
             [self class], self.image, @(self.appliesMediaViewMaskAsOutgoing)];
 }
 
 #pragma mark - NSCoding
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
         _image = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(image))];
@@ -131,17 +115,15 @@
     return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)aCoder
-{
+- (void)encodeWithCoder:(NSCoder *)aCoder {
     [super encodeWithCoder:aCoder];
     [aCoder encodeObject:self.image forKey:NSStringFromSelector(@selector(image))];
 }
 
 #pragma mark - NSCopying
 
-- (instancetype)copyWithZone:(NSZone *)zone
-{
-    JSQPhotoMediaItem *copy = [[JSQPhotoMediaItem allocWithZone:zone] initWithImage:self.image];
+- (instancetype)copyWithZone:(NSZone *)zone {
+    LJImageMediaItem *copy = [[LJImageMediaItem allocWithZone:zone] initWithImage:self.image];
     copy.appliesMediaViewMaskAsOutgoing = self.appliesMediaViewMaskAsOutgoing;
     return copy;
 }

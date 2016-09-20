@@ -289,7 +289,7 @@
     
     [self.msgModel sendTextMediaMessageWithText:text];
     
-    [self finishSendingMessageAnimated:YES];
+    
     
 }
 
@@ -362,23 +362,7 @@
 // photos数组里的UIImage对象，默认是828像素宽，你可以通过设置photoWidth属性的值来改变它
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto {
     for (UIImage *image in photos) {
-        //        [self.msgModel addPhotoMediaMessageWithImage:image];
-        
-        JSQPhotoMediaItem *photoItem = [[JSQPhotoMediaItem alloc] initWithImage:nil];
-        
-        JSQMessage *photoMessage = [JSQMessage messageWithSenderId:@"123"
-                                                       displayName:@"123"
-                                                             media:photoItem];
-        photoItem.image = image;
-        [self.msgModel.messages addObject:photoMessage];
-        [self finishSendingMessage];
-        
-        
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [photoMessage setDataState:LJMessageDataStateCompleted];
-            [self.collectionView reloadData];
-        });
+        [self.msgModel sendPhotoMediaMessageWithImage:image];
     }
     
     
@@ -538,7 +522,7 @@
 #pragma mark - LJMessagesModelDelegate
 
 - (void)messagesModelWillSend:(LJMessagesModel *)messagesModel {
-    
+    [self finishSendingMessageAnimated:YES];
 }
 
 - (void)messagesModelDidSend:(LJMessagesModel *)messagesModel {
@@ -926,7 +910,7 @@
         NSLog(@"点击视频!");
     } else if ([message.media isKindOfClass:[JSQLocationMediaItem class]]) {
         NSLog(@"点击地图!");
-    } else if ([message.media isKindOfClass:[JSQPhotoMediaItem class]]) {
+    } else if ([message.media isKindOfClass:[LJImageMediaItem class]]) {
         NSLog(@"点击图片!");
     }  else  {
         NSLog(@"点击文字!");

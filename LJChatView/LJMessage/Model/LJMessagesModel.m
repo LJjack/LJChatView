@@ -8,20 +8,9 @@
 
 #import "LJMessagesModel.h"
 
-#import "JSQMessage.h"
-#import "JSQMessagesAvatarImage.h"
-#import "JSQMessagesAvatarImageFactory.h"
-#import "JSQMessagesCollectionViewFlowLayout.h"
-#import "JSQMessagesBubbleImageFactory.h"
-
-#import "JSQAudioMediaItem.h"
-#import "JSQPhotoMediaItem.h"
-#import "LJVideoMediaItem.h"
-#import "LJShortVideoMediaItem.h"
+#import "JSQMessages.h"
 
 #import <CoreLocation/CoreLocation.h>
-
-#import "UIColor+JSQMessages.h"
 
 #import <ImSDK/ImSDK.h>
 
@@ -99,38 +88,21 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
 #pragma mark 发送文字
 - (void)sendTextMediaMessageWithText:(NSString *)text {
     NSAssert(text || text.length , @"文字不能为 nil 或长度为 0");
-    [self willSendMessage];
-    TIMMessage *message = [[TIMMessage alloc] init];
-    TIMTextElem *textElem = [[TIMTextElem alloc] init];
-    textElem.text = text;
-    [message addElem:textElem];
+    
     JSQMessage *textMessage = [JSQMessage messageWithSenderId:@"123" displayName:@"123" text:text];
     [textMessage setDataState:LJMessageDataStateRuning];
     [self.messages addObject:textMessage];
     
-    [self.chatingConversation sendMessage:message succ:^{
-        [textMessage setDataState:LJMessageDataStateCompleted];
-        [self didSendMessage];
-        NSLog(@"发送 成功");
-    } fail:^(int code, NSString *msg) {
-        [textMessage setDataState:LJMessageDataStateFailed];
-        [self failSendMessage];
-        NSLog(@"发送 失败 mesg=%@",msg);
-    }];
+    [self willSendMessage];
+    
+    TIMMessage *message = [[TIMMessage alloc] init];
+    TIMTextElem *textElem = [[TIMTextElem alloc] init];
+    textElem.text = text;
+    [message addElem:textElem];
+    
+    [self sendMessage:message jsqMessage:textMessage];
     
     
-}
-
-#pragma mark 发送音频
-- (void)sendAudioMediaMessageWithPath:(nonnull NSString *)audioPath audioTime:(NSInteger)audioTime {
-    NSAssert(audioPath || audioPath.length , @"音频路径不能为 nil 或长度为 0");
-    
-    
-    JSQAudioMediaItem *audioItem = [[JSQAudioMediaItem alloc] initWithPath:audioPath audioTime:audioTime];
-    JSQMessage *audioMessage = [JSQMessage messageWithSenderId:@"123"
-                                                   displayName:@"123"
-                                                         media:audioItem];
-    [self.messages addObject:audioMessage];
 }
 
 #pragma mark 发送照片
@@ -142,12 +114,55 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     if (![image isKindOfClass:[UIImage class]]) {
         NSAssert(NO , @"image获得不了图片或image路径下获得不了图片");
     }
-    
-    JSQPhotoMediaItem *photoItem = [[JSQPhotoMediaItem alloc] initWithImage:image];
+    LJImageMediaItem *photoItem = [[LJImageMediaItem alloc] initWithImage:image];
     JSQMessage *photoMessage = [JSQMessage messageWithSenderId:@"123"
                                                    displayName:@"123"
                                                          media:photoItem];
     [self.messages addObject:photoMessage];
+    
+    [self willSendMessage];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *nsTmpDIr = NSTemporaryDirectory();
+    NSString *filePath = [NSString stringWithFormat:@"%@uploadFile%3.f", nsTmpDIr, [NSDate timeIntervalSinceReferenceDate]];
+    BOOL isDirectory = NO;
+    NSError *err = nil;
+    
+    // 当前sdk仅支持文件路径上传图片，将图片存在本地
+    if ([fileManager fileExistsAtPath:filePath isDirectory:&isDirectory]) {
+        if (![fileManager removeItemAtPath:nsTmpDIr error:&err]) {
+            NSLog(@"Upload Image Failed: same upload filename: %@", err);
+            return ;
+        }
+    }
+    if (![fileManager createFileAtPath:filePath contents:UIImageJPEGRepresentation(image, 0.75) attributes:nil]) {
+        NSLog(@"Upload Image Failed: fail to create uploadfile: %@", err);
+        return;
+    }
+
+    
+    TIMMessage *message = [[TIMMessage alloc] init];
+    TIMImageElem *imageElem = [[TIMImageElem alloc] init];
+    
+    imageElem.path = filePath;
+    [message addElem:imageElem];
+    
+    [self sendMessage:message jsqMessage:photoMessage];
+    
+    
+}
+
+
+#pragma mark 发送音频
+- (void)sendAudioMediaMessageWithPath:(nonnull NSString *)audioPath audioTime:(NSInteger)audioTime {
+    NSAssert(audioPath || audioPath.length , @"音频路径不能为 nil 或长度为 0");
+    
+    
+    JSQAudioMediaItem *audioItem = [[JSQAudioMediaItem alloc] initWithPath:audioPath audioTime:audioTime];
+    JSQMessage *audioMessage = [JSQMessage messageWithSenderId:@"123"
+                                                   displayName:@"123"
+                                                         media:audioItem];
+    [self.messages addObject:audioMessage];
 }
 
 #pragma mark 发送当前位置
@@ -214,7 +229,7 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
             
         } else if ([elem isKindOfClass:[TIMImageElem class]]) {
             TIMImageElem *imageElem = (TIMImageElem *)elem;
-            JSQPhotoMediaItem *photoItem = [[JSQPhotoMediaItem alloc] initWithImage:nil];
+            LJImageMediaItem *photoItem = [[LJImageMediaItem alloc] initWithImage:nil];
             JSQMessage *imageMessage = [JSQMessage messageWithSenderId:senderId
                                                            displayName:displayName
                                                                  media:photoItem];
@@ -259,8 +274,6 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
                     }
                 }
             }
-            
-            
             
         } else if ([elem isKindOfClass:[TIMLocationElem class]]) {
             
@@ -320,6 +333,19 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
 }
 
 #pragma mark - Private Methods
+
+
+- (void)sendMessage:(TIMMessage*)message jsqMessage:(JSQMessage *)jsqMessage {
+    [self.chatingConversation sendMessage:message succ:^{
+        [jsqMessage setDataState:LJMessageDataStateCompleted];
+        [self didSendMessage];
+        NSLog(@"发送 成功");
+    } fail:^(int code, NSString *msg) {
+        [jsqMessage setDataState:LJMessageDataStateFailed];
+        [self failSendMessage];
+        NSLog(@"发送 失败 mesg=%@",msg);
+    }];
+}
 
 #pragma mark - 处理发送消息
 
