@@ -44,23 +44,14 @@
 @end
 
 @implementation LJMessagesController
+
 #pragma mark - View lifecycle
 
 - (void)dealloc {
     [self.inputPanel removeObserver:self forKeyPath:@"frame"];
 }
 
-/**
- *  Override point for customization.
- *
- *  Customize your view.
- *  Look at the properties on `JSQMessagesViewController` and `JSQMessagesCollectionView` to see what is possible.
- *
- *  Customize your layout.
- *  Look at the properties on `JSQMessagesCollectionViewFlowLayout` to see what is possible.
- */
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     
@@ -69,6 +60,8 @@
     if (!self.msgModel) {
         self.msgModel = [LJMessagesModel sharedInstance];
     }
+    self.msgModel.delegate = self;
+    
     self.title = @"JSQMessages";
     
     /* 语音播放工具 */
@@ -292,12 +285,9 @@
 
 - (void)chatInputPanel:(GJGCChatInputPanel *)panel sendTextMessage:(NSString *)text
 {
-    JSQMessage *message = [[JSQMessage alloc] initWithSenderId:[self.collectionView.dataSource senderId]
-                                             senderDisplayName:[self.collectionView.dataSource senderDisplayName]
-                                                          date:[NSDate date]
-                                                          text:text];
     
-    [self.msgModel.messages addObject:message];
+    
+    [self.msgModel sendTextMediaMessageWithText:text];
     
     [self finishSendingMessageAnimated:YES];
     
@@ -547,6 +537,26 @@
 
 #pragma mark - LJMessagesModelDelegate
 
+- (void)messagesModelWillSend:(LJMessagesModel *)messagesModel {
+    
+}
+
+- (void)messagesModelDidSend:(LJMessagesModel *)messagesModel {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [self.collectionView reloadData];
+//        [self scrollToBottomAnimated:YES];
+    });
+}
+
+- (void)messagesModelFailSend:(LJMessagesModel *)messagesModel {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [self.collectionView reloadData];
+//        [self scrollToBottomAnimated:YES];
+    });
+}
+
 - (void)messagesModelPrepareWillReveice:(LJMessagesModel *)messagesModel {
     
 }
@@ -562,7 +572,9 @@
 
 - (void)messagesModelDidReveice:(LJMessagesModel *)messagesModel {
     dispatch_async(dispatch_get_main_queue(), ^{
+        
         [self.collectionView reloadData];
+        [self scrollToBottomAnimated:YES];
     });
 }
 
@@ -590,7 +602,7 @@
 }
 
 - (void)closePressed:(UIBarButtonItem *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

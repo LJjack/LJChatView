@@ -7,15 +7,9 @@
 //
 
 #import "LJIMManagerListener.h"
+#import "LJMessagesModel.h"
 
 @implementation LJIMManagerListener
-
-- (instancetype)init {
-    if (self = [super init]) {
-        self.conversationList = [NSMutableArray array];
-    }
-    return self;
-}
 
 #pragma mark- TIMConnListener
 
@@ -65,8 +59,7 @@
                     if (!msg.isSelf) {
                         if ([self.chattingConversation getType] == TIM_C2C) {
                             int elemCount = [msg elemCount];
-                            for (int i = 0; i < elemCount; i++)
-                            {
+                            for (int i = 0; i < elemCount; i++) {
                                 TIMElem* elem = [msg getElem:i];
                                 if ([elem isKindOfClass:[TIMCustomElem class]]) {
                                      isInputStatus = YES;
@@ -80,6 +73,7 @@
                             [newConversation setReadMessage];
 //                            oldConversation.lastMessage = imamsg;
 //                            [_chattingConversation onReceiveNewMessage:imamsg];
+                            [[LJMessagesModel sharedInstance] reveiceMessage:msg];
                         }
                     }
                 } else {
@@ -92,6 +86,7 @@
         
         if (!isNewConversation) {
             // 说明会话列表中没有该会话，新生建会话，并更新到
+            [[TIMManager sharedInstance] getConversationList];
             [self.conversationList insertObject:newConversation atIndex:0];
            
         }

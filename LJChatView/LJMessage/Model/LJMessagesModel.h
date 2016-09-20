@@ -26,6 +26,24 @@ NS_ASSUME_NONNULL_BEGIN
 @optional
 
 /**
+ *  将要发送消息
+ */
+- (void)messagesModelWillSend:(LJMessagesModel *)messagesModel;
+
+/**
+ *  完成发送消息
+ */
+- (void)messagesModelDidSend:(LJMessagesModel *)messagesModel;
+
+/**
+ *  失败发送消息
+ */
+
+- (void)messagesModelFailSend:(LJMessagesModel *)messagesModel;
+
+
+
+/**
  *  准备将要接受消息
  */
 - (void)messagesModelPrepareWillReveice:(LJMessagesModel *)messagesModel;

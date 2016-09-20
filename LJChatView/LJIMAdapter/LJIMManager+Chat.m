@@ -12,7 +12,10 @@
 
 // 获取会话（TIMConversation*）列表
 -(NSArray*)getConversationList {
-    return [[TIMManager sharedInstance] getConversationList];
+    if (!self.listener.conversationList || !self.listener.conversationList.count) {
+        self.listener.conversationList = [[[TIMManager sharedInstance] getConversationList] mutableCopy];
+    }
+    return self.listener.conversationList.copy;
 }
 
 // 获取会话

@@ -99,18 +99,23 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
 #pragma mark 发送文字
 - (void)sendTextMediaMessageWithText:(NSString *)text {
     NSAssert(text || text.length , @"文字不能为 nil 或长度为 0");
+    [self willSendMessage];
     TIMMessage *message = [[TIMMessage alloc] init];
     TIMTextElem *textElem = [[TIMTextElem alloc] init];
     textElem.text = text;
-    
+    [message addElem:textElem];
     JSQMessage *textMessage = [JSQMessage messageWithSenderId:@"123" displayName:@"123" text:text];
     [textMessage setDataState:LJMessageDataStateRuning];
     [self.messages addObject:textMessage];
     
     [self.chatingConversation sendMessage:message succ:^{
-        [textMessage setDataState:LJMessageDataStateRuning];
+        [textMessage setDataState:LJMessageDataStateCompleted];
+        [self didSendMessage];
+        NSLog(@"发送 成功");
     } fail:^(int code, NSString *msg) {
         [textMessage setDataState:LJMessageDataStateFailed];
+        [self failSendMessage];
+        NSLog(@"发送 失败 mesg=%@",msg);
     }];
     
     
@@ -146,8 +151,7 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
 }
 
 #pragma mark 发送当前位置
-- (void)sendLocationMediaMessageCompletion:(JSQLocationMediaItemCompletionBlock)completion
-{
+- (void)sendLocationMediaMessageCompletion:(JSQLocationMediaItemCompletionBlock)completion {
     CLLocation *ferryBuildingInSF = [[CLLocation alloc] initWithLatitude:37.795313 longitude:-122.393757];
     
     JSQLocationMediaItem *locationItem = [[JSQLocationMediaItem alloc] init];
@@ -184,15 +188,26 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     [self willReveiceMessage];
     
     int elemCount = [message elemCount];
-    TIMUserProfile *user = [message GetSenderProfile];
+    
+    NSString *senderId = @"";
+    NSString *displayName = @"";
+    
+    if ([message isSelf]) {
+        senderId = @"123";
+        displayName = @"123";
+    } else {
+        TIMUserProfile *user = [message GetSenderProfile];
+        senderId = user.identifier;
+        displayName = user.nickname.length?user.nickname:senderId;
+    }
     
     for (int i = 0 ; i < elemCount; i ++) {
         
         TIMElem *elem = [message getElem:i];
         if ([elem isKindOfClass:[TIMTextElem class]]) {
             TIMTextElem *textElem = (TIMTextElem *)elem;
-            JSQMessage *textMessage = [JSQMessage messageWithSenderId:user.identifier
-                                             displayName:user.nickname
+            JSQMessage *textMessage = [JSQMessage messageWithSenderId:senderId
+                                             displayName:displayName
                                                     text:[textElem text]];
             [self.messages addObject:textMessage];
             [self didReveiceMessage];
@@ -200,8 +215,8 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
         } else if ([elem isKindOfClass:[TIMImageElem class]]) {
             TIMImageElem *imageElem = (TIMImageElem *)elem;
             JSQPhotoMediaItem *photoItem = [[JSQPhotoMediaItem alloc] initWithImage:nil];
-            JSQMessage *imageMessage = [JSQMessage messageWithSenderId:user.identifier
-                                                           displayName:user.nickname
+            JSQMessage *imageMessage = [JSQMessage messageWithSenderId:senderId
+                                                           displayName:displayName
                                                                  media:photoItem];
             [self.messages addObject:imageMessage];
             
@@ -258,29 +273,7 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     }
 }
 
-- (void)prepareWillReveiceMessage {
-    if ([self.delegate respondsToSelector:@selector(messagesModelPrepareWillReveice:)]) {
-        [self.delegate messagesModelPrepareWillReveice:self];
-    }
-}
 
-- (void)willReveiceMessage {
-    if ([self.delegate respondsToSelector:@selector(messagesModelWillReveice:)]) {
-        [self.delegate messagesModelWillReveice:self];
-    }
-}
-
-- (void)didReveiceMessage {
-    if ([self.delegate respondsToSelector:@selector(messagesModelDidReveice:)]) {
-        [self.delegate messagesModelDidReveice:self];
-    }
-}
-
-- (void)failReviceMessage {
-    if ([self.delegate respondsToSelector:@selector(messagesModelFailReveice:)]) {
-        [self.delegate messagesModelFailReveice:self];
-    }
-}
 
 #pragma mark 接受音频
 - (void)reveiceAudioMediaMessageWithPath:(nonnull NSString *)audioPath audioTime:(NSInteger)audioTime {
@@ -324,6 +317,54 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
                                                    displayName:@"456"
                                                          media:videoItem];
     [self.messages addObject:videoMessage];
+}
+
+#pragma mark - Private Methods
+
+#pragma mark - 处理发送消息
+
+- (void)willSendMessage {
+    if ([self.delegate respondsToSelector:@selector(messagesModelWillSend:)]) {
+        [self.delegate messagesModelWillSend:self];
+    }
+}
+
+- (void)didSendMessage {
+    if ([self.delegate respondsToSelector:@selector(messagesModelDidSend:)]) {
+        [self.delegate messagesModelDidSend:self];
+    }
+}
+
+- (void)failSendMessage {
+    if ([self.delegate respondsToSelector:@selector(messagesModelFailSend:)]) {
+        [self.delegate messagesModelFailSend:self];
+    }
+}
+
+#pragma mark - 处理接受消息
+
+- (void)prepareWillReveiceMessage {
+    if ([self.delegate respondsToSelector:@selector(messagesModelPrepareWillReveice:)]) {
+        [self.delegate messagesModelPrepareWillReveice:self];
+    }
+}
+
+- (void)willReveiceMessage {
+    if ([self.delegate respondsToSelector:@selector(messagesModelWillReveice:)]) {
+        [self.delegate messagesModelWillReveice:self];
+    }
+}
+
+- (void)didReveiceMessage {
+    if ([self.delegate respondsToSelector:@selector(messagesModelDidReveice:)]) {
+        [self.delegate messagesModelDidReveice:self];
+    }
+}
+
+- (void)failReviceMessage {
+    if ([self.delegate respondsToSelector:@selector(messagesModelFailReveice:)]) {
+        [self.delegate messagesModelFailReveice:self];
+    }
 }
 
 @end

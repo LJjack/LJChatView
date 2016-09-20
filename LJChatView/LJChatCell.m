@@ -61,8 +61,14 @@
         return @"我";
     }
     TIMUserProfile *userProfile = [message GetSenderProfile];
-    
-    return userProfile.remark ?: userProfile.nickname ?: userProfile.identifier;
+    NSString *name = userProfile.identifier;
+    if (userProfile.nickname.length) {
+        name = userProfile.nickname;
+        if (userProfile.remark.length) {
+            name = userProfile.remark;
+        }
+    }
+    return name;
 }
 
 @end

@@ -130,6 +130,7 @@
          LJMessagesController *msgC = segue.destinationViewController;
         LJMessagesModel *model = [LJMessagesModel sharedInstance];
         model.chatingConversation = self.dataList[indexPath.row];
+        [LJIMManager sharedInstance].listener.chattingConversation = self.dataList[indexPath.row];;
         msgC.msgModel = model;
     }
 }
