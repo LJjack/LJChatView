@@ -118,6 +118,7 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     JSQMessage *photoMessage = [JSQMessage messageWithSenderId:@"123"
                                                    displayName:@"123"
                                                          media:photoItem];
+    [photoMessage setDataState:LJMessageDataStateRuning];
     [self.messages addObject:photoMessage];
     
     [self willSendMessage];
