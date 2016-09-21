@@ -28,12 +28,13 @@
 #import "JSQMessage.h"
 
 #import "JSQMediaItem.h"
-#import "JSQAudioMediaItem.h"
-#import "JSQLocationMediaItem.h"
-//  === 自己写的 ===
+// ==== 自己写的 ====
 #import "LJImageMediaItem.h"
 #import "LJShortVideoMediaItem.h"
 #import "LJVideoMediaItem.h"
+#import "LJSoundMediaItem.h"
+#import "LJLocationMediaItem.h"
+// =================
 
 #import "JSQMessagesBubbleImage.h"
 #import "JSQMessagesAvatarImage.h"

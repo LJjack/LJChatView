@@ -7,7 +7,8 @@
 //
 
 @class GJGCChatInputPanel;
-#import "GJCFAudioModel.h"
+
+#import "LJSoundModel.h"
 
 @protocol GJGCChatInputPanelDelegate <NSObject>
 
@@ -27,7 +28,7 @@
  *  @param panel
  *  @param audioFile 录音结果文件
  */
-- (void)chatInputPanel:(GJGCChatInputPanel *)panel didFinishRecord:(GJCFAudioModel *)audioFile;
+- (void)chatInputPanel:(GJGCChatInputPanel *)panel didFinishRecord:(LJSoundModel *)soundModel;
 
 /**
  *  发送文字消息

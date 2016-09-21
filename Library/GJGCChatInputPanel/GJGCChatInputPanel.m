@@ -7,15 +7,12 @@
 //
 
 #import "GJGCChatInputPanel.h"
-#import "GJCFAudioRecord.h"
-#import "GJCFAudioPlayer.h"
 #import "GJGCChatInputRecordAudioTipView.h"
 #import "UIView+GJCFViewFrameUitil.h"
 
-@interface GJGCChatInputPanel ()<
-                                GJGCChatInputExpandMenuPanelDelegate,
-                                GJCFAudioRecordDelegate
-                                >
+#import "LJSoundRecord.h"
+
+@interface GJGCChatInputPanel ()<GJGCChatInputExpandMenuPanelDelegate,LJSoundRecordDelegate>
 
 /* 输入条 */
 @property (nonatomic,strong)GJGCChatInputBar *inputBar;
@@ -27,7 +24,7 @@
 @property (nonatomic,strong)GJGCChatInputExpandMenuPanel  *menuPanel;
 
 /* 录音组件 */
-@property (nonatomic,strong)GJCFAudioRecord *audioRecord;
+@property (nonatomic, strong) LJSoundRecord *audioRecord;
 
 @property (nonatomic,copy)GJGCChatInputPanelKeyboardFrameChangeBlock frameChangeBlock;
 
@@ -341,58 +338,45 @@
 #pragma mark - 录音管理
 - (void)initAudioRecord
 {
-    self.audioRecord = [[GJCFAudioRecord alloc]init];
+    self.audioRecord = [[LJSoundRecord alloc] init];
     self.audioRecord.delegate = self;
     self.audioRecord.limitRecordDuration = 60.0f;
     self.audioRecord.minEffectDuration = 1.f;
 }
 
-- (void)audioRecord:(GJCFAudioRecord *)audioRecord didFaildByMinRecordDuration:(NSTimeInterval)minDuration
-{
+- (void)soundRecord:(LJSoundRecord *)soundRecord didFaildByMinRecordDuration:(NSTimeInterval)minDuration {
     NSLog(@"最小录音时间失败:%f",minDuration);
     [self showRecordTipView];
 }
 
-- (void)audioRecord:(GJCFAudioRecord *)audioRecord didOccusError:(NSError *)error
-{
+- (void)soundRecord:(LJSoundRecord *)soundRecord didOccusError:(NSError *)error {
     NSLog(@"录音失败:%@",error);
 }
-- (void)audioRecord:(GJCFAudioRecord *)audioRecord finishRecord:(GJCFAudioModel *)resultAudio
-{
-    NSLog(@"录音成功:%@",resultAudio.description);
+
+- (void)soundRecord:(LJSoundRecord *)soundRecord finishRecord:(LJSoundModel *)soundModel {
+    NSLog(@"录音成功:%@",soundModel.description);
     
     NSString *formateNoti = [GJGCChatInputConst panelNoti:GJGCChatInputTextViewRecordTooLongNoti formateWithIdentifier:self.panelIndentifier];
     [[NSNotificationCenter defaultCenter] postNotificationName:formateNoti object:nil];
     
-    /**
-     *  录音文件转码
-     */
-//    [GJCFAudioFileUitil setupAudioFileTempEncodeFilePath:resultAudio];
-//    
-//    if ([GJCFEncodeAndDecode convertAudioFileToAMR:resultAudio]) {
-    
-        NSLog(@"ChatInputPanel 录音文件转码成功");
-        NSLog(@"%@",resultAudio);
-//
-        if (self.delegate && [self.delegate respondsToSelector:@selector(chatInputPanel:didFinishRecord:)]) {
-            [self.delegate chatInputPanel:self didFinishRecord:resultAudio];
-        }
-//    }
+    if ([self.delegate respondsToSelector:@selector(chatInputPanel:didFinishRecord:)]) {
+        [self.delegate chatInputPanel:self didFinishRecord:soundModel];
+    }
 }
-- (void)audioRecord:(GJCFAudioRecord *)audioRecord limitDurationProgress:(CGFloat)progress
-{
+
+- (void)soundRecord:(LJSoundRecord *)soundRecord limitDurationProgress:(CGFloat)progress {
 //    NSLog(@"最大录音限制进度:%f",progress);
 }
-- (void)audioRecord:(GJCFAudioRecord *)audioRecord soundMeter:(CGFloat)soundMeter
-{
+
+- (void)soundRecord:(LJSoundRecord *)soundRecord soundMeter:(CGFloat)soundMeter {
 //    NSLog(@"录音音量:%f",soundMeter);
     
     NSString *formateNoti = [GJGCChatInputConst panelNoti:GJGCChatInputTextViewRecordSoundMeterNoti formateWithIdentifier:self.panelIndentifier];
     [[NSNotificationCenter defaultCenter] postNotificationName:formateNoti object:@(soundMeter)];
     
 }
-- (void)audioRecordDidCancel:(GJCFAudioRecord *)audioRecord
-{
+
+- (void)soundRecordDidCancel:(LJSoundRecord *)soundRecord {
     NSLog(@"录音取消");
 }
 

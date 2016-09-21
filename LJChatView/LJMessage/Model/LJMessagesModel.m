@@ -10,8 +10,6 @@
 
 #import "JSQMessages.h"
 
-#import <CoreLocation/CoreLocation.h>
-
 #import <ImSDK/ImSDK.h>
 
 /**
@@ -155,23 +153,37 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
 
 
 #pragma mark 发送音频
-- (void)sendAudioMediaMessageWithPath:(nonnull NSString *)audioPath audioTime:(NSInteger)audioTime {
-    NSAssert(audioPath || audioPath.length , @"音频路径不能为 nil 或长度为 0");
+- (void)sendSoundMediaMessageWithData:(nonnull NSData *)soundData second:(int)second {
+    NSAssert(soundData || soundData.length , @"音频数据不能为 nil 或长度为 0");
     
     
-    JSQAudioMediaItem *audioItem = [[JSQAudioMediaItem alloc] initWithPath:audioPath audioTime:audioTime];
+    LJSoundMediaItem *audioItem = [[LJSoundMediaItem alloc] initWithData:soundData second:second];
     JSQMessage *audioMessage = [JSQMessage messageWithSenderId:@"123"
                                                    displayName:@"123"
                                                          media:audioItem];
     [self.messages addObject:audioMessage];
+    
+    [self willSendMessage];
+    
+    
+    TIMMessage *message = [[TIMMessage alloc] init];
+    TIMSoundElem *soundElem = [[TIMSoundElem alloc] init];
+    soundElem.data = soundData;
+    soundElem.second = second;
+    [message addElem:soundElem];
+    
+    [self sendMessage:message jsqMessage:audioMessage];
+    
+    
 }
 
 #pragma mark 发送当前位置
-- (void)sendLocationMediaMessageCompletion:(JSQLocationMediaItemCompletionBlock)completion {
-    CLLocation *ferryBuildingInSF = [[CLLocation alloc] initWithLatitude:37.795313 longitude:-122.393757];
+- (void)sendLocationMediaMessageLatitude:(double)latitude
+                   longitude:(double)longitude completion:(void(^)())completion {
+
     
-    JSQLocationMediaItem *locationItem = [[JSQLocationMediaItem alloc] init];
-    [locationItem setLocation:ferryBuildingInSF withCompletionHandler:completion];
+    LJLocationMediaItem *locationItem = [[LJLocationMediaItem alloc] init];
+    [locationItem setLatitude:37.795313 longitude:-122.393757 completionHandler:completion];
     
     JSQMessage *locationMessage = [JSQMessage messageWithSenderId:@"123"
                                                       displayName:@"123"
@@ -207,7 +219,7 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     
     NSString *senderId = @"";
     NSString *displayName = @"";
-    
+    BOOL outgoing = YES;
     if ([message isSelf]) {
         senderId = @"123";
         displayName = @"123";
@@ -215,6 +227,7 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
         TIMUserProfile *user = [message GetSenderProfile];
         senderId = user.identifier;
         displayName = user.nickname.length?user.nickname:senderId;
+        outgoing = NO;
     }
     
     for (int i = 0 ; i < elemCount; i ++) {
@@ -222,64 +235,23 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
         TIMElem *elem = [message getElem:i];
         if ([elem isKindOfClass:[TIMTextElem class]]) {
             TIMTextElem *textElem = (TIMTextElem *)elem;
-            JSQMessage *textMessage = [JSQMessage messageWithSenderId:senderId
-                                             displayName:displayName
-                                                    text:[textElem text]];
-            [self.messages addObject:textMessage];
-            [self didReveiceMessage];
+            [self reveiceText:textElem senderId:senderId displayName:displayName];
             
         } else if ([elem isKindOfClass:[TIMImageElem class]]) {
             TIMImageElem *imageElem = (TIMImageElem *)elem;
-            LJImageMediaItem *photoItem = [[LJImageMediaItem alloc] initWithImage:nil];
-            JSQMessage *imageMessage = [JSQMessage messageWithSenderId:senderId
-                                                           displayName:displayName
-                                                                 media:photoItem];
-            [self.messages addObject:imageMessage];
-            
-            if (imageElem && imageElem.imageList && imageElem.imageList.count) {
-                for (TIMImage *imageModel in imageElem.imageList) {
-                    if (imageModel.type == TIM_IMAGE_TYPE_ORIGIN) {
-                        if (!(imageModel.uuid && imageModel.uuid.length > 0)) {
-                            break;
-                        }
-                        
-                        NSFileManager *fileManager = [NSFileManager defaultManager];
-                        NSString *nsTmpDir = NSTemporaryDirectory();
-                        NSString *imagePath = [NSString stringWithFormat:@"%@/image_%@", nsTmpDir, imageModel.uuid];
-                        BOOL isDirectory;
-                        
-                        if ([fileManager fileExistsAtPath:imagePath isDirectory:&isDirectory]
-                            && isDirectory == NO) {
-                            NSData *data = [fileManager contentsAtPath:imagePath];
-                            if (data) {
-                                photoItem.image = [UIImage imageWithData:data];
-                                [self didReveiceMessage];
-                            }
-                        } else {
-                            [imageModel getImage:imagePath succ:^{
-                                NSData *data = [fileManager contentsAtPath:imagePath];
-                                if (data) {
-                                    photoItem.image = [UIImage imageWithData:data];
-                                    [self didReveiceMessage];
-                                } else {
-                                    [self failReviceMessage];
-                                    BJLog(@"下载的图片是空的");
-                                }
-                                
-                            } fail:^(int code, NSString *err) {
-                                [self failReviceMessage];
-                                BJLog(@"下载原图失败");
-                            }];
-                        }
-                        break;
-                    }
-                }
-            }
+            [self reveiceImage:imageElem
+                      senderId:senderId
+                   displayName:displayName
+                      outgoing:outgoing];
             
         } else if ([elem isKindOfClass:[TIMLocationElem class]]) {
             
         } else if ([elem isKindOfClass:[TIMSoundElem class]]) {
-            
+            TIMSoundElem *soundElem = (TIMSoundElem *)elem;
+            [self reveiceSound:soundElem
+                      senderId:senderId
+                   displayName:displayName
+                      outgoing:outgoing];
         } else if ([elem isKindOfClass:[TIMVideoElem class]]) {
             
         }
@@ -287,36 +259,116 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     }
 }
 
-
-
-#pragma mark 接受音频
-- (void)reveiceAudioMediaMessageWithPath:(nonnull NSString *)audioPath audioTime:(NSInteger)audioTime {
-    NSAssert(audioPath || audioPath.length , @"音频路径不能为 nil 或长度为 0");
-    
-    
-    JSQAudioMediaItem *audioItem = [[JSQAudioMediaItem alloc] initWithPath:audioPath audioTime:audioTime];
-    JSQMessage *audioMessage = [JSQMessage messageWithSenderId:@"456"
-                                                   displayName:@"456"
-                                                         media:audioItem];
-    [self.messages addObject:audioMessage];
+// 接受文字
+- (void)reveiceText:(TIMTextElem *)textElem
+            senderId:(NSString *)senderId
+         displayName:(NSString *)displayName {
+    JSQMessage *textMessage = [JSQMessage messageWithSenderId:senderId
+                                                  displayName:displayName
+                                                         text:[textElem text]];
+    [self.messages addObject:textMessage];
+    [self didReveiceMessage];
 }
 
-#pragma mark 接受当前位置
-- (void)reveiceLocationMediaMessageCompletion:(JSQLocationMediaItemCompletionBlock)completion
-{
-    CLLocation *ferryBuildingInSF = [[CLLocation alloc] initWithLatitude:37.795313 longitude:-122.393757];
+// 接受图片
+- (void)reveiceImage:(TIMImageElem *)imageElem
+            senderId:(NSString *)senderId
+         displayName:(NSString *)displayName
+            outgoing:(BOOL)outgoing {
+    LJImageMediaItem *photoItem = [[LJImageMediaItem alloc] initWithImage:nil];
+    photoItem.appliesMediaViewMaskAsOutgoing = outgoing;
+    JSQMessage *imageMessage = [JSQMessage messageWithSenderId:senderId
+                                                   displayName:displayName
+                                                         media:photoItem];
     
-    JSQLocationMediaItem *locationItem = [[JSQLocationMediaItem alloc] init];
-    [locationItem setLocation:ferryBuildingInSF withCompletionHandler:completion];
+    [self.messages addObject:imageMessage];
+    
+    if (imageElem && imageElem.imageList && imageElem.imageList.count) {
+        for (TIMImage *imageModel in imageElem.imageList) {
+            if (imageModel.type == TIM_IMAGE_TYPE_ORIGIN) {
+                if (!(imageModel.uuid && imageModel.uuid.length > 0)) {
+                    break;
+                }
+                
+                NSFileManager *fileManager = [NSFileManager defaultManager];
+                NSString *nsTmpDir = NSTemporaryDirectory();
+                NSString *imagePath = [NSString stringWithFormat:@"%@/image_%@", nsTmpDir, imageModel.uuid];
+                BOOL isDirectory;
+                
+                if ([fileManager fileExistsAtPath:imagePath isDirectory:&isDirectory]
+                    && isDirectory == NO) {
+                    NSData *data = [fileManager contentsAtPath:imagePath];
+                    if (data) {
+                        photoItem.image = [UIImage imageWithData:data];
+                        [self didReveiceMessage];
+                    }
+                } else {
+                    [imageModel getImage:imagePath succ:^{
+                        NSData *data = [fileManager contentsAtPath:imagePath];
+                        if (data) {
+                            photoItem.image = [UIImage imageWithData:data];
+                            [self didReveiceMessage];
+                        } else {
+                            [self failReviceMessage];
+                            BJLog(@"下载的图片是空的");
+                        }
+                        
+                    } fail:^(int code, NSString *err) {
+                        [self failReviceMessage];
+                        BJLog(@"下载原图失败");
+                    }];
+                }
+                break;
+            }
+        }
+    }
+}
+
+// 接受音频
+- (void)reveiceSound:(TIMSoundElem *)soundElem
+            senderId:(NSString *)senderId
+         displayName:(NSString *)displayName
+            outgoing:(BOOL)outgoing {
+    LJSoundMediaItem *soundItem = [[LJSoundMediaItem alloc] initWithData:nil second:soundElem.second];
+    
+    JSQMessage *soundMessage = [JSQMessage messageWithSenderId:senderId
+                                                      displayName:displayName
+                                                            media:soundItem];
+    [self.messages addObject:soundMessage];
+    
+    [soundElem getSound:^(NSData *data) {
+        soundItem.soundData = data;
+        [self didReveiceMessage];
+    } fail:^(int code, NSString *msg) {
+        [self failReviceMessage];
+        BJLog(@"下载音频失败, %@",msg);
+    }];
+}
+
+// 接受当前位置
+- (void)reveiceLocation:(TIMLocationElem *)locationElem
+            senderId:(NSString *)senderId
+         displayName:(NSString *)displayName
+               outgoing:(BOOL)outgoing {
+    
+    
+    LJLocationMediaItem *locationItem = [[LJLocationMediaItem alloc] init];
+    [locationItem setLatitude:locationElem.latitude
+                    longitude:locationElem.longitude completionHandler:^{
+        [self didReveiceMessage];
+    }];
     
     JSQMessage *locationMessage = [JSQMessage messageWithSenderId:@"456"
                                                       displayName:@"456"
                                                             media:locationItem];
     [self.messages addObject:locationMessage];
+    
 }
 
 #pragma mark 接受微视频
-- (void)reveiceShortVideoMediaMessageWithVideoPath:(nonnull NSString *)videoPath showImage:(nonnull UIImage *)showImage {
+- (void)reveiceShortVideoMediaMessageWithVideoPath:(nonnull NSString *)videoPath
+                                         showImage:(nonnull UIImage *)showImage
+                                          outgoing:(BOOL)outgoing {
     LJShortVideoMediaItem *videoItem = [[LJShortVideoMediaItem alloc] initWithVideoPath:videoPath aFrameImage:showImage];
     JSQMessage *videoMessage = [JSQMessage messageWithSenderId:@"456"
                                                    displayName:@"456"

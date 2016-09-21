@@ -1,13 +1,16 @@
 //
-//  Created by Jesse Squires
-//  License
-//  Copyright (c) 2014 Jesse Squires
+//  LJSoundMediaItem.m
+//  LJChatView
+//
+//  Created by 刘俊杰 on 16/9/21.
+//  Copyright © 2016年 刘俊杰. All rights reserved.
 //
 
-#import "JSQAudioMediaItem.h"
+#import "LJSoundMediaItem.h"
+
 #import "JSQMessagesMediaViewBubbleImageMasker.h"
 
-@interface JSQAudioMediaItem ()
+@interface LJSoundMediaItem ()
 
 @property (nonatomic, strong) UIView *cachedMediaView;
 
@@ -17,49 +20,43 @@
 
 @end
 
+@implementation LJSoundMediaItem
 
-@implementation JSQAudioMediaItem
-
-#pragma mark - Initialization
-
-- (instancetype)initWithPath:(nullable NSString *)audioPath audioTime:(NSInteger)audioTime
-{
+- (instancetype)initWithData:(NSData *)soundData second:(int)second {
     if (self = [super init]) {
-        _audioPath = [audioPath copy];
-        _audioTime = audioTime;
+        _soundData = [soundData copy];
+        _second = second;
         _cachedMediaView = nil;
     }
     return self;
 }
+
 - (instancetype)init {
-    return [self initWithPath:nil audioTime:0];
+    return [self initWithData:nil second:0];
 }
 
-- (void)dealloc
-{
-    _audioPath = nil;
+- (void)dealloc {
+    _soundData = nil;
     [self clearCachedMediaViews];
 }
 
-- (void)clearCachedMediaViews
-{
-
+- (void)clearCachedMediaViews {
+    
     _audioTimeLabel = nil;
     _audioPlayIndicatorView = nil;
-
     _cachedMediaView = nil;
     [super clearCachedMediaViews];
 }
 
 #pragma mark - Setters
 
-- (void)setAudioPath:(NSString *)audioPath {
-    _audioPath = [audioPath copy];
+- (void)setSoundData:(NSData *)soundData {
+    _soundData = [soundData copy];
     [self clearCachedMediaViews];
 }
 
-- (void)setAudioTime:(NSInteger)audioTime {
-    _audioTime = audioTime;
+- (void)setSecond:(int)second {
+    _second = second;
     [self clearCachedMediaViews];
 }
 
@@ -71,10 +68,7 @@
 
 #pragma mark - Private
 
-
-
-- (NSString *)timestampString:(NSInteger)time
-{
+- (NSString *)timestampString:(NSInteger)time {
     //2'24"
     if (time < 60) {
         return [NSString stringWithFormat:@"%@\"", @(time)];
@@ -84,8 +78,7 @@
     }
 }
 
-- (NSArray *)myAudioPlayIndicatorImages
-{
+- (NSArray *)myAudioPlayIndicatorImages {
     return @[
              [UIImage imageNamed:@"聊天-icon-语音1-绿"],
              [UIImage imageNamed:@"聊天-icon-语音2-绿"],
@@ -93,8 +86,7 @@
              ];
 }
 
-- (NSArray *)otherAudioPlayIndicatorImages
-{
+- (NSArray *)otherAudioPlayIndicatorImages {
     return @[
              [UIImage imageNamed:@"聊天-icon-语音及切换键盘1-灰"],
              [UIImage imageNamed:@"聊天-icon-语音及切换键盘2-灰"],
@@ -119,9 +111,8 @@
 
 #pragma mark - JSQMessageMediaData protocol
 
-- (CGSize)mediaViewDisplaySize
-{
-    NSInteger time = self.audioTime;
+- (CGSize)mediaViewDisplaySize {
+    NSInteger time = self.second;
     CGFloat width = 80.;
     if (time < 20) {
         width = 80. + time * 9;
@@ -131,9 +122,8 @@
     return CGSizeMake(width, 40.);
 }
 
-- (UIView *)mediaView
-{
-    if (self.audioPath && self.cachedMediaView == nil) {
+- (UIView *)mediaView {
+    if (self.soundData && self.cachedMediaView == nil) {
         
         // create container view for the various controls
         CGSize size = [self mediaViewDisplaySize];
@@ -145,10 +135,10 @@
         
         [playView addSubview:self.audioTimeLabel];
         
-        self.audioTimeLabel.text = [self timestampString:self.audioTime];
+        self.audioTimeLabel.text = [self timestampString:self.second];
         
         [playView addSubview:self.audioPlayIndicatorView];
-    
+        
         if (self.appliesMediaViewMaskAsOutgoing) {
             playView.backgroundColor = [UIColor greenColor];
             UIImage * image = [UIImage imageNamed:@"聊天-icon-语音-绿"];
@@ -169,7 +159,7 @@
         [JSQMessagesMediaViewBubbleImageMasker applyBubbleImageMaskToMediaView:playView isOutgoing:self.appliesMediaViewMaskAsOutgoing];
         self.cachedMediaView = playView;
     }
-
+    
     return self.cachedMediaView;
 }
 
@@ -194,60 +184,48 @@
     return _audioPlayIndicatorView;
 }
 
-- (NSUInteger)mediaHash
-{
+- (NSUInteger)mediaHash {
     return self.hash;
 }
 
 #pragma mark - NSObject
 
-- (BOOL)isEqual:(id)object
-{
-    if (![super isEqual:object]) {
-        return NO;
-    }
-
-    JSQAudioMediaItem *audioItem = (JSQAudioMediaItem *)object;
-    if (self.audioPath && ![self.audioPath isEqualToString:audioItem.audioPath]) {
-        return NO;
-    }
-
+- (BOOL)isEqual:(LJSoundMediaItem *)audioItem {
+    if (![super isEqual:audioItem]) return NO;
+    
+    if (!self.soundData && self.soundData != audioItem.soundData) return NO;
+    
     return YES;
 }
 
-- (NSUInteger)hash
-{
-    return super.hash ^ self.audioPath.hash;
+- (NSUInteger)hash {
+    return super.hash ^ self.soundData.hash;
 }
 
-- (NSString *)description
-{
-    return [NSString stringWithFormat:@"<%@: audioPath=%ld bytes, appliesMediaViewMaskAsOutgoing=%@>",
-            [self class], (unsigned long)[self.audioPath length],
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<%@: soundData=%ld bytes, appliesMediaViewMaskAsOutgoing=%@>",
+            [self class], (unsigned long)[self.soundData length],
             @(self.appliesMediaViewMaskAsOutgoing)];
 }
 
 #pragma mark - NSCoding
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
-    NSString *string = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(audioPath))];
-    NSInteger audioTime = [aDecoder decodeIntForKey:NSStringFromSelector(@selector(audioTime))];
-    return [self initWithPath:string audioTime:audioTime];
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    NSData *soundData = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(soundData))];
+    int second = [aDecoder decodeIntForKey:NSStringFromSelector(@selector(second))];
+    return [self initWithData:soundData second:second];
 }
 
-- (void)encodeWithCoder:(NSCoder *)aCoder
-{
+- (void)encodeWithCoder:(NSCoder *)aCoder {
     [super encodeWithCoder:aCoder];
-    [aCoder encodeObject:self.audioPath forKey:NSStringFromSelector(@selector(audioPath))];
-    [aCoder encodeInt:(int)self.audioTime forKey:NSStringFromSelector(@selector(audioTime))];
+    [aCoder encodeObject:self.soundData forKey:NSStringFromSelector(@selector(soundData))];
+    [aCoder encodeInt:self.second forKey:NSStringFromSelector(@selector(second))];
 }
 
 #pragma mark - NSCopying
 
-- (instancetype)copyWithZone:(NSZone *)zone
-{
-    JSQAudioMediaItem *copy = [[[self class] allocWithZone:zone] initWithPath:self.audioPath audioTime:self.audioTime];
+- (instancetype)copyWithZone:(NSZone *)zone {
+    LJSoundMediaItem *copy = [[LJSoundMediaItem allocWithZone:zone] initWithData:self.soundData second:self.second];
     copy.appliesMediaViewMaskAsOutgoing = self.appliesMediaViewMaskAsOutgoing;
     return copy;
 }

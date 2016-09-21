@@ -21,8 +21,6 @@
 #import "NSString+JSQMessages.h"
 #import "NSBundle+JSQMessages.h"
 
-#import "JSQAudioMediaItem.h"
-
 #import <objc/runtime.h>
 
 static IMP JSQReplaceMethodWithBlock(Class c, SEL origSEL, id block) {

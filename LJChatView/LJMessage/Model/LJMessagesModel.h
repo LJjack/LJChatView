@@ -8,10 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "JSQLocationMediaItem.h"
-
 #import "LJMessageDataStateDefine.h"
-
 
 @class JSQMessage, JSQMessagesBubbleImage, JSQMessagesAvatarImage;
 
@@ -89,12 +86,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)sendTextMediaMessageWithText:(NSString *)text;
 
-- (void)sendAudioMediaMessageWithPath:(nonnull NSString *)audioPath
-                            audioTime:(NSInteger)audioTime;
+- (void)sendSoundMediaMessageWithData:(nonnull NSData *)soundData
+                               second:(int)second ;
 
 - (void)sendPhotoMediaMessageWithImage:(nonnull id)image;
 
-- (void)sendLocationMediaMessageCompletion:(JSQLocationMediaItemCompletionBlock)completion;
+- (void)sendLocationMediaMessageLatitude:(double)latitude
+                               longitude:(double)longitude completion:(void(^)())completion;
 
 - (void)sendShortVideoMediaMessageWithVideoPath:(nonnull NSString *)videoPath
                                       showImage:(nonnull UIImage *)showImage;

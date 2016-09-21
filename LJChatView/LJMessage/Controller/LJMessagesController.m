@@ -15,7 +15,6 @@
 #import "LJMessageViewStateBtnDelegate.h"
 #import "UIView+GJCFViewFrameUitil.h"
 #import "GJGCChatInputPanel.h"
-#import "GJCFAudioPlayer.h"
 #import "NSString+LJEmojiParser.h"
 
 #import <TZImagePickerController/TZImagePickerController.h>
@@ -26,20 +25,22 @@
 #import "LJRecordVideoView.h"
 #import "LJFullVideoView.h"
 
+#import "LJSoundPlayer.h"
+
 #define GJCFSystemScreenHeight [UIScreen mainScreen].bounds.size.height
 #define GJCFSystemScreenWidth [UIScreen mainScreen].bounds.size.width
 
-@interface LJMessagesController ()<LJMessageViewStateBtnDelegate, GJGCChatInputPanelDelegate , TZImagePickerControllerDelegate, GJCFAudioPlayerDelegate, LJRecordVideoViewDelegate, LJMessagesModelDelegate>
+@interface LJMessagesController ()<LJMessageViewStateBtnDelegate, GJGCChatInputPanelDelegate , TZImagePickerControllerDelegate, LJSoundPlayerDelegate, LJRecordVideoViewDelegate, LJMessagesModelDelegate>
 
 @property (strong, nonatomic) GJGCChatInputPanel *inputPanel;
 
-@property (nonatomic, strong) GJCFAudioPlayer *audioPlayer;//播放器
+@property (nonatomic, strong) LJSoundPlayer *audioPlayer;//播放器
 
-@property (nonatomic, assign) JSQAudioMediaItem *audioMediaOldItem;
+@property (nonatomic, strong) LJSoundMediaItem *audioMediaOldItem;
 
-@property (nonatomic, assign) JSQAudioMediaItem *audioMediaNewItem;
+@property (nonatomic, strong) LJSoundMediaItem *audioMediaNewItem;
 
-@property (nonatomic, strong) GJCFAudioModel *currentRecordFile;
+@property (nonatomic, strong) LJSoundModel *currentRecordFile;
 
 @end
 
@@ -65,7 +66,7 @@
     self.title = @"JSQMessages";
     
     /* 语音播放工具 */
-    self.audioPlayer = [[GJCFAudioPlayer alloc]init];
+    self.audioPlayer = [[LJSoundPlayer alloc]init];
     self.audioPlayer.delegate = self;
     
     /* 观察录音工具开始录音 */
@@ -293,10 +294,9 @@
     
 }
 
-- (void)chatInputPanel:(GJGCChatInputPanel *)panel didFinishRecord:(GJCFAudioModel *)audioFile {
-    self.currentRecordFile = audioFile;
-    [self.msgModel sendAudioMediaMessageWithPath:audioFile.localStorePath audioTime:audioFile.duration];
-    [self finishSendingMessage];
+- (void)chatInputPanel:(GJGCChatInputPanel *)panel didFinishRecord:(LJSoundModel *)soundModel {
+    self.currentRecordFile = soundModel;
+    [self.msgModel sendSoundMediaMessageWithData:soundModel.data second:soundModel.second];
 }
 
 - (void)chatInputPanel:(GJGCChatInputPanel *)panel didChooseMenuAction:(GJGCChatInputMenuPanelActionType)actionType {
@@ -481,9 +481,9 @@
 
 //获取当前位置
 - (void)obtainCurrentLocation {
-    __weak typeof(self) weakSelf = self;
-    [self.msgModel sendLocationMediaMessageCompletion:^{
-        [weakSelf finishSendingMessage];
+    
+    [self.msgModel sendLocationMediaMessageLatitude:0 longitude:0 completion:^{
+        
     }];
     
 }
@@ -493,10 +493,12 @@
 - (void)startPlayCurrentAudio {
     
     [self stopOldPlayAudio];
+
+    LJSoundModel *audioModel = [[LJSoundModel alloc] init];
+//    audioModel.localStorePath = self.audioMediaNewItem.audioPath;
+    audioModel.data = self.audioMediaNewItem.soundData;
     
-    GJCFAudioModel *audioModel = [[GJCFAudioModel alloc] init];
-    audioModel.localStorePath = self.audioMediaNewItem.audioPath;
-    [self.audioPlayer playAudioFile:audioModel];
+    [self.audioPlayer playSoundModel:audioModel];
     [self.audioPlayer play];
     [self.audioMediaNewItem startAudioAnimating];
     self.audioMediaOldItem = self.audioMediaNewItem;
@@ -511,11 +513,11 @@
     
 }
 
-- (void)audioPlayer:(GJCFAudioPlayer *)audioPlay didOccusError:(NSError *)error {
+- (void)soundPlayer:(LJSoundPlayer *)soundPlayer didOccusError:(NSError *)error {
     [self stopOldPlayAudio];
 }
 
-- (void)audioPlayer:(GJCFAudioPlayer *)audioPlay didFinishPlayAudio:(GJCFAudioModel *)audioFile {
+- (void)soundPlayer:(LJSoundPlayer *)soundPlayer didFinishPlayAudio:(LJSoundModel *)audioFile {
     [self stopOldPlayAudio];
 }
 
@@ -529,7 +531,6 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         
         [self.collectionView reloadData];
-//        [self scrollToBottomAnimated:YES];
     });
 }
 
@@ -537,7 +538,6 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         
         [self.collectionView reloadData];
-//        [self scrollToBottomAnimated:YES];
     });
 }
 
@@ -635,57 +635,27 @@
     return [self.msgModel.messages objectAtIndex:indexPath.item];
 }
 
-- (void)collectionView:(JSQMessagesCollectionView *)collectionView didDeleteMessageAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)collectionView:(JSQMessagesCollectionView *)collectionView didDeleteMessageAtIndexPath:(NSIndexPath *)indexPath {
     [self.msgModel.messages removeObjectAtIndex:indexPath.item];
 }
 
-- (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    /**
-     *  You may return nil here if you do not want bubbles.
-     *  In this case, you should set the background color of your collection view cell's textView.
-     *
-     *  Otherwise, return your previously created bubble image data objects.
-     */
+- (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     JSQMessage *message = [self.msgModel.messages objectAtIndex:indexPath.item];
     
     if ([message.senderId isEqualToString:self.senderId]) {
         return self.msgModel.outgoingBubbleImageData;
     }
-    
+    NSLog(@"**************************");
     return self.msgModel.incomingBubbleImageData;
 }
 
-- (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    /**
-     *  Return `nil` here if you do not want avatars.
-     *  If you do return `nil`, be sure to do the following in `viewDidLoad`:
-     *
-     *  self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
-     *  self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
-     *
-     *  It is possible to have only outgoing avatars or only incoming avatars, too.
-     */
-    
-    /**
-     *  Return your previously created avatar image data objects.
-     *
-     *  Note: these the avatars will be sized according to these values:
-     *
-     *  self.collectionView.collectionViewLayout.incomingAvatarViewSize
-     *  self.collectionView.collectionViewLayout.outgoingAvatarViewSize
-     *
-     *  Override the defaults in `viewDidLoad`
-     */
+- (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     JSQMessage *message = [self.msgModel.messages objectAtIndex:indexPath.item];
     
     if ([message.senderId isEqualToString:self.senderId]) {
         return self.msgModel.avatarImgSelf;
     }
-    
     
     return self.msgModel.avatarImgOther;
 }
@@ -895,8 +865,8 @@
 {
     JSQMessage *message = [self.msgModel.messages objectAtIndex:indexPath.row];
     
-    if ([message.media isKindOfClass:[JSQAudioMediaItem class]]) {
-        self.audioMediaNewItem = (JSQAudioMediaItem *)message.media;
+    if ([message.media isKindOfClass:[LJSoundMediaItem class]]) {
+        self.audioMediaNewItem = (LJSoundMediaItem *)message.media;
         [self startPlayCurrentAudio];
         
         NSLog(@"点击音频!");
@@ -908,7 +878,7 @@
         
     } else if ([message.media isKindOfClass:[LJVideoMediaItem class]]) {
         NSLog(@"点击视频!");
-    } else if ([message.media isKindOfClass:[JSQLocationMediaItem class]]) {
+    } else if ([message.media isKindOfClass:[LJLocationMediaItem class]]) {
         NSLog(@"点击地图!");
     } else if ([message.media isKindOfClass:[LJImageMediaItem class]]) {
         NSLog(@"点击图片!");
