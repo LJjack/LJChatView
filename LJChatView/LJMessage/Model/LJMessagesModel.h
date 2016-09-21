@@ -92,7 +92,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)sendPhotoMediaMessageWithImage:(nonnull id)image;
 
 - (void)sendLocationMediaMessageLatitude:(double)latitude
-                               longitude:(double)longitude completion:(void(^)())completion;
+                               longitude:(double)longitude;
 
 - (void)sendShortVideoMediaMessageWithVideoPath:(nonnull NSString *)videoPath
                                       showImage:(nonnull UIImage *)showImage;

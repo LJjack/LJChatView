@@ -59,5 +59,6 @@
 #import "UIImage+JSQMessages.h"
 #import "UIView+JSQMessages.h"
 #import "NSBundle+JSQMessages.h"
+#import "JSQSystemSoundPlayer+JSQMessages.h"
 
 #endif

@@ -17,6 +17,10 @@
 
 @implementation LJVideoMediaItem
 
+- (instancetype)init {
+    return [self initWithVideoPath:nil aFrameImage:nil];
+}
+
 - (instancetype)initWithVideoPath:(NSString *)videoPath aFrameImage:(UIImage *)aFrameImage {
     self = [super init];
     if (self) {

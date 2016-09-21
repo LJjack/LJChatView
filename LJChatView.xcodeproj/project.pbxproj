@@ -280,6 +280,7 @@
 		83E02E8D1D9231B700C35246 /* LJSoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E02E8C1D9231B700C35246 /* LJSoundPlayer.m */; };
 		83E02E901D9231D100C35246 /* LJSoundRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E02E8F1D9231D100C35246 /* LJSoundRecord.m */; };
 		83E02E931D9268F800C35246 /* NSString+LJFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E02E921D9268F800C35246 /* NSString+LJFile.m */; };
+		83E02E961D92889500C35246 /* JSQSystemSoundPlayer+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E02E951D92889500C35246 /* JSQSystemSoundPlayer+JSQMessages.m */; };
 		83EBB3991D9141C400F1DBB5 /* LJImageMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB3981D9141C400F1DBB5 /* LJImageMediaItem.m */; };
 		A7355649B836919B6F0C8AD8 /* libPods-LJChatView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD64963A411C9DF679A3139 /* libPods-LJChatView.a */; };
 /* End PBXBuildFile section */
@@ -691,6 +692,8 @@
 		83E02E8F1D9231D100C35246 /* LJSoundRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJSoundRecord.m; sourceTree = "<group>"; };
 		83E02E911D9268F800C35246 /* NSString+LJFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+LJFile.h"; sourceTree = "<group>"; };
 		83E02E921D9268F800C35246 /* NSString+LJFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+LJFile.m"; sourceTree = "<group>"; };
+		83E02E941D92889500C35246 /* JSQSystemSoundPlayer+JSQMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JSQSystemSoundPlayer+JSQMessages.h"; sourceTree = "<group>"; };
+		83E02E951D92889500C35246 /* JSQSystemSoundPlayer+JSQMessages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JSQSystemSoundPlayer+JSQMessages.m"; sourceTree = "<group>"; };
 		83EBB3971D9141C400F1DBB5 /* LJImageMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJImageMediaItem.h; sourceTree = "<group>"; };
 		83EBB3981D9141C400F1DBB5 /* LJImageMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJImageMediaItem.m; sourceTree = "<group>"; };
 		937BF3A65342DE7FF73FCFD7 /* Pods-LJChatView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LJChatView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LJChatView/Pods-LJChatView.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1294,6 +1297,8 @@
 		83AB75991D89294E008DD6CF /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				83E02E941D92889500C35246 /* JSQSystemSoundPlayer+JSQMessages.h */,
+				83E02E951D92889500C35246 /* JSQSystemSoundPlayer+JSQMessages.m */,
 				83AB759A1D89294E008DD6CF /* NSBundle+JSQMessages.h */,
 				83AB759B1D89294E008DD6CF /* NSBundle+JSQMessages.m */,
 				83AB759C1D89294E008DD6CF /* NSString+JSQMessages.h */,
@@ -1851,6 +1856,7 @@
 				83B407911D869A6700CAD8CF /* LJShortVideoPlayView.m in Sources */,
 				83AB76AD1D89294E008DD6CF /* JSQMessagesBubbleImage.m in Sources */,
 				83DBAE1F1D8E344E00D98400 /* LJIMLoginParam.m in Sources */,
+				83E02E961D92889500C35246 /* JSQSystemSoundPlayer+JSQMessages.m in Sources */,
 				83AB75F01D89294E008DD6CF /* GJGCChatInputExpandEmojiPanelMenuBar.m in Sources */,
 				83AB76A01D89294E008DD6CF /* JSQMessagesAvatarImageFactory.m in Sources */,
 				8329A70F1D66D9020081FDD5 /* UIImage+LJVideo.m in Sources */,

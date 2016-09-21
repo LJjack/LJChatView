@@ -21,6 +21,8 @@
 #import <TZImagePickerController/TZImageManager.h>
 #import <TZImagePickerController/TZVideoPlayerController.h>
 
+#import <JSQSystemSoundPlayer/JSQSystemSoundPlayer.h>
+
 #import "UIImage+LJVideo.h"
 #import "LJRecordVideoView.h"
 #import "LJFullVideoView.h"
@@ -481,21 +483,15 @@
 
 //获取当前位置
 - (void)obtainCurrentLocation {
-    
-    [self.msgModel sendLocationMediaMessageLatitude:0 longitude:0 completion:^{
-        
-    }];
-    
+    [self.msgModel sendLocationMediaMessageLatitude:0 longitude:0];
 }
 
 #pragma mark - 播放音频
 
 - (void)startPlayCurrentAudio {
-    
     [self stopOldPlayAudio];
 
     LJSoundModel *audioModel = [[LJSoundModel alloc] init];
-//    audioModel.localStorePath = self.audioMediaNewItem.audioPath;
     audioModel.data = self.audioMediaNewItem.soundData;
     
     [self.audioPlayer playSoundModel:audioModel];
@@ -525,6 +521,7 @@
 
 - (void)messagesModelWillSend:(LJMessagesModel *)messagesModel {
     [self finishSendingMessageAnimated:YES];
+    [JSQSystemSoundPlayer jsq_playMessageSentSound];
 }
 
 - (void)messagesModelDidSend:(LJMessagesModel *)messagesModel {
@@ -547,11 +544,8 @@
 
 - (void)messagesModelWillReveice:(LJMessagesModel *)messagesModel {
     self.showTypingIndicator = !self.showTypingIndicator;
-    [self scrollToBottomAnimated:YES];
-    
     [self finishReceivingMessage];
-    
-    // [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
+     [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
 }
 
 - (void)messagesModelDidReveice:(LJMessagesModel *)messagesModel {

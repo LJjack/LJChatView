@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>JSQSystemSoundPlayer.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -37,17 +42,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>34D94C63DA56D30DF3644A5A45D87DAB</key>
+		<key>199FF83D70927B27E76BE19CEA7B587E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4710CC2ADD0643589E7C95B1AAABCEF7</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>789F1192962B9FAB747424325488E5F3</key>
+		<key>61861371043B587CA1FADE42E4F20678</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -57,7 +57,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C2F5170D9E866F4D10940C635E11EEA7</key>
+		<key>ACEDA10BFA670659263E2556061FBA09</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DB45D9A67D464A76B4DCFBE3A5AA5C38</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F872B53CBA8F10BED601DE1624415873</key>
 		<dict>
 			<key>primary</key>
 			<true/>

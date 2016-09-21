@@ -99,8 +99,6 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     [message addElem:textElem];
     
     [self sendMessage:message jsqMessage:textMessage];
-    
-    
 }
 
 #pragma mark 发送照片
@@ -139,7 +137,6 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
         return;
     }
 
-    
     TIMMessage *message = [[TIMMessage alloc] init];
     TIMImageElem *imageElem = [[TIMImageElem alloc] init];
     
@@ -147,8 +144,6 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     [message addElem:imageElem];
     
     [self sendMessage:message jsqMessage:photoMessage];
-    
-    
 }
 
 
@@ -174,21 +169,33 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     
     [self sendMessage:message jsqMessage:audioMessage];
     
-    
 }
 
 #pragma mark 发送当前位置
 - (void)sendLocationMediaMessageLatitude:(double)latitude
-                   longitude:(double)longitude completion:(void(^)())completion {
+                   longitude:(double)longitude {
 
-    
     LJLocationMediaItem *locationItem = [[LJLocationMediaItem alloc] init];
-    [locationItem setLatitude:37.795313 longitude:-122.393757 completionHandler:completion];
+    [locationItem setLatitude:37.795313 longitude:-122.393757 completionHandler:^{
+        [self didSendMessage];
+    }];
     
     JSQMessage *locationMessage = [JSQMessage messageWithSenderId:@"123"
                                                       displayName:@"123"
                                                             media:locationItem];
     [self.messages addObject:locationMessage];
+    
+    [self willSendMessage];
+    
+    TIMMessage *message = [[TIMMessage alloc] init];
+    TIMLocationElem *locationElem = [[TIMLocationElem alloc] init];
+    locationElem.latitude = latitude;
+    locationElem.longitude = longitude;
+    [message addElem:locationElem];
+    
+    [self sendMessage:message jsqMessage:locationMessage];
+    
+    
 }
 
 #pragma mark 发送微视频
@@ -198,6 +205,36 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
                                                    displayName:@"123"
                                                          media:videoItem];
     [self.messages addObject:videoMessage];
+    
+    [self willSendMessage];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *nsTmpDIr = NSTemporaryDirectory();
+    NSString *filePath = [NSString stringWithFormat:@"%@uploadFile%3.f", nsTmpDIr, [NSDate timeIntervalSinceReferenceDate]];
+    BOOL isDirectory = NO;
+    NSError *err = nil;
+    
+    // 当前sdk仅支持文件路径上传图片，将图片存在本地
+    if ([fileManager fileExistsAtPath:filePath isDirectory:&isDirectory]) {
+        if (![fileManager removeItemAtPath:nsTmpDIr error:&err]) {
+            NSLog(@"Upload Image Failed: same upload filename: %@", err);
+            return ;
+        }
+    }
+    if (![fileManager createFileAtPath:filePath contents:UIImageJPEGRepresentation(showImage, 0.75) attributes:nil]) {
+        NSLog(@"Upload Image Failed: fail to create uploadfile: %@", err);
+        return;
+    }
+    
+    TIMMessage *message = [[TIMMessage alloc] init];
+    TIMVideoElem *videoElem = [[TIMVideoElem alloc] init];
+    videoElem.videoPath = videoPath;
+    videoElem.snapshotPath = filePath;
+    [message addElem:videoElem];
+    
+    [self sendMessage:message jsqMessage:videoMessage];
+    
+    
 }
 
 #pragma mark 发送视频
@@ -245,7 +282,11 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
                       outgoing:outgoing];
             
         } else if ([elem isKindOfClass:[TIMLocationElem class]]) {
-            
+            TIMLocationElem *locationElem = (TIMLocationElem *)elem;
+            [self reveiceLocation:locationElem
+                         senderId:senderId
+                      displayName:displayName
+                         outgoing:outgoing];
         } else if ([elem isKindOfClass:[TIMSoundElem class]]) {
             TIMSoundElem *soundElem = (TIMSoundElem *)elem;
             [self reveiceSound:soundElem
@@ -350,30 +391,91 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
             senderId:(NSString *)senderId
          displayName:(NSString *)displayName
                outgoing:(BOOL)outgoing {
-    
-    
+
     LJLocationMediaItem *locationItem = [[LJLocationMediaItem alloc] init];
+    locationItem.appliesMediaViewMaskAsOutgoing = outgoing;
     [locationItem setLatitude:locationElem.latitude
                     longitude:locationElem.longitude completionHandler:^{
         [self didReveiceMessage];
     }];
     
-    JSQMessage *locationMessage = [JSQMessage messageWithSenderId:@"456"
-                                                      displayName:@"456"
+    JSQMessage *locationMessage = [JSQMessage messageWithSenderId:senderId
+                                                      displayName:displayName
                                                             media:locationItem];
     [self.messages addObject:locationMessage];
     
 }
 
 #pragma mark 接受微视频
-- (void)reveiceShortVideoMediaMessageWithVideoPath:(nonnull NSString *)videoPath
-                                         showImage:(nonnull UIImage *)showImage
-                                          outgoing:(BOOL)outgoing {
-    LJShortVideoMediaItem *videoItem = [[LJShortVideoMediaItem alloc] initWithVideoPath:videoPath aFrameImage:showImage];
-    JSQMessage *videoMessage = [JSQMessage messageWithSenderId:@"456"
-                                                   displayName:@"456"
+- (void)reveiceShortVideo:(TIMVideoElem *)videoElem
+                 senderId:(NSString *)senderId
+              displayName:(NSString *)displayName
+                 outgoing:(BOOL)outgoing {
+    
+    
+    
+    LJShortVideoMediaItem *videoItem = [[LJShortVideoMediaItem alloc] init];
+    videoItem.appliesMediaViewMaskAsOutgoing = outgoing;
+    JSQMessage *videoMessage = [JSQMessage messageWithSenderId:senderId
+                                                   displayName:displayName
                                                          media:videoItem];
     [self.messages addObject:videoMessage];
+    
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *nsTmpDir = NSTemporaryDirectory();
+    
+    TIMSnapshot * snapshot = videoElem.snapshot;
+    if (!(snapshot.uuid && snapshot.uuid.length)) {
+        BJLog(@"小视频截图UUID为空");
+        return;
+    }
+    
+    
+    NSString *imagePath = [NSString stringWithFormat:@"%@/snapshot_image_%@", nsTmpDir, snapshot.uuid];
+    BOOL isDirectory;
+    
+    if ([fileManager fileExistsAtPath:imagePath isDirectory:&isDirectory]
+        && isDirectory == NO) {
+        NSData *data = [fileManager contentsAtPath:imagePath];
+        if (data) {
+            videoItem.aFrameImage = [UIImage imageWithData:data];
+            [self didReveiceMessage];
+        }
+    } else {
+        [snapshot getImage:imagePath succ:^{
+            NSData *data = [fileManager contentsAtPath:imagePath];
+            if (data) {
+                videoItem.aFrameImage = [UIImage imageWithData:data];
+                [self didReveiceMessage];
+            } else {
+                [self failReviceMessage];
+                BJLog(@"下载的小视频截图是空的");
+            }
+            
+        } fail:^(int code, NSString *err) {
+            [self failReviceMessage];
+            BJLog(@"下载小视频截图失败");
+        }];
+    }
+    
+    TIMVideo *video = videoElem.video;
+    if (!(video.uuid && video.uuid.length)) {
+        BJLog(@"小视频UUID为空");
+        return;
+    }
+    
+    NSString *videoPath = [NSString stringWithFormat:@"%@/video_%@.mp4", nsTmpDir, video.uuid];
+    
+    if ([fileManager fileExistsAtPath:videoPath isDirectory:nil]) {
+        videoItem.videoPath = videoPath;
+    } else {
+        [video getVideo:videoPath succ:^{
+            videoItem.videoPath = videoPath;
+        } fail:^(int code, NSString *err) {
+            BJLog(@"下载视频失败, %@",err);
+        }];
+    }
 }
 
 #pragma mark 接受视频
@@ -386,7 +488,6 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
 }
 
 #pragma mark - Private Methods
-
 
 - (void)sendMessage:(TIMMessage*)message jsqMessage:(JSQMessage *)jsqMessage {
     [self.chatingConversation sendMessage:message succ:^{
