@@ -624,8 +624,7 @@
     return @"123";
 }
 
-- (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     return [self.msgModel.messages objectAtIndex:indexPath.item];
 }
 
@@ -633,6 +632,7 @@
     [self.msgModel.messages removeObjectAtIndex:indexPath.item];
 }
 
+// 仅是修改文字的BubbleImage
 - (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     JSQMessage *message = [self.msgModel.messages objectAtIndex:indexPath.item];
@@ -640,7 +640,6 @@
     if ([message.senderId isEqualToString:self.senderId]) {
         return self.msgModel.outgoingBubbleImageData;
     }
-    NSLog(@"**************************");
     return self.msgModel.incomingBubbleImageData;
 }
 

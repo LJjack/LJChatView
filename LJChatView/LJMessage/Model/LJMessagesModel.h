@@ -104,6 +104,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)reveiceMessage:(TIMMessage *)message;
 
+#pragma mark - 删除
+
 @end
 
 NS_ASSUME_NONNULL_END
