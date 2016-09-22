@@ -7,19 +7,16 @@
 //
 
 #import "LJChatController.h"
-
 #import "LJMessagesController.h"
 
 #import "LJChatTopCell.h"
 #import "LJChatCell.h"
 
 #import "LJChatTopModel.h"
+#import "LJMessagesModel.h"
 
 #import "LJChatSocialAPI.h"
-
 #import "LJIMManagerListener.h"
-
-#import "LJMessagesModel.h"
 
 @interface LJChatController ()
 
@@ -61,7 +58,6 @@
     return self.dataList.count;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         LJChatTopCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LJChatTopCell" forIndexPath:indexPath];
@@ -73,6 +69,32 @@
         
         return cell;
     }
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        return UITableViewCellEditingStyleNone;
+    }
+    return UITableViewCellEditingStyleDelete;
+}
+
+- (nullable NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewRowAction *action = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        
+        [[LJIMManagerListener sharedInstance] removeConversationListAtIndex:indexPath.row];
+        self.dataList = [[LJIMManagerListener sharedInstance] getConversationList];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+    }];
+    
+    return @[action];
+}
+
+- (void)tableView:(UITableView*)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"---==willBeginEditingRowAtIndexPath===----");
+}
+
+- (void)tableView:(UITableView*)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"---==didEndEditingRowAtIndexPath===----");
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -101,7 +123,6 @@
     }
 }
 
-
 #pragma mark - Getters
 
 - (NSArray<LJChatTopModel *> *)topList {
@@ -110,8 +131,6 @@
     }
     return _topList;
 }
-
-
 
 #pragma mark - Navigation
 
@@ -138,6 +157,7 @@
 }
 
 - (void)handleUpdataUINotificationCenter {
+    self.dataList = [[LJIMManagerListener sharedInstance] getConversationList];
     [self.tableView reloadData];
 }
 

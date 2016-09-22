@@ -507,7 +507,6 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     
 }
 
-
 #pragma mark - Private Methods
 
 - (void)sendMessage:(TIMMessage*)message jsqMessage:(JSQMessage *)jsqMessage {
@@ -522,6 +521,7 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     }];
     
     self.chatingConversation.lj_lsatMessage = message;
+    [[NSNotificationCenter defaultCenter] postNotificationName:LJIMNotificationCenterUpdataChatUI object:nil];
 }
 
 #pragma mark - 处理发送消息

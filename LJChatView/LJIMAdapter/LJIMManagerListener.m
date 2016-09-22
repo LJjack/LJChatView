@@ -153,7 +153,6 @@
                                 TIMElem* elem = [msg getElem:i];
                                 if ([elem isKindOfClass:[TIMCustomElem class]]) {
                                      isInputStatus = YES;
-                                    // [[NSNotificationCenter defaultCenter] postNotificationName:kUserInputStatus object:elemCmd];
                                     NSLog(@"自定义消息 data.length=%d",(int)[(TIMCustomElem *)elem data].length);
                                 }
                             }
@@ -173,8 +172,6 @@
         }
         
         if (isNewConversation) {
-            // 说明会话列表中没有该会话，新生建会话，并更新到
-            [[TIMManager sharedInstance] getConversationList];
             [self.conversationList insertObject:newConversation atIndex:0];
         }
     }
