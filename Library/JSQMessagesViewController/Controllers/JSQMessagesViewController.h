@@ -249,20 +249,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)viewDidDisappear:(BOOL)animated NS_REQUIRES_SUPER;
 
 /**
- Called when `UIMenuControllerWillShowMenuNotification` is posted.
-
- @param notification The posted notification.
- */
-- (void)didReceiveMenuWillShowNotification:(NSNotification *)notification;
-
-/**
- Called when `UIMenuControllerWillHideMenuNotification` is posted.
-
- @param notification The posted notification.
- */
-- (void)didReceiveMenuWillHideNotification:(NSNotification *)notification;
-
-/**
  *  Called when `UIApplicationWillResignActiveNotification` is posted.
  *
  *  @param notification The posted notification.

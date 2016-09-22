@@ -86,16 +86,6 @@
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"更多" style:UIBarButtonItemStylePlain target:self action:@selector(receiveMessagePressed:)];
     
-    /**
-     *  Register custom menu actions for cells.
-     */
-    [JSQMessagesCollectionViewCell registerMenuAction:@selector(customAction:)];
-    
-    
-    /**
-     *  OPT-IN: allow cells to be deleted
-     */
-    [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
     
 }
 
@@ -560,19 +550,6 @@
     
 }
 
-#pragma mark - Custom menu actions for cells
-
-- (void)didReceiveMenuWillShowNotification:(NSNotification *)notification
-{
-    /**
-     *  Display custom menu actions for cells.
-     */
-    UIMenuController *menu = [notification object];
-    menu.menuItems = @[ [[UIMenuItem alloc] initWithTitle:@"Custom Action" action:@selector(customAction:)] ];
-    
-    [super didReceiveMenuWillShowNotification:notification];
-}
-
 
 #pragma mark - Actions
 
@@ -628,8 +605,9 @@
     return [self.msgModel.messages objectAtIndex:indexPath.item];
 }
 
+//删除某条消息
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didDeleteMessageAtIndexPath:(NSIndexPath *)indexPath {
-    [self.msgModel.messages removeObjectAtIndex:indexPath.item];
+    [self.msgModel removeAtIndex:indexPath.item];
 }
 
 // 仅是修改文字的BubbleImage
@@ -754,41 +732,6 @@
 
 
 #pragma mark - UICollectionView Delegate
-
-#pragma mark - Custom menu items
-
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
-{
-    if (action == @selector(customAction:)) {
-        return YES;
-    }
-    
-    return [super collectionView:collectionView canPerformAction:action forItemAtIndexPath:indexPath withSender:sender];
-}
-
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
-{
-    if (action == @selector(customAction:)) {
-        [self customAction:sender];
-        return;
-    }
-    
-    [super collectionView:collectionView performAction:action forItemAtIndexPath:indexPath withSender:sender];
-}
-
-- (void)customAction:(id)sender
-{
-    NSLog(@"Custom action received! Sender: %@", sender);
-    
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Custom Action", nil)
-                                message:nil
-                               delegate:nil
-                      cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                      otherButtonTitles:nil]
-     show];
-}
-
-
 
 #pragma mark - JSQMessages collection view flow layout delegate
 

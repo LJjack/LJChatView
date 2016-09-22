@@ -77,9 +77,15 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     
     self.messages = [NSMutableArray array];
     
-    NSArray<TIMMessage *> *msgs =  [chatingConversation getLastMsgs:10];
+    NSArray<TIMMessage *> *msgs =  [chatingConversation getLastMsgs:20];
     [msgs enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(TIMMessage * _Nonnull message, NSUInteger idx, BOOL * _Nonnull stop) {
-        [self reveiceMessage:message];
+        
+        if ([message status] == TIM_MSG_STATUS_HAS_DELETED) { // 过滤消息被删除
+            [message delFromStorage];
+        } else {
+           [self reveiceMessage:message];
+        }
+        
     }];
 }
 
@@ -495,15 +501,27 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
 
 // 删除指定位置的消息
 - (void)removeAtIndex:(NSUInteger)index {
-    if (index < self.messages.count) {
-        [self.messages removeObjectAtIndex:index];
-    }
-    [self.chatingConversation deleteLocalMessage:^{
+    NSUInteger totalCount = self.messages.count;
+    
+    
+    
+    [self.chatingConversation getLocalMessage:(int)totalCount last:nil succ:^(NSArray *msgs) {
+        NSInteger num = totalCount - index - 1;
+        if (num > -1 && num < msgs.count) {
+            TIMMessage *message = msgs[num];
+            [message remove];
+            [message delFromStorage];
+        }
+        
+        
         
     } fail:^(int code, NSString *msg) {
         
     }];
-    
+    if (index < self.messages.count) {
+        [self.messages removeObjectAtIndex:index];
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:LJIMNotificationCenterUpdataChatUI object:nil];
     
 }
 

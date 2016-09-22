@@ -24,6 +24,8 @@
 
 @property (nonatomic, copy) NSArray<TIMConversation *> *dataList;
 
+@property (nonatomic, strong) NSIndexPath *selectedIndexPathForMenu;
+
 @end
 
 @implementation LJChatController
@@ -37,7 +39,6 @@
     [self addOrRemveNotificationCenter:YES];
     
     self.dataList =  [[LJIMManagerListener sharedInstance] getConversationList];
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -89,13 +90,6 @@
     return @[action];
 }
 
-- (void)tableView:(UITableView*)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"---==willBeginEditingRowAtIndexPath===----");
-}
-
-- (void)tableView:(UITableView*)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"---==didEndEditingRowAtIndexPath===----");
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
@@ -103,7 +97,12 @@
     } else {
         [LJIMManagerListener sharedInstance].chattingConversation = self.dataList[indexPath.row];
         [[LJIMManagerListener sharedInstance] openNewConversation];
-        [self performSegueWithIdentifier:@"openMessage" sender:indexPath];
+        
+        LJMessagesController *msgC = [[LJMessagesController alloc] init];
+        LJMessagesModel *model = [LJMessagesModel sharedInstance];
+        model.chatingConversation = self.dataList[indexPath.row];
+        msgC.msgModel = model;
+        [self.navigationController pushViewController:msgC animated:YES];
     }
 }
 
@@ -132,17 +131,6 @@
     return _topList;
 }
 
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"openMessage"]) {
-        NSIndexPath *indexPath = sender;
-         LJMessagesController *msgC = segue.destinationViewController;
-        LJMessagesModel *model = [LJMessagesModel sharedInstance];
-        model.chatingConversation = self.dataList[indexPath.row];
-        msgC.msgModel = model;
-    }
-}
 
 #pragma mark - 
 

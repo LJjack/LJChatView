@@ -94,8 +94,6 @@ static void JSQInstallWorkaroundForSheetPresentationIssue26295020(void) {
 
 @property (weak, nonatomic) IBOutlet JSQMessagesCollectionView *collectionView;
 
-@property (strong, nonatomic) NSIndexPath *selectedIndexPathForMenu;
-
 //@property (strong, nonatomic) GJCFAudioPlayer *audioPlayer;
 
 @end
@@ -142,7 +140,7 @@ static void JSQInstallWorkaroundForSheetPresentationIssue26295020(void) {
     self.incomingMediaCellIdentifier = [JSQMessagesCollectionViewCellIncoming mediaCellReuseIdentifier];
 
     // NOTE: let this behavior be opt-in for now
-    // [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
+     [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
 
     self.showTypingIndicator = NO;
 
@@ -589,8 +587,6 @@ static void JSQInstallWorkaroundForSheetPresentationIssue26295020(void) {
         return NO;
     }
 
-    self.selectedIndexPathForMenu = indexPath;
-
     //  textviews are selectable to allow data detectors
     //  however, this allows the 'copy, define, select' UIMenuController to show
     //  which conflicts with the collection view's UIMenuController
@@ -635,9 +631,12 @@ static void JSQInstallWorkaroundForSheetPresentationIssue26295020(void) {
     }
     else if (action == @selector(delete:)) {
         [collectionView.dataSource collectionView:collectionView didDeleteMessageAtIndexPath:indexPath];
-
-        [collectionView deleteItemsAtIndexPaths:@[indexPath]];
-        [collectionView.collectionViewLayout invalidateLayout];
+        __weak typeof(collectionView) weakCollectionView = collectionView;
+    [collectionView performBatchUpdates:^{
+        [weakCollectionView deleteItemsAtIndexPaths:@[indexPath]];
+    } completion:^(BOOL finished) {
+        [weakCollectionView.collectionViewLayout invalidateLayout];
+    }];
     }
 }
 
@@ -704,7 +703,7 @@ static void JSQInstallWorkaroundForSheetPresentationIssue26295020(void) {
 {
     //  check if cell copy menu is showing
     //  it is only our menu if `selectedIndexPathForMenu` is not `nil`
-    return self.selectedIndexPathForMenu != nil && [[UIMenuController sharedMenuController] isMenuVisible];
+    return [[UIMenuController sharedMenuController] isMenuVisible];
 }
 
 #pragma mark - Utilities
@@ -713,15 +712,6 @@ static void JSQInstallWorkaroundForSheetPresentationIssue26295020(void) {
 {
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     if (registerForNotifications) {
-        [center addObserver:self
-                   selector:@selector(didReceiveMenuWillShowNotification:)
-                       name:UIMenuControllerWillShowMenuNotification
-                     object:nil];
-
-        [center addObserver:self
-                   selector:@selector(didReceiveMenuWillHideNotification:)
-                       name:UIMenuControllerWillHideMenuNotification
-                     object:nil];
 
         [center addObserver:self
                    selector:@selector(preferredContentSizeChanged:)
@@ -730,15 +720,6 @@ static void JSQInstallWorkaroundForSheetPresentationIssue26295020(void) {
         [center addObserver:self selector:@selector(observeApplicationResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
     }
     else {
-
-        [center removeObserver:self
-                          name:UIMenuControllerWillShowMenuNotification
-                        object:nil];
-
-        [center removeObserver:self
-                          name:UIMenuControllerWillHideMenuNotification
-                        object:nil];
-
         [center removeObserver:self
                           name:UIContentSizeCategoryDidChangeNotification
                         object:nil];
@@ -750,44 +731,6 @@ static void JSQInstallWorkaroundForSheetPresentationIssue26295020(void) {
 }
 
 #pragma mark - Notifications
-
-- (void)didReceiveMenuWillShowNotification:(NSNotification *)notification
-{
-    if (!self.selectedIndexPathForMenu) {
-        return;
-    }
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIMenuControllerWillShowMenuNotification
-                                                  object:nil];
-    
-    UIMenuController *menu = [notification object];
-    [menu setMenuVisible:NO animated:NO];
-    
-    JSQMessagesCollectionViewCell *selectedCell = (JSQMessagesCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:self.selectedIndexPathForMenu];
-    CGRect selectedCellMessageBubbleFrame = [selectedCell convertRect:selectedCell.messageBubbleContainerView.frame toView:self.view];
-    
-    [menu setTargetRect:selectedCellMessageBubbleFrame inView:self.view];
-    [menu setMenuVisible:YES animated:YES];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didReceiveMenuWillShowNotification:)
-                                                 name:UIMenuControllerWillShowMenuNotification
-                                               object:nil];
-}
-
-- (void)didReceiveMenuWillHideNotification:(NSNotification *)notification
-{
-    if (!self.selectedIndexPathForMenu) {
-        return;
-    }
-    
-    //  per comment above in 'shouldShowMenuForItemAtIndexPath:'
-    //  re-enable 'selectable', thus re-enabling data detectors if present
-    JSQMessagesCollectionViewCell *selectedCell = (JSQMessagesCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:self.selectedIndexPathForMenu];
-    selectedCell.textView.selectable = YES;
-    self.selectedIndexPathForMenu = nil;
-}
 
 - (void)preferredContentSizeChanged:(NSNotification *)notification
 {
