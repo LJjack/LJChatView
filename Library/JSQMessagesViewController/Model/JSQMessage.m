@@ -75,8 +75,7 @@
         _senderDisplayName = [senderDisplayName copy];
         _date = [date copy];
         _isMediaMessage = isMedia;
-        //默认是运行状态
-        _dataState = LJMessageDataStateCompleted;
+        
     }
     return self;
 }
@@ -84,10 +83,6 @@
 - (NSUInteger)messageHash
 {
     return self.hash;
-}
-
-- (void)setDataState:(LJMessageDataState)dataState {
-    _dataState = dataState;
 }
 
 #pragma mark - NSObject

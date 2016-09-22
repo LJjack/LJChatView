@@ -297,7 +297,6 @@
 		8329A70D1D66D9020081FDD5 /* UIImage+LJVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+LJVideo.m"; sourceTree = "<group>"; };
 		8329AB611D88FFE5005F9BDD /* NSString+LJEmojiParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+LJEmojiParser.h"; sourceTree = "<group>"; };
 		8329AB621D88FFE5005F9BDD /* NSString+LJEmojiParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+LJEmojiParser.m"; sourceTree = "<group>"; };
-		8329AB661D88FFE5005F9BDD /* LJMessageDataStateDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJMessageDataStateDefine.h; sourceTree = "<group>"; };
 		8329AB6A1D88FFE5005F9BDD /* LJMessageViewStateBtnDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJMessageViewStateBtnDelegate.h; sourceTree = "<group>"; };
 		8329AB6B1D88FFE5005F9BDD /* LJShortVideoMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJShortVideoMediaItem.h; sourceTree = "<group>"; };
 		8329AB6C1D88FFE5005F9BDD /* LJShortVideoMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJShortVideoMediaItem.m; sourceTree = "<group>"; };
@@ -391,6 +390,7 @@
 		839CC2361D937E6E009000F5 /* TIMConversation+LJAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TIMConversation+LJAdd.m"; sourceTree = "<group>"; };
 		839CC2381D938CB2009000F5 /* LJIMConfigFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJIMConfigFile.h; sourceTree = "<group>"; };
 		839CC2391D938CB2009000F5 /* LJIMConfigFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJIMConfigFile.m; sourceTree = "<group>"; };
+		839CC23B1D93E8D8009000F5 /* LJMessageDataStateDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJMessageDataStateDefine.h; sourceTree = "<group>"; };
 		839D0D201D89555200E2A101 /* IMCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IMCore.framework; path = ../../Tim_IM_2.3.0/IMCore.framework; sourceTree = "<group>"; };
 		839D0D211D89555200E2A101 /* ImSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImSDK.framework; path = ../../Tim_IM_2.3.0/ImSDK.framework; sourceTree = "<group>"; };
 		839D0D221D89555200E2A101 /* QALSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QALSDK.framework; path = ../../Tim_IM_2.3.0/QALSDK.framework; sourceTree = "<group>"; };
@@ -749,7 +749,7 @@
 		8329AB5F1D88FFE5005F9BDD /* LJMessage */ = {
 			isa = PBXGroup;
 			children = (
-				8329AB661D88FFE5005F9BDD /* LJMessageDataStateDefine.h */,
+				839CC23B1D93E8D8009000F5 /* LJMessageDataStateDefine.h */,
 				8329AB601D88FFE5005F9BDD /* Category */,
 				8329AB631D88FFE5005F9BDD /* Controller */,
 				8329AB671D88FFE5005F9BDD /* Model */,

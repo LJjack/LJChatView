@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "LJMessageDataStateDefine.h"
 
 @class JSQMessage, JSQMessagesBubbleImage, JSQMessagesAvatarImage;
 
@@ -23,20 +22,20 @@ NS_ASSUME_NONNULL_BEGIN
 @optional
 
 /**
- *  将要发送消息
+ *  消息将要发送
  */
-- (void)messagesModelWillSend:(LJMessagesModel *)messagesModel;
+- (void)messagesModel:(LJMessagesModel *)messagesModel willSendItemAtIndex:(NSUInteger)index;
 
 /**
- *  完成发送消息
+ *  消息发送完成
  */
-- (void)messagesModelDidSend:(LJMessagesModel *)messagesModel;
+- (void)messagesModel:(LJMessagesModel *)messagesModel didSendFinishItemAtIndex:(NSUInteger)index;
 
 /**
- *  失败发送消息
+ *  消息发送失败
  */
 
-- (void)messagesModelFailSend:(LJMessagesModel *)messagesModel;
+- (void)messagesModel:(LJMessagesModel *)messagesModel didSendFailItemAtIndex:(NSUInteger)index;
 
 
 
@@ -48,18 +47,17 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  将要接受消息
  */
-- (void)messagesModelWillReveice:(LJMessagesModel *)messagesModel;
+- (void)messagesModel:(LJMessagesModel *)messagesModel willReveiceItemAtIndex:(NSUInteger)index;
 
 /**
  *  完成接受消息
  */
-- (void)messagesModelDidReveice:(LJMessagesModel *)messagesModel;
+- (void)messagesModel:(LJMessagesModel *)messagesModel didReveiceFinishItemAtIndex:(NSUInteger)index;
 
 /**
  *  失败接受消息
  */
-
-- (void)messagesModelFailReveice:(LJMessagesModel *)messagesModel;
+- (void)messagesModel:(LJMessagesModel *)messagesModel didReveiceFailItemAtIndex:(NSUInteger)index;
 
 @end
 
@@ -92,7 +90,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)sendPhotoMediaMessageWithImage:(nonnull id)image;
 
 - (void)sendLocationMediaMessageLatitude:(double)latitude
-                               longitude:(double)longitude;
+                               longitude:(double)longitude
+                       completionHandler:(void (^)())completion;
 
 - (void)sendShortVideoMediaMessageWithVideoPath:(nonnull NSString *)videoPath
                                       showImage:(nonnull UIImage *)showImage;
@@ -103,6 +102,10 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - 接受消息
 
 - (void)reveiceMessage:(TIMMessage *)message;
+
+#pragma mark - 重新发送
+
+- (void)reSendAtIndex:(NSUInteger)index;
 
 #pragma mark - 删除
 

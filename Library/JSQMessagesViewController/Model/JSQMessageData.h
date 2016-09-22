@@ -7,7 +7,6 @@
 #import <UIKit/UIKit.h>
 
 #import "JSQMessageMediaData.h"
-#import "LJMessageDataStateDefine.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -71,10 +70,6 @@ NS_ASSUME_NONNULL_BEGIN
  *  This value is used to cache layout information in the collection view.
  */
 - (NSUInteger)messageHash;
-
-- (LJMessageDataState)dataState;
-
-- (void)setDataState:(LJMessageDataState)dataState;
 
 @optional
 

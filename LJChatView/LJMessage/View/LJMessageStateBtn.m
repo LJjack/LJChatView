@@ -32,48 +32,29 @@
     self.indicatorView.center = CGPointMake(self.bounds.size.width * 0.5, self.bounds.size.height * 0.5);
 }
 
-- (void)startAnimating {
-    [self.indicatorView startAnimating];
+- (void)runingAnimating {
+    if (![self.indicatorView isAnimating]) {
+        [self.indicatorView startAnimating];
+    }
     [self setImage:nil forState:UIControlStateNormal];
 }
-- (void)stopAnimating {
-    [self.indicatorView stopAnimating];
-    [self failedState];
-}
+
 - (BOOL)isAnimating {
     return [self.indicatorView isAnimating];
 }
 
 - (void)completedState {
     [self.indicatorView stopAnimating];
+    [self setImage:nil forState:UIControlStateNormal];
     self.hidden =YES;
 }
 
 - (void)failedState {
-    [self setImage:[UIImage imageNamed:@"Sendfailed"] forState:UIControlStateNormal];
-}
-
-#pragma mark - Setters
-
-- (void)setDataState:(LJMessageDataState)dataState {
-    _dataState = dataState;
-    switch (dataState) {
-        case LJMessageDataStateRuning: {
-            [self startAnimating];
-        } break;
-        case LJMessageDataStateCompleted: {
-            [self completedState];
-        } break;
-        case LJMessageDataStateFailed: {
-            [self failedState];
-        } break;
-        case LJMessageDataStateStop: {
-            [self stopAnimating];
-        } break;
-            
-        default:
-            break;
+    self.hidden = NO;
+    if ([self.indicatorView isAnimating]) {
+        [self.indicatorView stopAnimating];
     }
+    [self setImage:[UIImage imageNamed:@"Sendfailed"] forState:UIControlStateNormal];
 }
 
 #pragma mark - Getters

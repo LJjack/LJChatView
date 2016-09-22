@@ -473,7 +473,9 @@
 
 //获取当前位置
 - (void)obtainCurrentLocation {
-    [self.msgModel sendLocationMediaMessageLatitude:0 longitude:0];
+    [self.msgModel sendLocationMediaMessageLatitude:0 longitude:0 completionHandler:^{
+        [self.collectionView reloadData];
+    }];
 }
 
 #pragma mark - 播放音频
@@ -507,38 +509,37 @@
     [self stopOldPlayAudio];
 }
 
-#pragma mark - LJMessagesModelDelegate
+#pragma mark - 发送 LJMessagesModelDelegate
 
-- (void)messagesModelWillSend:(LJMessagesModel *)messagesModel {
+- (void)messagesModel:(LJMessagesModel *)messagesModel willSendItemAtIndex:(NSUInteger)index {
     [self finishSendingMessageAnimated:YES];
     [JSQSystemSoundPlayer jsq_playMessageSentSound];
+    
+    
 }
 
-- (void)messagesModelDidSend:(LJMessagesModel *)messagesModel {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        [self.collectionView reloadData];
-    });
+- (void)messagesModel:(LJMessagesModel *)messagesModel didSendFinishItemAtIndex:(NSUInteger)index {
+    
+    [self.collectionView reloadData];
 }
 
-- (void)messagesModelFailSend:(LJMessagesModel *)messagesModel {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        [self.collectionView reloadData];
-    });
+- (void)messagesModel:(LJMessagesModel *)messagesModel didSendFailItemAtIndex:(NSUInteger)index {
+    [self.collectionView reloadData];
 }
+
+#pragma mark - 接受 LJMessagesModelDelegate
 
 - (void)messagesModelPrepareWillReveice:(LJMessagesModel *)messagesModel {
     
 }
 
-- (void)messagesModelWillReveice:(LJMessagesModel *)messagesModel {
+- (void)messagesModel:(LJMessagesModel *)messagesModel willReveiceItemAtIndex:(NSUInteger)index {
     self.showTypingIndicator = !self.showTypingIndicator;
     [self finishReceivingMessage];
      [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
 }
 
-- (void)messagesModelDidReveice:(LJMessagesModel *)messagesModel {
+- (void)messagesModel:(LJMessagesModel *)messagesModel didReveiceFinishItemAtIndex:(NSUInteger)index {
     dispatch_async(dispatch_get_main_queue(), ^{
         
         [self.collectionView reloadData];
@@ -546,7 +547,7 @@
     });
 }
 
-- (void)messagesModelFailReveice:(LJMessagesModel *)messagesModel {
+- (void)messagesModel:(LJMessagesModel *)messagesModel didReveiceFailItemAtIndex:(NSUInteger)index {
     
 }
 
@@ -718,7 +719,6 @@
     }
     
     cell.cellStateBtn.hidden = NO;//![self shouldShowCellStateBtnForMessage:msg];
-    cell.cellStateBtn.dataState = [msg dataState];
     
     return cell;
 }
@@ -835,12 +835,7 @@
  */
 - (void)messageView:(JSQMessagesCollectionView *)messageView didTapCellStateBtnRuningAtIndexPath:(NSIndexPath *)indexPath {
     
-    [self.msgModel.messages[indexPath.row] setDataState:LJMessageDataStateRuning];
-    [self.collectionView reloadData];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.msgModel.messages[indexPath.row] setDataState:LJMessageDataStateCompleted];
-        [self.collectionView reloadData];
-    });
+    [self.msgModel reSendAtIndex:indexPath.item];
     
 }
 
@@ -849,7 +844,7 @@
  */
 - (void)messageView:(JSQMessagesCollectionView *)messageView didTapCellStateBtnStopAtIndexPath:(NSIndexPath *)indexPath {
     
-    [self.msgModel.messages[indexPath.row] setDataState:LJMessageDataStateFailed];
+//    [self.msgModel.messages[indexPath.row] setDataState:LJMessageDataStateFailed];
     [self.collectionView reloadData];
 }
 

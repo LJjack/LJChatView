@@ -40,6 +40,13 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     return state;
 }
 
+@interface LJMessagesModel ()
+
+@property (nonatomic, strong) NSMutableDictionary *failMessages;
+
+
+@end
+
 @implementation LJMessagesModel
 
 + (instancetype)sharedInstance {
@@ -76,14 +83,19 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     _chatingConversation = chatingConversation;
     
     self.messages = [NSMutableArray array];
+    self.failMessages = [NSMutableDictionary dictionary];
     
     NSArray<TIMMessage *> *msgs =  [chatingConversation getLastMsgs:20];
     [msgs enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(TIMMessage * _Nonnull message, NSUInteger idx, BOOL * _Nonnull stop) {
+        TIMMessageStatus status = [message status];
         
-        if ([message status] == TIM_MSG_STATUS_HAS_DELETED) { // 过滤消息被删除
+        if (status == TIM_MSG_STATUS_HAS_DELETED) { // 过滤消息被删除
             [message delFromStorage];
         } else {
-           [self reveiceMessage:message];
+            [self reveiceMessage:message];
+            if (status == TIM_MSG_STATUS_SEND_FAIL) { //记录消息发送失败
+                self.failMessages[@(idx)] =  message;
+            }
         }
         
     }];
@@ -98,8 +110,6 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     JSQMessage *textMessage = [JSQMessage messageWithSenderId:@"123" displayName:@"123" text:text];
     [textMessage setDataState:LJMessageDataStateRuning];
     [self.messages addObject:textMessage];
-    
-    [self willSendMessage];
     
     TIMMessage *message = [[TIMMessage alloc] init];
     TIMTextElem *textElem = [[TIMTextElem alloc] init];
@@ -124,8 +134,6 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
                                                          media:photoItem];
     [photoMessage setDataState:LJMessageDataStateRuning];
     [self.messages addObject:photoMessage];
-    
-    [self willSendMessage];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *nsTmpDIr = NSTemporaryDirectory();
@@ -166,9 +174,6 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
                                                          media:audioItem];
     [self.messages addObject:audioMessage];
     
-    [self willSendMessage];
-    
-    
     TIMMessage *message = [[TIMMessage alloc] init];
     
     TIMSoundElem *soundElem = [[TIMSoundElem alloc] init];
@@ -182,19 +187,16 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
 
 #pragma mark 发送当前位置
 - (void)sendLocationMediaMessageLatitude:(double)latitude
-                   longitude:(double)longitude {
+                   longitude:(double)longitude completionHandler:(void (^)())completion{
 
     LJLocationMediaItem *locationItem = [[LJLocationMediaItem alloc] init];
-    [locationItem setLatitude:37.795313 longitude:-122.393757 completionHandler:^{
-        [self didSendMessage];
-    }];
+    [locationItem setLatitude:37.795313 longitude:-122.393757 completionHandler:completion];
     
     JSQMessage *locationMessage = [JSQMessage messageWithSenderId:@"123"
                                                       displayName:@"123"
                                                             media:locationItem];
     [self.messages addObject:locationMessage];
     
-    [self willSendMessage];
     
     TIMMessage *message = [[TIMMessage alloc] init];
     TIMLocationElem *locationElem = [[TIMLocationElem alloc] init];
@@ -215,7 +217,6 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
                                                          media:videoItem];
     [self.messages addObject:videoMessage];
     
-    [self willSendMessage];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *nsTmpDIr = NSTemporaryDirectory();
@@ -258,11 +259,9 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
 #pragma mark - 接受消息
 
 - (void)reveiceMessage:(TIMMessage *)message {
-    
-    [self willReveiceMessage];
+    [self willPrepareReveiceMessage];
     
     int elemCount = [message elemCount];
-    
     NSString *senderId = @"";
     NSString *displayName = @"";
     BOOL outgoing = YES;
@@ -317,7 +316,12 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
                                                   displayName:displayName
                                                          text:[textElem text]];
     [self.messages addObject:textMessage];
-    [self didReveiceMessage];
+    
+    NSUInteger index = self.messages.count - 1;
+    [self willReveiceMessageItemAtIndex:index];
+    
+    
+    [self didReveiceFinishMessageItemAtIndex:index];
 }
 
 // 接受图片
@@ -332,6 +336,9 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
                                                          media:photoItem];
     
     [self.messages addObject:imageMessage];
+    
+    NSUInteger index = self.messages.count - 1;
+    [self willReveiceMessageItemAtIndex:index];
     
     if (imageElem && imageElem.imageList && imageElem.imageList.count) {
         for (TIMImage *imageModel in imageElem.imageList) {
@@ -350,21 +357,21 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
                     NSData *data = [fileManager contentsAtPath:imagePath];
                     if (data) {
                         photoItem.image = [UIImage imageWithData:data];
-                        [self didReveiceMessage];
+                        [self didReveiceFinishMessageItemAtIndex:index];
                     }
                 } else {
                     [imageModel getImage:imagePath succ:^{
                         NSData *data = [fileManager contentsAtPath:imagePath];
                         if (data) {
                             photoItem.image = [UIImage imageWithData:data];
-                            [self didReveiceMessage];
+                            [self didReveiceFinishMessageItemAtIndex:index];
                         } else {
-                            [self failReviceMessage];
+                            [self didReviceFailMessageItemAtIndex:index];
                             BJLog(@"下载的图片是空的");
                         }
                         
                     } fail:^(int code, NSString *err) {
-                        [self failReviceMessage];
+                        [self didReviceFailMessageItemAtIndex:index];
                         BJLog(@"下载原图失败");
                     }];
                 }
@@ -386,11 +393,14 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
                                                             media:soundItem];
     [self.messages addObject:soundMessage];
     
+    NSUInteger index = self.messages.count - 1;
+    [self willReveiceMessageItemAtIndex:index];
+    
     [soundElem getSound:^(NSData *data) {
         soundItem.soundData = data;
-        [self didReveiceMessage];
+        [self didReveiceFinishMessageItemAtIndex:index];
     } fail:^(int code, NSString *msg) {
-        [self failReviceMessage];
+        [self didReviceFailMessageItemAtIndex:index];
         BJLog(@"下载音频失败, %@",msg);
     }];
 }
@@ -405,13 +415,17 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     locationItem.appliesMediaViewMaskAsOutgoing = outgoing;
     [locationItem setLatitude:locationElem.latitude
                     longitude:locationElem.longitude completionHandler:^{
-        [self didReveiceMessage];
+        NSUInteger index = self.messages.count - 1;
+        [self didReveiceFinishMessageItemAtIndex:index];
     }];
     
     JSQMessage *locationMessage = [JSQMessage messageWithSenderId:senderId
                                                       displayName:displayName
                                                             media:locationItem];
     [self.messages addObject:locationMessage];
+    
+    NSUInteger index = self.messages.count - 1;
+    [self willReveiceMessageItemAtIndex:index];
     
 }
 
@@ -430,6 +444,8 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
                                                          media:videoItem];
     [self.messages addObject:videoMessage];
     
+    NSUInteger index = self.messages.count - 1;
+    [self willReveiceMessageItemAtIndex:index];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *nsTmpDir = NSTemporaryDirectory();
@@ -449,21 +465,21 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
         NSData *data = [fileManager contentsAtPath:imagePath];
         if (data) {
             videoItem.aFrameImage = [UIImage imageWithData:data];
-            [self didReveiceMessage];
+            [self didReveiceFinishMessageItemAtIndex:index];
         }
     } else {
         [snapshot getImage:imagePath succ:^{
             NSData *data = [fileManager contentsAtPath:imagePath];
             if (data) {
                 videoItem.aFrameImage = [UIImage imageWithData:data];
-                [self didReveiceMessage];
+                [self didReveiceFinishMessageItemAtIndex:index];
             } else {
-                [self failReviceMessage];
+                [self didReviceFailMessageItemAtIndex:index];
                 BJLog(@"下载的小视频截图是空的");
             }
             
         } fail:^(int code, NSString *err) {
-            [self failReviceMessage];
+            [self didReviceFailMessageItemAtIndex:index];
             BJLog(@"下载小视频截图失败");
         }];
     }
@@ -487,23 +503,21 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     }
 }
 
-#pragma mark 接受视频
-- (void)reveiceVideoMediaMessageWithVideoPath:(nonnull NSString *)videoPath showImage:(nonnull UIImage *)showImage {
-    LJVideoMediaItem *videoItem = [[LJVideoMediaItem alloc] initWithVideoPath:videoPath aFrameImage:showImage];
-    JSQMessage *videoMessage = [JSQMessage messageWithSenderId:@"456"
-                                                   displayName:@"456"
-                                                         media:videoItem];
-    [self.messages addObject:videoMessage];
-}
+#pragma mark - 重新发送
 
+- (void)reSendAtIndex:(NSUInteger)index {
+    TIMMessage * message = self.failMessages[@(index)];
+    
+    if (message && index < self.messages.count) {
+        [self sendMessage:message jsqMessage:self.messages[index]];
+    }
+}
 
 #pragma mark - 删除
 
 // 删除指定位置的消息
 - (void)removeAtIndex:(NSUInteger)index {
     NSUInteger totalCount = self.messages.count;
-    
-    
     
     [self.chatingConversation getLocalMessage:(int)totalCount last:nil succ:^(NSArray *msgs) {
         NSInteger num = totalCount - index - 1;
@@ -527,15 +541,22 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
 
 #pragma mark - Private Methods
 
-- (void)sendMessage:(TIMMessage*)message jsqMessage:(JSQMessage *)jsqMessage {
+- (void)sendMessage:(TIMMessage*)message
+         jsqMessage:(JSQMessage *)jsqMessage{
+    
+    NSUInteger index = self.messages.count - 1;
+    
+    [self willSendMessageItemAtIndex:index];
+    
     [self.chatingConversation sendMessage:message succ:^{
         [jsqMessage setDataState:LJMessageDataStateCompleted];
-        [self didSendMessage];
+        [self didSendFinishMessageItemAtIndex:index];
         NSLog(@"发送 成功");
     } fail:^(int code, NSString *msg) {
         [jsqMessage setDataState:LJMessageDataStateFailed];
-        [self failSendMessage];
+        [self didSendFailMessageItemAtIndex:index];
         NSLog(@"发送 失败 mesg=%@",msg);
+        self.failMessages[@([self.messages indexOfObject:jsqMessage])] =  message;
     }];
     
     self.chatingConversation.lj_lsatMessage = message;
@@ -544,47 +565,47 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
 
 #pragma mark - 处理发送消息
 
-- (void)willSendMessage {
-    if ([self.delegate respondsToSelector:@selector(messagesModelWillSend:)]) {
-        [self.delegate messagesModelWillSend:self];
+- (void)willSendMessageItemAtIndex:(NSUInteger)index {
+    if ([self.delegate respondsToSelector:@selector(messagesModel:willSendItemAtIndex:)]) {
+        [self.delegate messagesModel:self willSendItemAtIndex:index];
     }
 }
 
-- (void)didSendMessage {
-    if ([self.delegate respondsToSelector:@selector(messagesModelDidSend:)]) {
-        [self.delegate messagesModelDidSend:self];
+- (void)didSendFinishMessageItemAtIndex:(NSUInteger)index {
+    if ([self.delegate respondsToSelector:@selector(messagesModel:didSendFinishItemAtIndex:)]) {
+        [self.delegate messagesModel:self didSendFinishItemAtIndex:index];
     }
 }
 
-- (void)failSendMessage {
-    if ([self.delegate respondsToSelector:@selector(messagesModelFailSend:)]) {
-        [self.delegate messagesModelFailSend:self];
+- (void)didSendFailMessageItemAtIndex:(NSUInteger)index {
+    if ([self.delegate respondsToSelector:@selector(messagesModel:didSendFailItemAtIndex:)]) {
+        [self.delegate messagesModel:self didSendFailItemAtIndex:index];
     }
 }
 
 #pragma mark - 处理接受消息
 
-- (void)prepareWillReveiceMessage {
+- (void)willPrepareReveiceMessage{
     if ([self.delegate respondsToSelector:@selector(messagesModelPrepareWillReveice:)]) {
         [self.delegate messagesModelPrepareWillReveice:self];
     }
 }
 
-- (void)willReveiceMessage {
-    if ([self.delegate respondsToSelector:@selector(messagesModelWillReveice:)]) {
-        [self.delegate messagesModelWillReveice:self];
+- (void)willReveiceMessageItemAtIndex:(NSUInteger)index {
+    if ([self.delegate respondsToSelector:@selector(messagesModel:willReveiceItemAtIndex:)]) {
+        [self.delegate messagesModel:self willReveiceItemAtIndex:index];
     }
 }
 
-- (void)didReveiceMessage {
-    if ([self.delegate respondsToSelector:@selector(messagesModelDidReveice:)]) {
-        [self.delegate messagesModelDidReveice:self];
+- (void)didReveiceFinishMessageItemAtIndex:(NSUInteger)index {
+    if ([self.delegate respondsToSelector:@selector(messagesModel:didReveiceFinishItemAtIndex:)]) {
+        [self.delegate messagesModel:self didReveiceFinishItemAtIndex:index];
     }
 }
 
-- (void)failReviceMessage {
-    if ([self.delegate respondsToSelector:@selector(messagesModelFailReveice:)]) {
-        [self.delegate messagesModelFailReveice:self];
+- (void)didReviceFailMessageItemAtIndex:(NSUInteger)index {
+    if ([self.delegate respondsToSelector:@selector(messagesModel:didReveiceFailItemAtIndex:)]) {
+        [self.delegate messagesModel:self didReveiceFailItemAtIndex:index];
     }
 }
 

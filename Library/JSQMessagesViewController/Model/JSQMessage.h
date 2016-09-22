@@ -60,9 +60,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (copy, nonatomic, readonly, null_unspecified) id<JSQMessageMediaData> media;
 
-@property (assign, nonatomic, readonly) LJMessageDataState dataState;
-
-
 #pragma mark - Initialization
 
 /**
