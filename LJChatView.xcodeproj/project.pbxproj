@@ -56,6 +56,8 @@
 		839721971D8FC37500BB6875 /* LDRunState.m in Sources */ = {isa = PBXBuildFile; fileRef = 839721801D8FC37500BB6875 /* LDRunState.m */; };
 		839721981D8FC37500BB6875 /* LDState.m in Sources */ = {isa = PBXBuildFile; fileRef = 839721821D8FC37500BB6875 /* LDState.m */; };
 		8397219B1D8FECEC00BB6875 /* LJFollowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8397219A1D8FECEC00BB6875 /* LJFollowModel.m */; };
+		839CC2371D937E6E009000F5 /* TIMConversation+LJAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 839CC2361D937E6E009000F5 /* TIMConversation+LJAdd.m */; };
+		839CC23A1D938CB2009000F5 /* LJIMConfigFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 839CC2391D938CB2009000F5 /* LJIMConfigFile.m */; };
 		839D0D2C1D8955E500E2A101 /* IMCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839D0D291D8955E500E2A101 /* IMCore.framework */; };
 		839D0D2D1D8955E500E2A101 /* ImSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839D0D2A1D8955E500E2A101 /* ImSDK.framework */; };
 		839D0D2E1D8955E500E2A101 /* TLSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839D0D2B1D8955E500E2A101 /* TLSSDK.framework */; };
@@ -272,7 +274,6 @@
 		83DBAE1C1D8E313A00D98400 /* LJIMManagerListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DBAE1B1D8E313A00D98400 /* LJIMManagerListener.m */; };
 		83DBAE1F1D8E344E00D98400 /* LJIMLoginParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DBAE1E1D8E344E00D98400 /* LJIMLoginParam.m */; };
 		83DBAE251D8E3F0C00D98400 /* LJIMManager+AppConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DBAE241D8E3F0C00D98400 /* LJIMManager+AppConfig.m */; };
-		83DBAE2F1D8E48C300D98400 /* LJIMManager+Chat.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DBAE2E1D8E48C300D98400 /* LJIMManager+Chat.m */; };
 		83E02E801D921B3300C35246 /* LJSoundMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E02E7F1D921B3300C35246 /* LJSoundMediaItem.m */; };
 		83E02E831D92217C00C35246 /* LJLocationMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E02E821D92217C00C35246 /* LJLocationMediaItem.m */; };
 		83E02E871D922FB000C35246 /* LJSoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E02E861D922FB000C35246 /* LJSoundManager.m */; };
@@ -386,6 +387,10 @@
 		839721821D8FC37500BB6875 /* LDState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDState.m; sourceTree = "<group>"; };
 		839721991D8FECEC00BB6875 /* LJFollowModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJFollowModel.h; sourceTree = "<group>"; };
 		8397219A1D8FECEC00BB6875 /* LJFollowModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJFollowModel.m; sourceTree = "<group>"; };
+		839CC2351D937E6E009000F5 /* TIMConversation+LJAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TIMConversation+LJAdd.h"; sourceTree = "<group>"; };
+		839CC2361D937E6E009000F5 /* TIMConversation+LJAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TIMConversation+LJAdd.m"; sourceTree = "<group>"; };
+		839CC2381D938CB2009000F5 /* LJIMConfigFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJIMConfigFile.h; sourceTree = "<group>"; };
+		839CC2391D938CB2009000F5 /* LJIMConfigFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJIMConfigFile.m; sourceTree = "<group>"; };
 		839D0D201D89555200E2A101 /* IMCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IMCore.framework; path = ../../Tim_IM_2.3.0/IMCore.framework; sourceTree = "<group>"; };
 		839D0D211D89555200E2A101 /* ImSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImSDK.framework; path = ../../Tim_IM_2.3.0/ImSDK.framework; sourceTree = "<group>"; };
 		839D0D221D89555200E2A101 /* QALSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QALSDK.framework; path = ../../Tim_IM_2.3.0/QALSDK.framework; sourceTree = "<group>"; };
@@ -676,8 +681,6 @@
 		83DBAE1E1D8E344E00D98400 /* LJIMLoginParam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJIMLoginParam.m; sourceTree = "<group>"; };
 		83DBAE231D8E3F0C00D98400 /* LJIMManager+AppConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LJIMManager+AppConfig.h"; sourceTree = "<group>"; };
 		83DBAE241D8E3F0C00D98400 /* LJIMManager+AppConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LJIMManager+AppConfig.m"; sourceTree = "<group>"; };
-		83DBAE2D1D8E48C300D98400 /* LJIMManager+Chat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LJIMManager+Chat.h"; sourceTree = "<group>"; };
-		83DBAE2E1D8E48C300D98400 /* LJIMManager+Chat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LJIMManager+Chat.m"; sourceTree = "<group>"; };
 		83E02E7E1D921B3300C35246 /* LJSoundMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJSoundMediaItem.h; sourceTree = "<group>"; };
 		83E02E7F1D921B3300C35246 /* LJSoundMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJSoundMediaItem.m; sourceTree = "<group>"; };
 		83E02E811D92217C00C35246 /* LJLocationMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJLocationMediaItem.h; sourceTree = "<group>"; };
@@ -1418,16 +1421,18 @@
 		83DBAE071D8E2C2200D98400 /* LJIMAdapter */ = {
 			isa = PBXGroup;
 			children = (
+				839CC2381D938CB2009000F5 /* LJIMConfigFile.h */,
+				839CC2391D938CB2009000F5 /* LJIMConfigFile.m */,
 				83DBAE171D8E2DEE00D98400 /* LJIMManager.h */,
 				83DBAE181D8E2DEE00D98400 /* LJIMManager.m */,
-				83DBAE2D1D8E48C300D98400 /* LJIMManager+Chat.h */,
-				83DBAE2E1D8E48C300D98400 /* LJIMManager+Chat.m */,
 				83DBAE231D8E3F0C00D98400 /* LJIMManager+AppConfig.h */,
 				83DBAE241D8E3F0C00D98400 /* LJIMManager+AppConfig.m */,
 				83DBAE1D1D8E344E00D98400 /* LJIMLoginParam.h */,
 				83DBAE1E1D8E344E00D98400 /* LJIMLoginParam.m */,
 				83DBAE1A1D8E313A00D98400 /* LJIMManagerListener.h */,
 				83DBAE1B1D8E313A00D98400 /* LJIMManagerListener.m */,
+				839CC2351D937E6E009000F5 /* TIMConversation+LJAdd.h */,
+				839CC2361D937E6E009000F5 /* TIMConversation+LJAdd.m */,
 			);
 			path = LJIMAdapter;
 			sourceTree = "<group>";
@@ -1880,7 +1885,6 @@
 				839721871D8FC37500BB6875 /* NSObject+LDPropertyIterator.m in Sources */,
 				83AB76B91D89294E008DD6CF /* JSQMessagesMediaPlaceholderView.m in Sources */,
 				83AB76A41D89294E008DD6CF /* JSQMessagesBubblesSizeCalculator.m in Sources */,
-				83DBAE2F1D8E48C300D98400 /* LJIMManager+Chat.m in Sources */,
 				8329A70E1D66D9020081FDD5 /* LJMovieDecoder.m in Sources */,
 				83AB769B1D89294E008DD6CF /* UIColor+JSQMessages.m in Sources */,
 				83E02E801D921B3300C35246 /* LJSoundMediaItem.m in Sources */,
@@ -1891,6 +1895,7 @@
 				83AB75EF1D89294E008DD6CF /* GJGCChatInputExpandEmojiPanelGifSubItem.m in Sources */,
 				839721971D8FC37500BB6875 /* LDRunState.m in Sources */,
 				83DBAE251D8E3F0C00D98400 /* LJIMManager+AppConfig.m in Sources */,
+				839CC2371D937E6E009000F5 /* TIMConversation+LJAdd.m in Sources */,
 				839721981D8FC37500BB6875 /* LDState.m in Sources */,
 				83AB75F11D89294E008DD6CF /* GJGCChatInputExpandEmojiPanelMenuBarDataSource.m in Sources */,
 				8397218D1D8FC37500BB6875 /* LDSilentHttpCaller.m in Sources */,
@@ -1928,6 +1933,7 @@
 				83AB76BA1D89294E008DD6CF /* JSQMessagesTypingIndicatorFooterView.m in Sources */,
 				83AB75F91D89294E008DD6CF /* GJGCChatInputPanel.m in Sources */,
 				83AB75ED1D89294E008DD6CF /* GJGCChatInputExpandEmojiPanel.m in Sources */,
+				839CC23A1D938CB2009000F5 /* LJIMConfigFile.m in Sources */,
 				83AB75F51D89294E008DD6CF /* GJGCChatInputExpandMenuPanelConfigModel.m in Sources */,
 				83E02E8A1D92308200C35246 /* LJSoundModel.m in Sources */,
 				83AB75F31D89294E008DD6CF /* GJGCChatInputExpandEmojiPanelPageItem.m in Sources */,

@@ -11,6 +11,97 @@
 
 @implementation LJIMManagerListener
 
++ (instancetype)sharedInstance {
+    static LJIMManagerListener *_instance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _instance = [[LJIMManagerListener alloc] init];
+    });
+    
+    return _instance;
+}
+
+// 获取会话（TIMConversation*）列表
+-(NSArray*)getConversationList {
+    if (!self.conversationList || !self.conversationList.count) {
+        self.conversationList = [[[TIMManager sharedInstance] getConversationList] mutableCopy];
+    }
+    return self.conversationList.copy;
+}
+
+// 获取会话
+-(TIMConversation*)getConversation:(TIMConversationType)type receiver:(NSString *)receiver {
+    return [[TIMManager sharedInstance] getConversation:type receiver:receiver];
+}
+
+- (void)openNewConversation {
+    if ([self.conversationList indexOfObject:self.chattingConversation] != 0) {
+        [self.conversationList removeObject:self.chattingConversation];
+        [self.conversationList insertObject:self.chattingConversation atIndex:0];
+    }
+    //设置会话中所有消息为已读状态
+    [self.chattingConversation setReadMessage];
+    
+    [self updataUIForNotificationCenter];
+    
+}
+
+- (BOOL)removeConversationListAtIndex:(NSUInteger)index {
+    if (index < self.conversationList.count) {
+        [self.conversationList removeObjectAtIndex:index];
+        TIMConversation *conv =[[TIMManager sharedInstance] getConversationByIndex:(int)index];
+        if (conv) {
+            //删除会话和消息
+            return [[TIMManager sharedInstance] deleteConversationAndMessages:[conv getType] receiver:[conv getReceiver]];
+        }
+        
+    }
+    return NO;
+    
+}
+
+- (void)removeAllConversationList {
+    [self.conversationList enumerateObjectsUsingBlock:^(TIMConversation * _Nonnull conv, NSUInteger idx, BOOL * _Nonnull stop) {
+        //删除会话和消息
+        [[TIMManager sharedInstance] deleteConversationAndMessages:[conv getType] receiver:[conv getReceiver]];
+    }];
+    
+    [self.conversationList removeAllObjects];
+    self.chattingConversation = nil;
+}
+
+#pragma mark - 私有方法
+
+//是当前回话时，更新位置
+- (void)updateOnLastMessageChanged:(TIMConversation *)conv {
+    if ([_chattingConversation isEqual:conv]) {
+        NSUInteger index = [_conversationList indexOfObject:conv];
+        if (index == 0) {
+            // index == 0 不作处理
+            return;
+        }
+        NSUInteger toindex = [self insertPosition];
+        if (index < [_conversationList count]) {
+            [_conversationList removeObject:conv];
+            [_conversationList insertObject:conv atIndex:toindex];
+        } else {
+            [_conversationList insertObject:conv atIndex:toindex];
+        }
+    }
+}
+
+- (NSUInteger)insertPosition {
+    if (!self.isConnectSucceed) {
+        return 1;
+    }
+    return 0;
+}
+
+- (void)updataUIForNotificationCenter {
+    [[NSNotificationCenter defaultCenter] postNotificationName:LJIMNotificationCenterUpdataChatUI object:nil];
+}
+
+
 #pragma mark- TIMConnListener
 
 //  网络连接成功
@@ -47,12 +138,11 @@
         //过滤系统消息
         if ([newConversation getType] == TIM_SYSTEM) return;
         
-        BOOL isNewConversation = NO;
+        BOOL isNewConversation = YES;
         for (TIMConversation *oldConversation in self.conversationList) {
             
-            NSString *receiverID = [oldConversation getReceiver];
-            if ([oldConversation getType] == [newConversation getType] && [receiverID isEqualToString:[newConversation getReceiver]]) {
-                if (oldConversation == self.chattingConversation) {
+            if ([newConversation isEqual:oldConversation]) {
+                if ([oldConversation isEqual:self.chattingConversation]) {
                     //如果是c2c会话，则更新“对方正在输入...”状态
                     BOOL isInputStatus = NO;
                     
@@ -71,26 +161,26 @@
                         
                         if (!isInputStatus) {
                             [newConversation setReadMessage];
-//                            oldConversation.lastMessage = imamsg;
-//                            [_chattingConversation onReceiveNewMessage:imamsg];
                             [[LJMessagesModel sharedInstance] reveiceMessage:msg];
                         }
                     }
-                } else {
-                  
+                    
+                    [self updateOnLastMessageChanged:newConversation];
                 }
-                isNewConversation = YES;
+                isNewConversation = NO;
                 break;
             }
         }
         
-        if (!isNewConversation) {
+        if (isNewConversation) {
             // 说明会话列表中没有该会话，新生建会话，并更新到
             [[TIMManager sharedInstance] getConversationList];
             [self.conversationList insertObject:newConversation atIndex:0];
-           
         }
     }
+    
+    //更新界面
+    [self updataUIForNotificationCenter];
 }
 
 #pragma mark - TIMUserStatusListener

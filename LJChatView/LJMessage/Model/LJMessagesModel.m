@@ -12,6 +12,8 @@
 
 #import <ImSDK/ImSDK.h>
 
+#import "TIMConversation+LJAdd.h"
+
 /**
  *  状态转化
  *
@@ -162,6 +164,7 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     
     
     TIMMessage *message = [[TIMMessage alloc] init];
+    
     TIMSoundElem *soundElem = [[TIMSoundElem alloc] init];
     soundElem.data = soundData;
     soundElem.second = second;
@@ -487,6 +490,24 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     [self.messages addObject:videoMessage];
 }
 
+
+#pragma mark - 删除
+
+// 删除指定位置的消息
+- (void)removeAtIndex:(NSUInteger)index {
+    if (index < self.messages.count) {
+        [self.messages removeObjectAtIndex:index];
+    }
+    [self.chatingConversation deleteLocalMessage:^{
+        
+    } fail:^(int code, NSString *msg) {
+        
+    }];
+    
+    
+}
+
+
 #pragma mark - Private Methods
 
 - (void)sendMessage:(TIMMessage*)message jsqMessage:(JSQMessage *)jsqMessage {
@@ -499,6 +520,8 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
         [self failSendMessage];
         NSLog(@"发送 失败 mesg=%@",msg);
     }];
+    
+    self.chatingConversation.lj_lsatMessage = message;
 }
 
 #pragma mark - 处理发送消息

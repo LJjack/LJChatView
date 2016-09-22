@@ -106,6 +106,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - 删除
 
+- (void)removeAtIndex:(NSUInteger)index;
+
 @end
 
 NS_ASSUME_NONNULL_END

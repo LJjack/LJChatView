@@ -10,6 +10,8 @@
 
 #import <ImSDK/ImSDK.h>
 
+#import "TIMConversation+LJAdd.h"
+
 @interface LJChatCell ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconView;
@@ -17,6 +19,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *destitleLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *tipLabel;
 
 @end
 
@@ -40,20 +44,29 @@
 
 - (void)setModel:(TIMConversation *)model {
     _model = model;
-    
-    if ([model getType] == TIM_C2C) {
-        [model getMessage:1 last:nil succ:^(NSArray *msgs) {
-            TIMMessage *message = msgs[0];
-            self.titleLabel.text = [self showTitleWithMessage:message];
-            TIMElem *elem = [message getElem:0];
-            if ([elem isKindOfClass:[TIMTextElem class]]) {
-                self.destitleLabel.text = [(TIMTextElem *)elem text];
-            }
-            
-        } fail:^(int code, NSString *msg) {
-            
-        }];
+    TIMMessage *message = model.lj_lsatMessage;
+    self.titleLabel.text = [self showTitleWithMessage:message];
+    TIMElem *elem = [message getElem:0];
+    if ([elem isKindOfClass:[TIMTextElem class]]) {
+        self.destitleLabel.text = [(TIMTextElem *)elem text];
+    } else if ([elem isKindOfClass:[TIMImageElem class]]) {
+        self.destitleLabel.text = @"[图片]";
+    } else if ([elem isKindOfClass:[TIMLocationElem class]]) {
+        self.destitleLabel.text = @"[地理位置]";
+    } else if ([elem isKindOfClass:[TIMSoundElem class]]) {
+        self.destitleLabel.text = @"[语音]";
+    } else if ([elem isKindOfClass:[TIMVideoElem class]]) {
+        self.destitleLabel.text = @"[微视频]";
     }
+    
+    int tipNum = [model getUnReadMessageNum];
+    if (tipNum <= 0) {
+        self.tipLabel.hidden = YES;
+    } else {
+        self.tipLabel.hidden = NO;
+        self.tipLabel.text = [NSString stringWithFormat:@"%d",tipNum];
+    }
+    
 }
 
 - (NSString *)showTitleWithMessage:(TIMMessage *)message {

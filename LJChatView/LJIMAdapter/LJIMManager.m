@@ -8,9 +8,6 @@
 
 #import "LJIMManager.h"
 
-#define kSdkAppId       1400012698
-#define kSdkAccountType @"6588"
-
 @implementation LJIMManager
 
 + (instancetype)sharedInstance {
@@ -25,7 +22,7 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        _listener = [[LJIMManagerListener alloc] init];
+        _listener = [LJIMManagerListener sharedInstance];
         [[TIMManager sharedInstance] setMessageListener:_listener];
         [[TIMManager sharedInstance] setConnListener:_listener];
         [[TIMManager sharedInstance] setUserStatusListener:_listener];
@@ -38,7 +35,6 @@
         [[TIMManager sharedInstance] disableRecentContact];
         
         [[TIMManager sharedInstance] initSdk:kSdkAppId accountType:kSdkAccountType];
-        
         TIMAPNSConfig *config = [[TIMAPNSConfig alloc] init];
         config.openPush = 1;//开启推送
     }

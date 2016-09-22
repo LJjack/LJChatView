@@ -17,7 +17,7 @@
 
 #import "LJChatSocialAPI.h"
 
-#import "LJIMManager+Chat.h"
+#import "LJIMManagerListener.h"
 
 #import "LJMessagesModel.h"
 
@@ -31,27 +31,16 @@
 
 @implementation LJChatController
 
+- (void)dealloc {
+    [self addOrRemveNotificationCenter:NO];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [[LJChatSocialAPI sharedInstance] GETGetFollowees];
+    [self addOrRemveNotificationCenter:YES];
     
-    self.dataList =  [[LJIMManager sharedInstance] getConversationList];
-//    for (TIMConversation *conv in self.dataList) {
-//        BJLog(@"%@",conv);
-//    }
-    
-//    TIMConversation *newConv =[[LJIMManager sharedInstance] getConversation:TIM_C2C receiver:@"1470823510780"];
-//    
-//    TIMMessage *message = [[TIMMessage alloc] init];
-//    TIMTextElem *textElem = [[TIMTextElem alloc] init];
-//    textElem.text = @"我去打你了！！！";
-//    [message addElem:textElem];
-//    [newConv sendMessage:message succ:^{
-//        NSLog(@"发送 成功");
-//    } fail:^(int code, NSString *msg) {
-//        NSLog(@"发送 失败%@",msg);
-//    }];
-//    BJLog(@"%@",newConv);
+    self.dataList =  [[LJIMManagerListener sharedInstance] getConversationList];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -90,6 +79,8 @@
     if (indexPath.section == 0) {
         
     } else {
+        [LJIMManagerListener sharedInstance].chattingConversation = self.dataList[indexPath.row];
+        [[LJIMManagerListener sharedInstance] openNewConversation];
         [self performSegueWithIdentifier:@"openMessage" sender:indexPath];
     }
 }
@@ -130,10 +121,24 @@
          LJMessagesController *msgC = segue.destinationViewController;
         LJMessagesModel *model = [LJMessagesModel sharedInstance];
         model.chatingConversation = self.dataList[indexPath.row];
-        [LJIMManager sharedInstance].listener.chattingConversation = self.dataList[indexPath.row];;
         msgC.msgModel = model;
     }
 }
 
+#pragma mark - 
+
+- (void)addOrRemveNotificationCenter:(BOOL)isAdd {
+    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+    if (isAdd) {
+        [defaultCenter addObserver:self selector:@selector(handleUpdataUINotificationCenter) name:LJIMNotificationCenterUpdataChatUI object:nil];
+    } else {
+        [defaultCenter removeObserver:self name:LJIMNotificationCenterUpdataChatUI object:nil];
+    }
+    
+}
+
+- (void)handleUpdataUINotificationCenter {
+    [self.tableView reloadData];
+}
 
 @end
