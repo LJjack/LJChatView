@@ -562,45 +562,10 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
-
-
-#pragma mark - JSQMessagesViewController method overrides
-
-- (void)didPressSendButton:(UIButton *)button
-           withMessageText:(NSString *)text
-                  senderId:(NSString *)senderId
-         senderDisplayName:(NSString *)senderDisplayName
-                      date:(NSDate *)date
-{
-    /**
-     *  Sending a message. Your implementation of this method should do *at least* the following:
-     *
-     *  1. Play sound (optional)
-     *  2. Add new id<JSQMessageData> object to your data source
-     *  3. Call `finishSendingMessage`
-     */
-    
-    // [JSQSystemSoundPlayer jsq_playMessageSentSound];
-    
-    JSQMessage *message = [[JSQMessage alloc] initWithSenderId:senderId
-                                             senderDisplayName:senderDisplayName
-                                                          date:date
-                                                          text:text];
-    
-    [self.msgModel.messages addObject:message];
-    
-    [self finishSendingMessageAnimated:YES];
-}
-
 #pragma mark - JSQMessages CollectionView DataSource
 
 - (NSString *)senderId {
-    return @"123";
-}
-
-- (NSString *)senderDisplayName {
-    return @"123";
+    return @"自己";
 }
 
 - (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -794,7 +759,6 @@
     if (!_refreshControl) {
         _refreshControl = [[UIRefreshControl alloc] init];
         _refreshControl.tintColor = [UIColor lightGrayColor];
-        _refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"下拉加载更多的数据" attributes:@{NSForegroundColorAttributeName :[UIColor lightGrayColor],NSFontAttributeName:[UIFont systemFontOfSize:14]}];
         [_refreshControl addTarget:self action:@selector(loadMoreMessageData) forControlEvents:UIControlEventValueChanged];
         
     }

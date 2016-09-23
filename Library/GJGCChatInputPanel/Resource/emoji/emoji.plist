@@ -211,8 +211,8 @@
 		<string>052[凋谢]</string>
 	</dict>
 	<dict>
-		<key>[蜡烛]</key>
-		<string>053[蜡烛]</string>
+		<key>[蛋糕]</key>
+		<string>053[蛋糕]</string>
 	</dict>
 	<dict>
 		<key>[爱心]</key>
@@ -235,8 +235,8 @@
 		<string>058[月亮]</string>
 	</dict>
 	<dict>
-		<key>[蛋糕]</key>
-		<string>059[蛋糕]</string>
+		<key>[瓢虫]</key>
+		<string>059[瓢虫]</string>
 	</dict>
 	<dict>
 		<key>[闪电]</key>
@@ -307,16 +307,12 @@
 		<string>076[便便]</string>
 	</dict>
 	<dict>
-		<key>[飞机]</key>
-		<string>077[飞机]</string>
+		<key>[跳绳]</key>
+		<string>077[跳绳]</string>
 	</dict>
 	<dict>
-		<key>[金钱]</key>
-		<string>078[金钱]</string>
-	</dict>
-	<dict>
-		<key>[金钱]</key>
-		<string>078[金钱]</string>
+		<key>[右跳]</key>
+		<string>078[右跳]</string>
 	</dict>
 	<dict>
 		<key>[抱抱]</key>
@@ -353,10 +349,6 @@
 	<dict>
 		<key>[擦汗]</key>
 		<string>087[擦汗]</string>
-	</dict>
-	<dict>
-		<key>[吓]</key>
-		<string>090[吓]</string>
 	</dict>
 	<dict>
 		<key>[菜刀]</key>

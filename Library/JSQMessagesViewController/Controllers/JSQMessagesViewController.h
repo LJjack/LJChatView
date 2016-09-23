@@ -171,8 +171,6 @@ NS_ASSUME_NONNULL_BEGIN
  *  Scrolling to the new message can be animated as specified by the animated parameter.
  *
  *  @param animated Specifies whether the sending of a message should be animated or not. Pass `YES` to animate changes, `NO` otherwise.
- *
- *  @discussion You should call this method at the end of `didPressSendButton: withMessageText: senderId: senderDisplayName: date`
  *  after adding the new message to your data source and performing any related tasks.
  *
  *  @see `automaticallyScrollsToMostRecentMessage`.

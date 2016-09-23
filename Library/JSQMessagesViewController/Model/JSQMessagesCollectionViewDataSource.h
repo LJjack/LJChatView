@@ -24,15 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
 @required
 
 /**
- *  Asks the data source for the current sender's display name, that is, the current user who is sending messages.
- *
- *  @return An initialized string describing the current sender to display in a `JSQMessagesCollectionViewCell`.
- *  
- *  @warning You must not return `nil` from this method. This value does not need to be unique.
- */
-- (NSString *)senderDisplayName;
-
-/**
  *  Asks the data source for the current sender's unique identifier, that is, the current user who is sending messages.
  *
  *  @return An initialized string identifier that uniquely identifies the current sender.

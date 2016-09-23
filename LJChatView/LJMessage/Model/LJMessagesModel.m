@@ -88,7 +88,7 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
 - (void)sendTextMediaMessageWithText:(NSString *)text {
     NSAssert(text || text.length , @"文字不能为 nil 或长度为 0");
     
-    JSQMessage *textMessage = [JSQMessage messageWithSenderId:@"123" displayName:@"123" text:text];
+    JSQMessage *textMessage = [JSQMessage messageWithSenderId:@"自己" displayName:@"自己" text:text];
     [textMessage setDataState:LJMessageDataStateRuning];
     [self.messages addObject:textMessage];
     
@@ -110,8 +110,8 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
         NSAssert(NO , @"image获得不了图片或image路径下获得不了图片");
     }
     LJImageMediaItem *photoItem = [[LJImageMediaItem alloc] initWithImage:image];
-    JSQMessage *photoMessage = [JSQMessage messageWithSenderId:@"123"
-                                                   displayName:@"123"
+    JSQMessage *photoMessage = [JSQMessage messageWithSenderId:@"自己"
+                                                   displayName:@"自己"
                                                          media:photoItem];
     [photoMessage setDataState:LJMessageDataStateRuning];
     [self.messages addObject:photoMessage];
@@ -140,6 +140,8 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     imageElem.path = filePath;
     [message addElem:imageElem];
     
+   
+    
     [self sendMessage:message jsqMessage:photoMessage];
 }
 
@@ -150,8 +152,8 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     
     
     LJSoundMediaItem *audioItem = [[LJSoundMediaItem alloc] initWithData:soundData second:second];
-    JSQMessage *audioMessage = [JSQMessage messageWithSenderId:@"123"
-                                                   displayName:@"123"
+    JSQMessage *audioMessage = [JSQMessage messageWithSenderId:@"自己"
+                                                   displayName:@"自己"
                                                          media:audioItem];
     [self.messages addObject:audioMessage];
     
@@ -173,8 +175,8 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     LJLocationMediaItem *locationItem = [[LJLocationMediaItem alloc] init];
     [locationItem setLatitude:37.795313 longitude:-122.393757 completionHandler:completion];
     
-    JSQMessage *locationMessage = [JSQMessage messageWithSenderId:@"123"
-                                                      displayName:@"123"
+    JSQMessage *locationMessage = [JSQMessage messageWithSenderId:@"自己"
+                                                      displayName:@"自己"
                                                             media:locationItem];
     [self.messages addObject:locationMessage];
     
@@ -187,14 +189,13 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     
     [self sendMessage:message jsqMessage:locationMessage];
     
-    
 }
 
 #pragma mark 发送微视频
 - (void)sendShortVideoMediaMessageWithVideoPath:(nonnull NSString *)videoPath showImage:(nonnull UIImage *)showImage {
     LJShortVideoMediaItem *videoItem = [[LJShortVideoMediaItem alloc] initWithVideoPath:videoPath aFrameImage:showImage];
-    JSQMessage *videoMessage = [JSQMessage messageWithSenderId:@"123"
-                                                   displayName:@"123"
+    JSQMessage *videoMessage = [JSQMessage messageWithSenderId:@"自己"
+                                                   displayName:@"自己"
                                                          media:videoItem];
     [self.messages addObject:videoMessage];
     
@@ -224,15 +225,13 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     [message addElem:videoElem];
     
     [self sendMessage:message jsqMessage:videoMessage];
-    
-    
 }
 
 #pragma mark 发送视频
 - (void)sendVideoMediaMessageWithVideoPath:(nonnull NSString *)videoPath showImage:(nonnull UIImage *)showImage {
     LJVideoMediaItem *videoItem = [[LJVideoMediaItem alloc] initWithVideoPath:videoPath aFrameImage:showImage];
-    JSQMessage *videoMessage = [JSQMessage messageWithSenderId:@"123"
-                                                   displayName:@"123"
+    JSQMessage *videoMessage = [JSQMessage messageWithSenderId:@"自己"
+                                                   displayName:@"自己"
                                                          media:videoItem];
     [self.messages addObject:videoMessage];
 }
@@ -247,8 +246,8 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     NSString *displayName = @"";
     BOOL outgoing = YES;
     if ([message isSelf]) {
-        senderId = @"123";
-        displayName = @"123";
+        senderId = @"自己";
+        displayName = @"自己";
     } else {
         TIMUserProfile *user = [message GetSenderProfile];
         senderId = user.identifier;
@@ -333,8 +332,6 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
        [self.messages addObject:jsqMessage];
     }
     
-    
-    
     NSUInteger index = self.messages.count - 1;
     [self willReveiceMessageItemAtIndex:index];
     
@@ -376,6 +373,20 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
                 break;
             }
         }
+    } else {//运行状态
+        //展示发送的图片
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSString *imagePath = imageElem.path;
+        BOOL isDirectory;
+        
+        if ([fileManager fileExistsAtPath:imagePath isDirectory:&isDirectory]
+            && isDirectory == NO) {
+            NSData *data = [fileManager contentsAtPath:imagePath];
+            if (data) {
+                photoItem.image = [UIImage imageWithData:data];
+            }
+        }
+        
     }
 }
 
@@ -656,8 +667,6 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     
     NSArray<TIMMessage *> *msgs =  [chatingConversation getLastMsgs:20];
     [self handleReveicedOldMessage:msgs];
-    
-    
 }
 
 
@@ -665,7 +674,9 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     
     [msgs enumerateObjectsUsingBlock:^(TIMMessage * _Nonnull message, NSUInteger idx, BOOL * _Nonnull stop) {
         TIMMessageStatus status = [message status];
-        
+        if (status == TIM_MSG_STATUS_SENDING) {
+            
+        }
         if (status == TIM_MSG_STATUS_HAS_DELETED) { // 过滤消息被删除
             [message delFromStorage];
         } else {
@@ -674,6 +685,7 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
             if (status == TIM_MSG_STATUS_SEND_FAIL) { //记录消息发送失败
                 self.failMessages[@(idx)] =  message;
             }
+        
         }
     }];
 }
@@ -689,7 +701,7 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
 
 - (void)hanleReveiceNewMessage:(NSNotification *)info {
     TIMMessage *newMessage = (TIMMessage *)info.object;
-    [self reveiceMessage:newMessage isAtTop:YES];
+    [self reveiceMessage:newMessage isAtTop:NO];
 }
 
 @end
