@@ -44,6 +44,7 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
 
 @property (nonatomic, strong) NSMutableDictionary *failMessages;
 
+@property (nonatomic, strong) NSMutableArray *runMessages;//旧的消息还在运行状态
 
 @end
 
@@ -332,7 +333,7 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
        [self.messages addObject:jsqMessage];
     }
     
-    NSUInteger index = self.messages.count - 1;
+    NSUInteger index = [self.messages indexOfObject:jsqMessage];
     [self willReveiceMessageItemAtIndex:index];
     
     if (imageElem && imageElem.imageList && imageElem.imageList.count) {
@@ -374,6 +375,10 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
             }
         }
     } else {//运行状态
+        if ([self.runMessages containsObject:@(index)]) {
+            [jsqMessage setDataState:LJMessageDataStateRuning];
+        }
+        
         //展示发送的图片
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSString *imagePath = imageElem.path;
@@ -662,6 +667,7 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     
     self.messages = [NSMutableArray array];
     self.failMessages = [NSMutableDictionary dictionary];
+    self.runMessages = [NSMutableArray array];
     
     self.otherName = [chatingConversation getReceiver];
     
@@ -675,7 +681,7 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     [msgs enumerateObjectsUsingBlock:^(TIMMessage * _Nonnull message, NSUInteger idx, BOOL * _Nonnull stop) {
         TIMMessageStatus status = [message status];
         if (status == TIM_MSG_STATUS_SENDING) {
-            
+            [self.runMessages addObject:@(idx)];
         }
         if (status == TIM_MSG_STATUS_HAS_DELETED) { // 过滤消息被删除
             [message delFromStorage];
