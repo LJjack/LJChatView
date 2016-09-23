@@ -509,7 +509,9 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     TIMMessage * message = self.failMessages[@(index)];
     
     if (message && index < self.messages.count) {
-        [self sendMessage:message jsqMessage:self.messages[index]];
+        JSQMessage *jsqMessage = self.messages[index];
+        [jsqMessage setDataState:LJMessageDataStateRuning];
+        [self sendMessage:message jsqMessage:jsqMessage];
     }
 }
 

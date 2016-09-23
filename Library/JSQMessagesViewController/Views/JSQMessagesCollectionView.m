@@ -28,7 +28,6 @@
 
 #import "UIColor+JSQMessages.h"
 
-
 @interface JSQMessagesCollectionView () <JSQMessagesLoadEarlierHeaderViewDelegate>
 
 - (void)jsq_configureCollectionView;
@@ -200,9 +199,6 @@ forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
             [self.stateDelegate messageView:self didTapCellStateBtnRuningAtIndexPath:indexPath];
         }
     }
-    
-    
-
     
 }
 

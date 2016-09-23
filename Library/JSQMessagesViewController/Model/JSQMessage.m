@@ -76,8 +76,15 @@
         _date = [date copy];
         _isMediaMessage = isMedia;
         
+        //默认是完成状态
+        _dataState = LJMessageDataStateCompleted;
+        
     }
     return self;
+}
+
+- (void)setDataState:(LJMessageDataState)dataState {
+    _dataState = dataState;
 }
 
 - (NSUInteger)messageHash

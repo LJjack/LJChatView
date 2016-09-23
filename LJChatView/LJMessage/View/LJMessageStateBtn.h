@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#import "LJMessageDataStateDefine.h"
+
 /**
  *  消息状态
  */
 @interface LJMessageStateBtn : UIButton
+
+@property (nonatomic, assign) LJMessageDataState dataState;
 
 - (void)runingAnimating;
 

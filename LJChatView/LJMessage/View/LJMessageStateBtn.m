@@ -57,6 +57,27 @@
     [self setImage:[UIImage imageNamed:@"Sendfailed"] forState:UIControlStateNormal];
 }
 
+#pragma mark - Setters
+
+- (void)setDataState:(LJMessageDataState)dataState {
+    _dataState = dataState;
+    switch (dataState) {
+        case LJMessageDataStateRuning: {
+            [self runingAnimating];
+        } break;
+        case LJMessageDataStateCompleted: {
+            [self completedState];
+        } break;
+        case LJMessageDataStateFailed:
+        case LJMessageDataStateStop: {
+            [self failedState];
+        } break;
+            
+        default:
+            break;
+    }
+}
+
 #pragma mark - Getters
 
 - (UIActivityIndicatorView *)indicatorView {

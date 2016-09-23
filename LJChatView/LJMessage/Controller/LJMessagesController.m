@@ -717,17 +717,11 @@
         }
         
     }
-    
-    cell.cellStateBtn.hidden = NO;//![self shouldShowCellStateBtnForMessage:msg];
-    
+    LJMessageStateBtn *stateBtn = cell.cellStateBtn;
+    stateBtn.hidden = NO;
+    stateBtn.dataState = [msg dataState];
     return cell;
 }
-
-
-- (BOOL)shouldShowCellStateBtnForMessage:(id<JSQMessageData>)message {
-    return [message isMediaMessage];
-}
-
 
 
 
