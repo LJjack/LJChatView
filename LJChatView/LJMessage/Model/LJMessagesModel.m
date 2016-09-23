@@ -67,17 +67,14 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     if (self = [super init]) {
         JSQMessagesAvatarImageFactory *avatarFactory = [[JSQMessagesAvatarImageFactory alloc] initWithDiameter:kJSQMessagesCollectionViewAvatarSizeDefault];
         
-        self.avatarImgSelf = [avatarFactory avatarImageWithUserInitials:@"JSQ"
-                                                                      backgroundColor:[UIColor colorWithWhite:0.85f alpha:1.0f]
-                                                                            textColor:[UIColor colorWithWhite:0.60f alpha:1.0f]
-                                                                                 font:[UIFont systemFontOfSize:14.0f]];
+        self.avatarImgSelf = [avatarFactory avatarImageWithPlaceholder:[UIImage imageNamed:@"message-touxiang"]];
         
-        self.avatarImgOther = [avatarFactory avatarImageWithImage:[UIImage imageNamed:@"demo_avatar_cook"]];
+        self.avatarImgOther = [avatarFactory avatarImageWithPlaceholder:[UIImage imageNamed:@"message-touxiang"]];
 
         JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
         
-        self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
-        self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleGreenColor]];
+        self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor orangeColor]];
+        self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor whiteColor]];
         
         [self addOrRemoveNotificationCenter:YES];
     }
@@ -256,6 +253,7 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
         TIMUserProfile *user = [message GetSenderProfile];
         senderId = user.identifier;
         displayName = user.nickname.length?user.nickname:senderId;
+        NSLog(@"=== %@",user.faceURL);
         outgoing = NO;
     }
     
