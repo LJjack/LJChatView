@@ -12,12 +12,12 @@
 
 @implementation TIMConversation (LJAdd)
 
-- (void)setLj_lsatMessage:(TIMMessage *)lj_lsatMessage {
-    objc_setAssociatedObject(self, "TIMConversation_LJAdd_lj_lsatMessage", lj_lsatMessage, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setLj_lastMessage:(TIMMessage *)lj_lastMessage {
+    objc_setAssociatedObject(self, "kLastMessage_TIMConversation_LJAdd", lj_lastMessage, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (TIMMessage *)lj_lsatMessage {
-   TIMMessage *message = objc_getAssociatedObject(self, "TIMConversation_LJAdd_lj_lsatMessage");
+- (TIMMessage *)lj_lastMessage {
+   TIMMessage *message = objc_getAssociatedObject(self, "kLastMessage_TIMConversation_LJAdd");
     if (message) {
         return message;
     }
@@ -25,6 +25,19 @@
     NSArray *msgs = [self getLastMsgs:1];
     if (msgs.count) {
         return msgs[0];
+    }
+    
+    return nil;
+}
+
+- (void)setLj_TopMessage:(TIMMessage *)lj_TopMessage {
+    objc_setAssociatedObject(self, "kTopMessage_TIMConversation_LJAdd", lj_TopMessage, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (TIMMessage *)lj_TopMessage {
+    TIMMessage *message = objc_getAssociatedObject(self, "kTopMessage_TIMConversation_LJAdd");
+    if (message) {
+        return message;
     }
     
     return nil;

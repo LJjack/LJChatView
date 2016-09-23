@@ -77,6 +77,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) id<LJMessagesModelDelegate> delegate;
 
+@property (nonatomic, copy) NSString *otherName;
+
 
 + (instancetype)sharedInstance;
 
@@ -100,8 +102,13 @@ NS_ASSUME_NONNULL_BEGIN
                                  showImage:(nonnull UIImage *)showImage;
 
 #pragma mark - 接受消息
-
-- (void)reveiceMessage:(TIMMessage *)message;
+/**
+ *  接受消息
+ *
+ *  @param message 消息
+ *  @param isAtTop 是否是新消息，是在数组0位置添加，还是在数组最后追加
+ */
+- (void)reveiceMessage:(TIMMessage *)message isAtTop:(BOOL)isAtTop ;
 
 #pragma mark - 重新发送
 
@@ -113,7 +120,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark- 加载更多数据
 
-- (void)loadMoreMessageData;
+- (void)loadMoreMessageData:(void(^)())succ fail:(void(^)(int code, NSString *msg))fail;
 
 @end
 

@@ -14,10 +14,4 @@
 
 @property (nonatomic, strong) LJMessagesModel *msgModel;
 
-
-
-- (void)receiveMessagePressed:(UIBarButtonItem *)sender;
-
-- (void)closePressed:(UIBarButtonItem *)sender;
-
 @end

@@ -62,12 +62,9 @@
     
     [self jsq_configureMessagesInputPanel];
     
-    if (!self.msgModel) {
-        self.msgModel = [LJMessagesModel sharedInstance];
-    }
     self.msgModel.delegate = self;
     
-    self.title = @"JSQMessages";
+    self.title = self.msgModel.otherName;
     
     /* 语音播放工具 */
     self.audioPlayer = [[LJSoundPlayer alloc]init];
@@ -76,11 +73,7 @@
     /* 观察录音工具开始录音 */
     //    NSString *formateNoti = [GJGCChatInputConst panelNoti:GJGCChatInputPanelBeginRecordNoti formateWithIdentifier:self.inputPanel.panelIndentifier];
     //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(observeChatInputPanelBeginRecord:) name:formateNoti object:nil];
-    
-    
-    /**
-     *  Set up message accessory button delegate and configuration
-     */
+
     self.collectionView.stateDelegate = self;
     
     
@@ -115,7 +108,11 @@
 
 
 - (void)loadMoreMessageData {
-    [self.msgModel loadMoreMessageData];
+    [self.msgModel loadMoreMessageData:^{
+        [self.refreshControl endRefreshing];
+    } fail:^(int code, NSString * _Nonnull msg) {
+        [self.refreshControl endRefreshing];
+    }];
 }
 
 //========================   输入键盘工具 开始  ================================

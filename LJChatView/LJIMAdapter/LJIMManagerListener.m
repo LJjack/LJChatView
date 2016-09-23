@@ -7,7 +7,6 @@
 //
 
 #import "LJIMManagerListener.h"
-#import "LJMessagesModel.h"
 
 @implementation LJIMManagerListener
 
@@ -161,7 +160,8 @@
                         
                         if (!isInputStatus) {
                             [newConversation setReadMessage];
-                            [[LJMessagesModel sharedInstance] reveiceMessage:msg];
+                            //通知
+                            [[NSNotificationCenter defaultCenter] postNotificationName:LJIMNotificationCenterReveicedNewMessage object:msg];
                         }
                     }
                     

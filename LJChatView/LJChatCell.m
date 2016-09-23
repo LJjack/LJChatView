@@ -44,7 +44,7 @@
 
 - (void)setModel:(TIMConversation *)model {
     _model = model;
-    TIMMessage *message = model.lj_lsatMessage;
+    TIMMessage *message = model.lj_lastMessage;
     self.titleLabel.text = [self showTitleWithMessage:message];
     TIMElem *elem = [message getElem:0];
     if ([elem isKindOfClass:[TIMTextElem class]]) {

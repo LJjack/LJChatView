@@ -9,9 +9,10 @@
 #import "LJIMConfigFile.h"
 
 
-NSString * const LJIMNotificationCenterUpdataChatUI = @"LJIMNotificationCenterUpdataChatUI";
-
 int const kSdkAppId = 1400012698;
 
 NSString * const kSdkAccountType = @"6588";
 
+NSString * const LJIMNotificationCenterUpdataChatUI = @"LJIMNotificationCenterUpdataChatUI";
+
+NSString * const LJIMNotificationCenterReveicedNewMessage = @"LJIMNotificationCenterReveicedNewMessage";

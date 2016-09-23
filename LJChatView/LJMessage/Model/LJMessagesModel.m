@@ -59,6 +59,10 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     return _instance;
 }
 
+- (void)dealloc {
+    [self addOrRemoveNotificationCenter:NO];
+}
+
 - (instancetype)init {
     if (self = [super init]) {
         JSQMessagesAvatarImageFactory *avatarFactory = [[JSQMessagesAvatarImageFactory alloc] initWithDiameter:kJSQMessagesCollectionViewAvatarSizeDefault];
@@ -74,31 +78,11 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
         
         self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
         self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleGreenColor]];
+        
+        [self addOrRemoveNotificationCenter:YES];
     }
     
     return self;
-}
-
-- (void)setChatingConversation:(TIMConversation *)chatingConversation {
-    _chatingConversation = chatingConversation;
-    
-    self.messages = [NSMutableArray array];
-    self.failMessages = [NSMutableDictionary dictionary];
-    
-    NSArray<TIMMessage *> *msgs =  [chatingConversation getLastMsgs:20];
-    [msgs enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(TIMMessage * _Nonnull message, NSUInteger idx, BOOL * _Nonnull stop) {
-        TIMMessageStatus status = [message status];
-        
-        if (status == TIM_MSG_STATUS_HAS_DELETED) { // 过滤消息被删除
-            [message delFromStorage];
-        } else {
-            [self reveiceMessage:message];
-            if (status == TIM_MSG_STATUS_SEND_FAIL) { //记录消息发送失败
-                self.failMessages[@(idx)] =  message;
-            }
-        }
-        
-    }];
 }
 
 #pragma mark - 发送消息
@@ -258,7 +242,7 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
 
 #pragma mark - 接受消息
 
-- (void)reveiceMessage:(TIMMessage *)message {
+- (void)reveiceMessage:(TIMMessage *)message isAtTop:(BOOL)isAtTop {
     [self willPrepareReveiceMessage];
     
     int elemCount = [message elemCount];
@@ -280,29 +264,37 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
         TIMElem *elem = [message getElem:i];
         if ([elem isKindOfClass:[TIMTextElem class]]) {
             TIMTextElem *textElem = (TIMTextElem *)elem;
-            [self reveiceText:textElem senderId:senderId displayName:displayName];
+            [self reveiceText:textElem senderId:senderId displayName:displayName isAtTop:isAtTop];
             
         } else if ([elem isKindOfClass:[TIMImageElem class]]) {
             TIMImageElem *imageElem = (TIMImageElem *)elem;
             [self reveiceImage:imageElem
                       senderId:senderId
                    displayName:displayName
-                      outgoing:outgoing];
+                      outgoing:outgoing
+                       isAtTop:isAtTop];
             
         } else if ([elem isKindOfClass:[TIMLocationElem class]]) {
             TIMLocationElem *locationElem = (TIMLocationElem *)elem;
             [self reveiceLocation:locationElem
                          senderId:senderId
                       displayName:displayName
-                         outgoing:outgoing];
+                         outgoing:outgoing
+                          isAtTop:isAtTop];
         } else if ([elem isKindOfClass:[TIMSoundElem class]]) {
             TIMSoundElem *soundElem = (TIMSoundElem *)elem;
             [self reveiceSound:soundElem
                       senderId:senderId
                    displayName:displayName
-                      outgoing:outgoing];
+                      outgoing:outgoing
+                       isAtTop:isAtTop];
         } else if ([elem isKindOfClass:[TIMVideoElem class]]) {
-            
+            TIMVideoElem *videoElem = (TIMVideoElem *)elem;
+            [self reveiceShortVideo:videoElem
+                           senderId:senderId
+                        displayName:displayName
+                           outgoing:outgoing
+                            isAtTop:isAtTop];
         }
         
     }
@@ -311,16 +303,18 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
 // 接受文字
 - (void)reveiceText:(TIMTextElem *)textElem
             senderId:(NSString *)senderId
-         displayName:(NSString *)displayName {
-    JSQMessage *textMessage = [JSQMessage messageWithSenderId:senderId
+        displayName:(NSString *)displayName
+            isAtTop:(BOOL)isAtTop {
+    JSQMessage *jsqMessage = [JSQMessage messageWithSenderId:senderId
                                                   displayName:displayName
                                                          text:[textElem text]];
-    [self.messages addObject:textMessage];
-    
+    if (isAtTop) {
+        [self.messages insertObject:jsqMessage atIndex:0];
+    } else {
+        [self.messages addObject:jsqMessage];
+    }
     NSUInteger index = self.messages.count - 1;
     [self willReveiceMessageItemAtIndex:index];
-    
-    
     [self didReveiceFinishMessageItemAtIndex:index];
 }
 
@@ -328,14 +322,20 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
 - (void)reveiceImage:(TIMImageElem *)imageElem
             senderId:(NSString *)senderId
          displayName:(NSString *)displayName
-            outgoing:(BOOL)outgoing {
+            outgoing:(BOOL)outgoing
+             isAtTop:(BOOL)isAtTop {
     LJImageMediaItem *photoItem = [[LJImageMediaItem alloc] initWithImage:nil];
     photoItem.appliesMediaViewMaskAsOutgoing = outgoing;
-    JSQMessage *imageMessage = [JSQMessage messageWithSenderId:senderId
+    JSQMessage *jsqMessage = [JSQMessage messageWithSenderId:senderId
                                                    displayName:displayName
                                                          media:photoItem];
+    if (isAtTop) {
+        [self.messages insertObject:jsqMessage atIndex:0];
+    } else {
+       [self.messages addObject:jsqMessage];
+    }
     
-    [self.messages addObject:imageMessage];
+    
     
     NSUInteger index = self.messages.count - 1;
     [self willReveiceMessageItemAtIndex:index];
@@ -385,13 +385,18 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
 - (void)reveiceSound:(TIMSoundElem *)soundElem
             senderId:(NSString *)senderId
          displayName:(NSString *)displayName
-            outgoing:(BOOL)outgoing {
+            outgoing:(BOOL)outgoing
+             isAtTop:(BOOL)isAtTop {
     LJSoundMediaItem *soundItem = [[LJSoundMediaItem alloc] initWithData:nil second:soundElem.second];
     
-    JSQMessage *soundMessage = [JSQMessage messageWithSenderId:senderId
+    JSQMessage *jsqMessage = [JSQMessage messageWithSenderId:senderId
                                                       displayName:displayName
                                                             media:soundItem];
-    [self.messages addObject:soundMessage];
+    if (isAtTop) {
+        [self.messages insertObject:jsqMessage atIndex:0];
+    } else {
+        [self.messages addObject:jsqMessage];
+    }
     
     NSUInteger index = self.messages.count - 1;
     [self willReveiceMessageItemAtIndex:index];
@@ -409,7 +414,8 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
 - (void)reveiceLocation:(TIMLocationElem *)locationElem
             senderId:(NSString *)senderId
          displayName:(NSString *)displayName
-               outgoing:(BOOL)outgoing {
+               outgoing:(BOOL)outgoing
+                isAtTop:(BOOL)isAtTop {
 
     LJLocationMediaItem *locationItem = [[LJLocationMediaItem alloc] init];
     locationItem.appliesMediaViewMaskAsOutgoing = outgoing;
@@ -433,16 +439,21 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
 - (void)reveiceShortVideo:(TIMVideoElem *)videoElem
                  senderId:(NSString *)senderId
               displayName:(NSString *)displayName
-                 outgoing:(BOOL)outgoing {
+                 outgoing:(BOOL)outgoing
+                  isAtTop:(BOOL)isAtTop {
     
     
     
     LJShortVideoMediaItem *videoItem = [[LJShortVideoMediaItem alloc] init];
     videoItem.appliesMediaViewMaskAsOutgoing = outgoing;
-    JSQMessage *videoMessage = [JSQMessage messageWithSenderId:senderId
+    JSQMessage *jsqMessage = [JSQMessage messageWithSenderId:senderId
                                                    displayName:displayName
                                                          media:videoItem];
-    [self.messages addObject:videoMessage];
+    if (isAtTop) {
+        [self.messages insertObject:jsqMessage atIndex:0];
+    } else {
+        [self.messages addObject:jsqMessage];
+    }
     
     NSUInteger index = self.messages.count - 1;
     [self willReveiceMessageItemAtIndex:index];
@@ -546,16 +557,23 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
 
 #pragma mark- 加载更多数据
 
-- (void)loadMoreMessageData {
-    [self.chatingConversation getMessageForward:1000 last:self.chatingConversation.lj_lsatMessage succ:^(NSArray *msgs) {
-        
-        for (TIMMessage *message in msgs) {
-            NSLog(@"--- %@",message);
-        }
-        
-    } fail:^(int code, NSString *msg) {
-        NSLog(@"===== %@",msg);
-    }];
+- (void)loadMoreMessageData:(void(^)())succ fail:(void(^)(int code, NSString *msg))fail {
+    TIMMessage *topMessage = self.chatingConversation.lj_TopMessage;
+    NSLog(@"=== %@",topMessage);
+    if (topMessage) {
+        [self.chatingConversation getMessage:20 last:self.chatingConversation.lj_TopMessage succ:^(NSArray *msgs) {
+            NSLog(@"加载更多数据 %lu",(unsigned long)msgs.count);
+            [self handleReveicedOldMessage:msgs];
+            if (succ) succ();
+            
+        } fail:^(int code, NSString *msg) {
+            NSLog(@"== %d   msg=%@",code,msg);
+            if (fail) fail(code, msg);
+        }];
+    } else {
+        if (succ) succ();
+    }
+    
 }
 
 #pragma mark - Private Methods
@@ -578,7 +596,7 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
         self.failMessages[@([self.messages indexOfObject:jsqMessage])] =  message;
     }];
     
-    self.chatingConversation.lj_lsatMessage = message;
+    self.chatingConversation.lj_lastMessage = message;
     [[NSNotificationCenter defaultCenter] postNotificationName:LJIMNotificationCenterUpdataChatUI object:nil];
 }
 
@@ -626,6 +644,54 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     if ([self.delegate respondsToSelector:@selector(messagesModel:didReveiceFailItemAtIndex:)]) {
         [self.delegate messagesModel:self didReveiceFailItemAtIndex:index];
     }
+}
+
+#pragma mark - Setters
+
+- (void)setChatingConversation:(TIMConversation *)chatingConversation {
+    _chatingConversation = chatingConversation;
+    
+    self.messages = [NSMutableArray array];
+    self.failMessages = [NSMutableDictionary dictionary];
+    
+    self.otherName = [chatingConversation getReceiver];
+    
+    NSArray<TIMMessage *> *msgs =  [chatingConversation getLastMsgs:20];
+    [self handleReveicedOldMessage:msgs];
+    
+    
+}
+
+
+- (void)handleReveicedOldMessage:(NSArray<TIMMessage *> *)msgs {
+    
+    [msgs enumerateObjectsUsingBlock:^(TIMMessage * _Nonnull message, NSUInteger idx, BOOL * _Nonnull stop) {
+        TIMMessageStatus status = [message status];
+        
+        if (status == TIM_MSG_STATUS_HAS_DELETED) { // 过滤消息被删除
+            [message delFromStorage];
+        } else {
+             self.chatingConversation.lj_TopMessage = message;
+            [self reveiceMessage:message isAtTop:YES];
+            if (status == TIM_MSG_STATUS_SEND_FAIL) { //记录消息发送失败
+                self.failMessages[@(idx)] =  message;
+            }
+        }
+    }];
+}
+
+- (void)addOrRemoveNotificationCenter:(BOOL)isAdd {
+    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+    if (isAdd) {
+        [defaultCenter addObserver:self selector:@selector(hanleReveiceNewMessage:) name:LJIMNotificationCenterReveicedNewMessage object:nil];
+    } else {
+        [defaultCenter removeObserver:self name:LJIMNotificationCenterReveicedNewMessage object:nil];
+    }
+}
+
+- (void)hanleReveiceNewMessage:(NSNotification *)info {
+    TIMMessage *newMessage = (TIMMessage *)info.object;
+    [self reveiceMessage:newMessage isAtTop:YES];
 }
 
 @end
