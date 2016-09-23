@@ -48,8 +48,9 @@
 
 - (BOOL)removeConversationListAtIndex:(NSUInteger)index {
     if (index < self.conversationList.count) {
+        TIMConversation *conv = self.conversationList[index];
+        
         [self.conversationList removeObjectAtIndex:index];
-        TIMConversation *conv =[[TIMManager sharedInstance] getConversationByIndex:(int)index];
         if (conv) {
             //删除会话和消息
             return [[TIMManager sharedInstance] deleteConversationAndMessages:[conv getType] receiver:[conv getReceiver]];

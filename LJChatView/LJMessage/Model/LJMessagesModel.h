@@ -111,6 +111,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)removeAtIndex:(NSUInteger)index;
 
+#pragma mark- 加载更多数据
+
+- (void)loadMoreMessageData;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -36,7 +36,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self addOrRemveNotificationCenter:YES];
+    [self addOrRemveNotificationCenter:YES];//1472107765293
+    
+//   TIMConversation *newCon = [[LJIMManagerListener sharedInstance] getConversation:TIM_C2C receiver:@"1472107765293"];
+    
     
     self.dataList =  [[LJIMManagerListener sharedInstance] getConversationList];
 }

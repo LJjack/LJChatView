@@ -44,6 +44,8 @@
 
 @property (nonatomic, strong) LJSoundModel *currentRecordFile;
 
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
+
 @end
 
 @implementation LJMessagesController
@@ -82,7 +84,8 @@
     self.collectionView.stateDelegate = self;
     
     
-    self.showLoadEarlierMessagesHeader = YES;
+    [self.collectionView addSubview:self.refreshControl];
+    self.showLoadEarlierMessagesHeader = NO;
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"更多" style:UIBarButtonItemStylePlain target:self action:@selector(receiveMessagePressed:)];
     
@@ -108,6 +111,11 @@
      *  Note: this feature is mostly stable, but still experimental
      */
     //    self.collectionView.collectionViewLayout.springinessEnabled = [NSUserDefaults springinessSetting];
+}
+
+
+- (void)loadMoreMessageData {
+    [self.msgModel loadMoreMessageData];
 }
 
 //========================   输入键盘工具 开始  ================================
@@ -780,11 +788,11 @@
 
 #pragma mark - Responding to collection view tap events
 
-- (void)collectionView:(JSQMessagesCollectionView *)collectionView
-                header:(JSQMessagesLoadEarlierHeaderView *)headerView didTapLoadEarlierMessagesButton:(UIButton *)sender
-{
-    NSLog(@"Load earlier messages!");
-}
+//- (void)collectionView:(JSQMessagesCollectionView *)collectionView
+//                header:(JSQMessagesLoadEarlierHeaderView *)headerView didTapLoadEarlierMessagesButton:(UIButton *)sender
+//{
+//    NSLog(@"Load earlier messages!");
+//}
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapAvatarImageView:(UIImageView *)avatarImageView atIndexPath:(NSIndexPath *)indexPath
 {
@@ -840,6 +848,18 @@
     
 //    [self.msgModel.messages[indexPath.row] setDataState:LJMessageDataStateFailed];
     [self.collectionView reloadData];
+}
+
+
+- (UIRefreshControl *)refreshControl {
+    if (!_refreshControl) {
+        _refreshControl = [[UIRefreshControl alloc] init];
+        _refreshControl.tintColor = [UIColor lightGrayColor];
+        _refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"下拉加载更多的数据" attributes:@{NSForegroundColorAttributeName :[UIColor lightGrayColor],NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+        [_refreshControl addTarget:self action:@selector(loadMoreMessageData) forControlEvents:UIControlEventValueChanged];
+        
+    }
+    return _refreshControl;
 }
 
 @end

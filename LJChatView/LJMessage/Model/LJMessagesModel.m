@@ -510,6 +510,9 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     
     if (message && index < self.messages.count) {
         JSQMessage *jsqMessage = self.messages[index];
+        [self.messages removeObjectAtIndex:index];
+        [self.messages addObject:jsqMessage];
+        
         [jsqMessage setDataState:LJMessageDataStateRuning];
         [self sendMessage:message jsqMessage:jsqMessage];
     }
@@ -539,6 +542,20 @@ LJMessageDataState lj_messageDataStateFormIMStatus(NSInteger status) {
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:LJIMNotificationCenterUpdataChatUI object:nil];
     
+}
+
+#pragma mark- 加载更多数据
+
+- (void)loadMoreMessageData {
+    [self.chatingConversation getMessageForward:1000 last:self.chatingConversation.lj_lsatMessage succ:^(NSArray *msgs) {
+        
+        for (TIMMessage *message in msgs) {
+            NSLog(@"--- %@",message);
+        }
+        
+    } fail:^(int code, NSString *msg) {
+        NSLog(@"===== %@",msg);
+    }];
 }
 
 #pragma mark - Private Methods
