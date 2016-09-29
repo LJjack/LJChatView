@@ -22,8 +22,8 @@
 }
 - (IBAction)clickLoginBtn:(UIButton *)sender {
     [self.indView startAnimating];
-    LJIMLoginParam *loginParam = [LJIMLoginParam loginParamWithUserID:@"1472107542932" userToken:@"eJxVkF1PwjAUhv-LbjWmX-sy4WKRZQ4RJExnuGnK1rEqdKV0soX4353NiPH2ec6b855zcbL5*o4pJUrKDMW6dO4d4NxazDslNKesMlwPGLkhAuAqv7g*iUb*cgBdiDAAf1KUXBpRCZuDxEcQ*C5BIUbjwEnsBvMcrx7SR-36npI8OdTxKslequA4BSrpvdbfTrOC4S6opBc8gaPEkYgWqL752PLMa8Q8meVv8Wa9PLfIr0nKF313zsmy3c82exDtJpPrsvKT2hNtmaElRF4YjNKIA-9XcuSsKJpWGmp6xe1Pvn8Agn1Xjg__"];
-    
+    LJIMLoginParam *loginParam = [LJIMLoginParam loginParamWithUserID:@"1474271948862" userToken:@"eJxVkF1PgzAUhv8Ltxppy7d3bCjjY2bLWDK9acpaWINChW7AjP9dbFiMt89z3pz3nC8tS3cPRAhOMZHYaKn2qAHtXmE2CN4yTArJ2gkjy0MA3OSFtR1v6l8OoAWRAcCf5JTVkhdc5aDpmMiBnum6NpoHOl5OZv30uoy2gX9IhC6G5I3ECyNf*068eg*qJR-18ET7vto7d*U5f96E9jY6*ZvYz2R-CX1RdkHWNSuYV6mw8mHQx13wkliH9HMRXZOi3t*W0QqrE1WZqSVEtufOUvIP9q-kzMnx2JxrieUomPrJ9w-*Ulit"];
+    NSLog(@"开始登陆");
    [[LJIMManager sharedInstance] loginIM:loginParam succ:^{
         NSLog(@"登录 成功");
        [self.indView stopAnimating];
