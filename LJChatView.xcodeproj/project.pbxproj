@@ -851,7 +851,7 @@
 				838BAA0E1D51EE6000F2F1FD /* AppDelegate.h */,
 				838BAA0F1D51EE6000F2F1FD /* AppDelegate.m */,
 				83EBB3921D90DF1200F1DBB5 /* Login */,
-				83EBB3931D90DF2000F1DBB5 /* Chat */,
+				83EBB3931D90DF2000F1DBB5 /* LJChatList */,
 				839720ED1D8F80EB00BB6875 /* ChatAPI */,
 				83DBAE071D8E2C2200D98400 /* LJIMAdapter */,
 				830A06291D826164002965E6 /* LJShowFPS.h */,
@@ -1460,14 +1460,14 @@
 			name = Login;
 			sourceTree = "<group>";
 		};
-		83EBB3931D90DF2000F1DBB5 /* Chat */ = {
+		83EBB3931D90DF2000F1DBB5 /* LJChatList */ = {
 			isa = PBXGroup;
 			children = (
 				83EBB3941D90DF3900F1DBB5 /* Controller */,
 				83EBB3951D90DF4A00F1DBB5 /* View */,
 				83EBB3961D90DF5600F1DBB5 /* Model */,
 			);
-			name = Chat;
+			path = LJChatList;
 			sourceTree = "<group>";
 		};
 		83EBB3941D90DF3900F1DBB5 /* Controller */ = {
@@ -1476,7 +1476,7 @@
 				83465BFC1D8E9A4400045013 /* LJChatController.h */,
 				83465BFD1D8E9A4400045013 /* LJChatController.m */,
 			);
-			name = Controller;
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		83EBB3951D90DF4A00F1DBB5 /* View */ = {
@@ -1487,7 +1487,7 @@
 				83465C051D8E9A6200045013 /* LJChatCell.h */,
 				83465C061D8E9A6200045013 /* LJChatCell.m */,
 			);
-			name = View;
+			path = View;
 			sourceTree = "<group>";
 		};
 		83EBB3961D90DF5600F1DBB5 /* Model */ = {
@@ -1496,7 +1496,7 @@
 				83465C081D8E9D5D00045013 /* LJChatTopModel.h */,
 				83465C091D8E9D5D00045013 /* LJChatTopModel.m */,
 			);
-			name = Model;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		ADFF93DA912AF8D797369362 /* Frameworks */ = {
@@ -1555,6 +1555,7 @@
 				TargetAttributes = {
 					838BAA071D51EE6000F2F1FD = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = N5VR4US535;
 					};
 				};
 			};
@@ -2060,6 +2061,7 @@
 			baseConfigurationReference = 937BF3A65342DE7FF73FCFD7 /* Pods-LJChatView.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = N5VR4US535;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2081,6 +2083,7 @@
 			baseConfigurationReference = 73E0139A39D7FF96ACF06A91 /* Pods-LJChatView.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = N5VR4US535;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

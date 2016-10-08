@@ -63,7 +63,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LJMessagesModel : NSObject
 
-@property (nonatomic, strong) TIMConversation *chatingConversation; //<! 当前会话
+/**
+ 当前会话
+ */
+@property (nonatomic, strong) TIMConversation *chatingConversation; 
 
 @property (nonatomic, strong) NSMutableArray<JSQMessage *> *messages;
 
