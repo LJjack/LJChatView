@@ -32,7 +32,6 @@
 		838BAAB01D51F03E00F2F1FD /* jsq_messages_sample.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 838BAAAE1D51F03E00F2F1FD /* jsq_messages_sample.m4a */; };
 		83917AEC1D533ACE00C92C12 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83917AEB1D533ACE00C92C12 /* Reveal.framework */; };
 		83917AEE1D533ADF00C92C12 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 83917AED1D533ADF00C92C12 /* libz.1.2.5.tbd */; };
-		839720F01D8F812D00BB6875 /* LJChatSocialAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 839720EF1D8F812D00BB6875 /* LJChatSocialAPI.m */; };
 		839721831D8FC37500BB6875 /* LDSynchroniser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8397214D1D8FC37500BB6875 /* LDSynchroniser.m */; };
 		839721841D8FC37500BB6875 /* LDResourceDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 839721501D8FC37500BB6875 /* LDResourceDataSet.m */; };
 		839721851D8FC37500BB6875 /* LDResourcePackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 839721521D8FC37500BB6875 /* LDResourcePackage.m */; };
@@ -55,7 +54,6 @@
 		839721961D8FC37500BB6875 /* LDPrepareState.m in Sources */ = {isa = PBXBuildFile; fileRef = 8397217E1D8FC37500BB6875 /* LDPrepareState.m */; };
 		839721971D8FC37500BB6875 /* LDRunState.m in Sources */ = {isa = PBXBuildFile; fileRef = 839721801D8FC37500BB6875 /* LDRunState.m */; };
 		839721981D8FC37500BB6875 /* LDState.m in Sources */ = {isa = PBXBuildFile; fileRef = 839721821D8FC37500BB6875 /* LDState.m */; };
-		8397219B1D8FECEC00BB6875 /* LJFollowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8397219A1D8FECEC00BB6875 /* LJFollowModel.m */; };
 		839CC2371D937E6E009000F5 /* TIMConversation+LJAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 839CC2361D937E6E009000F5 /* TIMConversation+LJAdd.m */; };
 		839CC23A1D938CB2009000F5 /* LJIMConfigFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 839CC2391D938CB2009000F5 /* LJIMConfigFile.m */; };
 		839D0D2C1D8955E500E2A101 /* IMCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839D0D291D8955E500E2A101 /* IMCore.framework */; };
@@ -282,6 +280,8 @@
 		83E02E931D9268F800C35246 /* NSString+LJFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E02E921D9268F800C35246 /* NSString+LJFile.m */; };
 		83E02E961D92889500C35246 /* JSQSystemSoundPlayer+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E02E951D92889500C35246 /* JSQSystemSoundPlayer+JSQMessages.m */; };
 		83EBB3991D9141C400F1DBB5 /* LJImageMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB3981D9141C400F1DBB5 /* LJImageMediaItem.m */; };
+		83FC6E6E1DA8F6FC005D3B00 /* LJChatSocialAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FC6E6B1DA8F6FC005D3B00 /* LJChatSocialAPI.m */; };
+		83FC6E6F1DA8F6FC005D3B00 /* LJFollowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FC6E6D1DA8F6FC005D3B00 /* LJFollowModel.m */; };
 		A7355649B836919B6F0C8AD8 /* libPods-LJChatView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD64963A411C9DF679A3139 /* libPods-LJChatView.a */; };
 /* End PBXBuildFile section */
 
@@ -334,8 +334,6 @@
 		83917AEB1D533ACE00C92C12 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 		83917AED1D533ADF00C92C12 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		839720991D8F7A9B00BB6875 /* LJNetworkDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LJNetworkDefine.h; sourceTree = "<group>"; };
-		839720EE1D8F812D00BB6875 /* LJChatSocialAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJChatSocialAPI.h; sourceTree = "<group>"; };
-		839720EF1D8F812D00BB6875 /* LJChatSocialAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJChatSocialAPI.m; sourceTree = "<group>"; };
 		8397214C1D8FC37500BB6875 /* LDSynchroniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDSynchroniser.h; sourceTree = "<group>"; };
 		8397214D1D8FC37500BB6875 /* LDSynchroniser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDSynchroniser.m; sourceTree = "<group>"; };
 		8397214F1D8FC37500BB6875 /* LDResourceDataSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDResourceDataSet.h; sourceTree = "<group>"; };
@@ -383,8 +381,6 @@
 		839721801D8FC37500BB6875 /* LDRunState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDRunState.m; sourceTree = "<group>"; };
 		839721811D8FC37500BB6875 /* LDState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDState.h; sourceTree = "<group>"; };
 		839721821D8FC37500BB6875 /* LDState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDState.m; sourceTree = "<group>"; };
-		839721991D8FECEC00BB6875 /* LJFollowModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJFollowModel.h; sourceTree = "<group>"; };
-		8397219A1D8FECEC00BB6875 /* LJFollowModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJFollowModel.m; sourceTree = "<group>"; };
 		839CC2351D937E6E009000F5 /* TIMConversation+LJAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TIMConversation+LJAdd.h"; sourceTree = "<group>"; };
 		839CC2361D937E6E009000F5 /* TIMConversation+LJAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TIMConversation+LJAdd.m"; sourceTree = "<group>"; };
 		839CC2381D938CB2009000F5 /* LJIMConfigFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJIMConfigFile.h; sourceTree = "<group>"; };
@@ -697,6 +693,10 @@
 		83E02E951D92889500C35246 /* JSQSystemSoundPlayer+JSQMessages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JSQSystemSoundPlayer+JSQMessages.m"; sourceTree = "<group>"; };
 		83EBB3971D9141C400F1DBB5 /* LJImageMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJImageMediaItem.h; sourceTree = "<group>"; };
 		83EBB3981D9141C400F1DBB5 /* LJImageMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJImageMediaItem.m; sourceTree = "<group>"; };
+		83FC6E6A1DA8F6FC005D3B00 /* LJChatSocialAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJChatSocialAPI.h; sourceTree = "<group>"; };
+		83FC6E6B1DA8F6FC005D3B00 /* LJChatSocialAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJChatSocialAPI.m; sourceTree = "<group>"; };
+		83FC6E6C1DA8F6FC005D3B00 /* LJFollowModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJFollowModel.h; sourceTree = "<group>"; };
+		83FC6E6D1DA8F6FC005D3B00 /* LJFollowModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJFollowModel.m; sourceTree = "<group>"; };
 		937BF3A65342DE7FF73FCFD7 /* Pods-LJChatView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LJChatView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LJChatView/Pods-LJChatView.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -852,10 +852,10 @@
 				838BAA0F1D51EE6000F2F1FD /* AppDelegate.m */,
 				83EBB3921D90DF1200F1DBB5 /* Login */,
 				83EBB3931D90DF2000F1DBB5 /* LJChatList */,
-				839720ED1D8F80EB00BB6875 /* ChatAPI */,
 				83DBAE071D8E2C2200D98400 /* LJIMAdapter */,
 				830A06291D826164002965E6 /* LJShowFPS.h */,
 				830A062A1D826164002965E6 /* LJShowFPS.m */,
+				83FC6E691DA8F6FC005D3B00 /* LJChatAPI */,
 				838BAAAE1D51F03E00F2F1FD /* jsq_messages_sample.m4a */,
 				838BAA141D51EE6000F2F1FD /* ChatMain.storyboard */,
 				838BAA171D51EE6000F2F1FD /* Assets.xcassets */,
@@ -875,17 +875,6 @@
 				839720991D8F7A9B00BB6875 /* LJNetworkDefine.h */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		839720ED1D8F80EB00BB6875 /* ChatAPI */ = {
-			isa = PBXGroup;
-			children = (
-				839720EE1D8F812D00BB6875 /* LJChatSocialAPI.h */,
-				839720EF1D8F812D00BB6875 /* LJChatSocialAPI.m */,
-				839721991D8FECEC00BB6875 /* LJFollowModel.h */,
-				8397219A1D8FECEC00BB6875 /* LJFollowModel.m */,
-			);
-			path = ChatAPI;
 			sourceTree = "<group>";
 		};
 		8397214A1D8FC37500BB6875 /* Linda */ = {
@@ -1499,6 +1488,17 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		83FC6E691DA8F6FC005D3B00 /* LJChatAPI */ = {
+			isa = PBXGroup;
+			children = (
+				83FC6E6A1DA8F6FC005D3B00 /* LJChatSocialAPI.h */,
+				83FC6E6B1DA8F6FC005D3B00 /* LJChatSocialAPI.m */,
+				83FC6E6C1DA8F6FC005D3B00 /* LJFollowModel.h */,
+				83FC6E6D1DA8F6FC005D3B00 /* LJFollowModel.m */,
+			);
+			path = LJChatAPI;
+			sourceTree = "<group>";
+		};
 		ADFF93DA912AF8D797369362 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1846,7 +1846,6 @@
 				8397218A1D8FC37500BB6875 /* LDRequest.m in Sources */,
 				8329AB771D88FFE5005F9BDD /* LJMessageStateBtn.m in Sources */,
 				83AB769E1D89294E008DD6CF /* JSQMessagesViewController.m in Sources */,
-				839720F01D8F812D00BB6875 /* LJChatSocialAPI.m in Sources */,
 				83AB76A21D89294E008DD6CF /* JSQMessagesMediaViewBubbleImageMasker.m in Sources */,
 				839721861D8FC37500BB6875 /* LDResourceRef.m in Sources */,
 				83AB76AA1D89294E008DD6CF /* JSQMediaItem.m in Sources */,
@@ -1884,6 +1883,7 @@
 				83AB76A41D89294E008DD6CF /* JSQMessagesBubblesSizeCalculator.m in Sources */,
 				8329A70E1D66D9020081FDD5 /* LJMovieDecoder.m in Sources */,
 				83AB769B1D89294E008DD6CF /* UIColor+JSQMessages.m in Sources */,
+				83FC6E6E1DA8F6FC005D3B00 /* LJChatSocialAPI.m in Sources */,
 				83E02E801D921B3300C35246 /* LJSoundMediaItem.m in Sources */,
 				839721851D8FC37500BB6875 /* LDResourcePackage.m in Sources */,
 				83AB76971D89294E008DD6CF /* UIView+GJCFViewFrameUitil.m in Sources */,
@@ -1921,9 +1921,9 @@
 				839721891D8FC37500BB6875 /* LDDataSource.m in Sources */,
 				83AB76AC1D89294E008DD6CF /* JSQMessagesAvatarImage.m in Sources */,
 				83AB76961D89294E008DD6CF /* GJCFCachePathManager.m in Sources */,
+				83FC6E6F1DA8F6FC005D3B00 /* LJFollowModel.m in Sources */,
 				83AB76991D89294E008DD6CF /* NSBundle+JSQMessages.m in Sources */,
 				83E02E901D9231D100C35246 /* LJSoundRecord.m in Sources */,
-				8397219B1D8FECEC00BB6875 /* LJFollowModel.m in Sources */,
 				83AB76AF1D89294E008DD6CF /* JSQMessagesCellTextView.m in Sources */,
 				83E02E831D92217C00C35246 /* LJLocationMediaItem.m in Sources */,
 				839721931D8FC37500BB6875 /* LDStateJobManager.m in Sources */,
