@@ -286,7 +286,7 @@
 //        [BJPushTool presentWebController:URL onController:self];
     } else if ([message.media isKindOfClass:[LJGoodsMediaItem class]]) {
         LJGoodsMediaItem *item = (LJGoodsMediaItem *)message.media;
-        LJGoodsModel *model = item.model;
+//        LJGoodsModel *model = item.model;
         
         if (item.model.type == LJGoodsModelTypeOrderInfo) {
             BJLog(@"订单资讯");

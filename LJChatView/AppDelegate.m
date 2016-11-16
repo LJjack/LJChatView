@@ -67,8 +67,7 @@
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 1];
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-    
-    [AppDelegate handelPasteboard];
+
 }
 
 //注册用户通知设置
