@@ -11,8 +11,9 @@
 
     #ifdef __OBJC__
 
-        #import "LJDebugDefine.h"
-        #import "LJNetworkDefine.h"
+        #import "LJMethodDefine.h"
+        #import "LJColorDefine.h"
+        #import "BJConfig.h"
 
     #endif
 

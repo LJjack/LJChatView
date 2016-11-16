@@ -3,7 +3,8 @@ PODS:
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
   - JSQSystemSoundPlayer (4.4.0)
-  - MBProgressHUD (0.9.2)
+  - MBProgressHUD (1.0.0)
+  - SDAutoLayout (2.1.7)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
@@ -14,6 +15,7 @@ DEPENDENCIES:
   - FMDB
   - JSQSystemSoundPlayer
   - MBProgressHUD
+  - SDAutoLayout
   - SDWebImage
   - TZImagePickerController
   - YYModel
@@ -21,11 +23,12 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   JSQSystemSoundPlayer: 126ccc4a08db8fc3036bd07d33b0f8eda1559476
-  MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
+  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  SDAutoLayout: e9b36d04b8c0b504762a04d76fbbe5108944297a
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   TZImagePickerController: e13a695a4623a94ac094b43baa28f8046d6a29f9
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: b65f82a6105a9813325a882e81b28c5a7b75d935
+PODFILE CHECKSUM: d20c673e1425b467ab39ed825b582ee1cd55df6e
 
 COCOAPODS: 1.0.1

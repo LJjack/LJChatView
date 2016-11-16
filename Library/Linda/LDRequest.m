@@ -8,7 +8,6 @@
 
 #import "LDRequest.h"
 #import "BJURLRequestSerialization.h"
-#import "BJUserManager.h"
 #import "NSString+LJHash.h"
 
 @interface LDRequest ()
@@ -23,7 +22,7 @@
 - (instancetype)init {
     if (self = [super init]) {
         // 配置默认值
-        _baseAddress = kAPPBaseAddress;
+        _baseAddress = @"";
         self.uploadBaseAddress = @"http://pic.8jiong.cn/api/upfiles/";
         self.timeout = 30;
     }
@@ -104,12 +103,12 @@
         param = [array componentsJoinedByString:@"&"];
     }
     
-    BJUser *user = [BJUserManager shareManager].currentUser;
-    
-    NSString *signmMD5 = [NSString stringWithFormat:@"%@%@%@",user.secret,param,user.accessToken].lj_md5String;
-    
-    [request setValue:user.accessToken forHTTPHeaderField:@"Access-Token"];
-    [request setValue:signmMD5 forHTTPHeaderField:@"signature"];
+//    BJUser *user = [BJUserManager shareManager].currentUser;
+//    
+//    NSString *signmMD5 = [NSString stringWithFormat:@"%@%@%@",user.secret,param,user.accessToken].lj_md5String;
+//    
+//    [request setValue:user.accessToken forHTTPHeaderField:@"Access-Token"];
+//    [request setValue:signmMD5 forHTTPHeaderField:@"signature"];
 }
 
 /**
@@ -126,12 +125,12 @@
         param = [array componentsJoinedByString:@""];
     }
     
-    BJUser *user = [BJUserManager shareManager].currentUser;
-    
-    NSString *signmMD5 = [NSString stringWithFormat:@"%@%@%@",user.secret,param,user.accessToken].lj_md5String;
-    
-    [request setValue:user.accessToken forHTTPHeaderField:@"Access-Token"];
-    [request setValue:signmMD5 forHTTPHeaderField:@"signature"];
+//    BJUser *user = [BJUserManager shareManager].currentUser;
+//    
+//    NSString *signmMD5 = [NSString stringWithFormat:@"%@%@%@",user.secret,param,user.accessToken].lj_md5String;
+//    
+//    [request setValue:user.accessToken forHTTPHeaderField:@"Access-Token"];
+//    [request setValue:signmMD5 forHTTPHeaderField:@"signature"];
 }
 
 - (Class)modelClass {

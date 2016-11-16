@@ -34,6 +34,8 @@
 #import "LJVideoMediaItem.h"
 #import "LJSoundMediaItem.h"
 #import "LJLocationMediaItem.h"
+#import "LJGoodsMediaItem.h"
+#import "LJOrderMediaItem.h"
 // =================
 
 #import "JSQMessagesBubbleImage.h"

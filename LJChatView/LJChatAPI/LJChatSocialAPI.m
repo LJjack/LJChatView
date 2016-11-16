@@ -8,12 +8,11 @@
 
 #import "LJChatSocialAPI.h"
 
-#import "LDSilentHttpCaller.h"
+
 #import "LJFollowModel.h"
 
 @interface LJChatSocialAPI()
 
-@property(nonatomic, strong) LDSilentHttpCaller *socialCaller;
 
 
 @end
@@ -32,7 +31,6 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.socialCaller = [[LDSilentHttpCaller alloc] initWithModelCls:[LJFollowModel class] hasDataSource:YES name:@"chatSocialCaller"];
     }
     return self;
 }
@@ -44,14 +42,7 @@
  *  @param isFriend 是否作为密友
  */
 - (void)postFollowWithTargetId:(NSInteger)targetId isFriend:(BOOL)isFriend {
-    LDRequest *request = [[[[[[[LDRequestBuilder alloc] init]
-                              addContextPath:@"social"]
-                             addMethodName:@"follow"]
-                            addFormData:@"targetId" value:@(targetId)]
-                           addFormData:@"isFriend" value:@(isFriend)] build];
-    [self.socialCaller post:request block:^(LDRequest *request, NSData *response) {
-        BJLog(@"%@, %@",request, response);
-    }];
+    
 }
 
 /**
@@ -98,12 +89,7 @@
  *  获取我关注的人
  */
 - (void)GETGetFollowees {
-    LDRequest *request = [[[[[LDRequestBuilder alloc] init]
-                              addContextPath:@"social"]
-                             addMethodName:@"getFollowees"] build];
-    [self.socialCaller get:request block:^(LDRequest *request, NSData *response) {
-        BJLog(@"%@, %@",request, response);
-    }];
+    
 }
 
 /**

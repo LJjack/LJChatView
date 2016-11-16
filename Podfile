@@ -5,6 +5,7 @@ target 'LJChatView' do
  pod 'TZImagePickerController'
  pod 'JSQSystemSoundPlayer'
  pod 'MBProgressHUD'
+ pod 'SDAutoLayout'
  pod 'SDWebImage'
  pod 'YYModel'
  pod 'FMDB'

@@ -7,7 +7,6 @@
 //
 
 #import "LDHttpClient.h"
-#import "BJUserManager.h"
 #import "BJURLRequestSerialization.h"
 
 @implementation LDHttpClient
@@ -41,7 +40,7 @@
     NSString *uploadFileURLString = @"http://pic.8jiong.cn/api/upfiles";
     static NSInteger counter = 0;
     
-    NSString *accessToken = [BJUserManager shareManager].currentUser.accessToken;
+    NSString *accessToken = @"";
     
     @synchronized(self) {
         ++counter;
