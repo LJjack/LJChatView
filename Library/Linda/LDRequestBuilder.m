@@ -7,37 +7,33 @@
 //
 
 #import "LDRequestBuilder.h"
-
-#define DEFAULT_TIMEOUT_INTERVAL     20
+#import "NSDictionary+LJURL.h"
 
 // requestId计数器
 static NSNumber *requestIdCounter;
 
 @interface LDRequestBuilder()
 
-@property(nonatomic, strong) NSNumber *requestId;//主键
+@property (nonatomic, strong) NSNumber *requestId;//主键
 
-@property(nonatomic, strong) NSNumber *modelId;
+@property (nonatomic, strong) LDRequest *request;
 
-@property(nonatomic, strong) NSNumber *masterModelId;
-
-@property(nonatomic, copy) NSString *modelCls;
-
-@property(nonatomic, copy) NSString *contextPath;
-
-@property(nonatomic, copy) NSString *methodName;
-
-@property(nonatomic, strong) NSMutableDictionary *params;
-
-@property(nonatomic, strong) NSMutableDictionary<NSString *, NSMutableArray*> *formData;
-
-@property(nonatomic, strong) NSMutableDictionary<NSString *, NSMutableArray*> *uploadFiles;
-
-@property(nonatomic, assign) NSInteger timeout;
-
+@property (nonatomic, strong) NSMutableDictionary *URLParamDicts;
+@property (nonatomic, strong) NSMutableDictionary *formDataDicts;
 @end
 
 @implementation LDRequestBuilder
+
+@synthesize HTTPPOST = _HTTPPOST;
+@synthesize HTTPGET = _HTTPGET;
+@synthesize HTTPSign = _HTTPSign;
+@synthesize path = _path;
+@synthesize method = _method;
+@synthesize URLParam = _URLParam;
+@synthesize formParam = _formParam;
+@synthesize uploadFiles = _uploadFiles;
+@synthesize timeout = _timeout;
+@synthesize request = _request;
 
 + (instancetype)createBuilder {
     static dispatch_once_t token;
@@ -48,98 +44,131 @@ static NSNumber *requestIdCounter;
             requestIdCounter = @(counter + 1);
         });
     }
-    
     return [[LDRequestBuilder alloc] init];
 }
 
-- (LDRequestBuilder *)addContextPath:(NSString *)path {
-    _contextPath = path;
-    return self;
-}
-
-- (LDRequestBuilder *)addMethodName:(NSString *)name {
-    _methodName = name;
-    return self;
-}
-
-- (LDRequestBuilder *)addParameter:(NSString *)name value:(id)value {
-    if (!_params) {
-        _params = [[NSMutableDictionary alloc] init];
+- (instancetype)init {
+    if (self = [super init]) {
+        self.request = [[LDRequest alloc] init];
+        self.URLParamDicts = [NSMutableDictionary dictionary];
+        self.formDataDicts = [NSMutableDictionary dictionary];
     }
-    _params[name] = value;
-    
     return self;
 }
 
-- (LDRequestBuilder *)addFormData:(NSString *)name value:(id)value {
-    if (!_formData) {
-        _formData = [NSMutableDictionary dictionaryWithCapacity:2];
+- (AddNotParam)HTTPPOST {
+    if (!_HTTPPOST) {
+        __weak typeof(self) weakSelf = self;
+        _HTTPPOST = ^() {
+                weakSelf.request.httpMethod = @"POST";
+            return weakSelf;
+        };
     }
-    
-    NSMutableArray *items = [_formData objectForKey:name];
-    if (!items) {
-        items = [NSMutableArray arrayWithCapacity:2];
-        _formData[name] = items;
-    }
-    
-    [items addObject:value];
-    
-    return self;
+    return _HTTPPOST;
 }
 
-- (LDRequestBuilder *)addUploadData:(NSString *)paramName path:(NSString *)path {
+- (AddNotParam)HTTPGET {
+    if (!_HTTPGET) {
+        __weak typeof(self) weakSelf = self;
+        _HTTPGET = ^() {
+                weakSelf.request.httpMethod = @"GET";
+            return weakSelf;
+        };
+    }
+    return _HTTPGET;
+}
+
+- (AddNotParam)HTTPSign {
+    if (!_HTTPSign) {
+        __weak typeof(self) weakSelf = self;
+        _HTTPSign = ^() {
+                weakSelf.request.isSignature = YES;
+            return weakSelf;
+        };
+    }
+    return _HTTPSign;
+}
+
+- (AddOneStringParam)path {
+    if (!_path) {
+        __weak typeof(self) weakSelf = self;
+        _path = ^(NSString *name) {
+               weakSelf.request.contextPath = name;
+            return weakSelf;
+        };
+    }
+    return _path;
+}
+
+- (AddOneStringParam)method {
+    if (!_method) {
+        __weak typeof(self) weakSelf = self;
+        _method = ^(NSString *name) {
+                weakSelf.request.methodName = name;
+            return weakSelf;
+        };
+    }
+    return _method;
+}
+
+- (AddKeyValue)URLParam {
+    if (!_URLParam) {
+        __weak typeof(self) weakSelf = self;
+        _URLParam = ^(NSString *key, id value) {
+            weakSelf.URLParamDicts[key] = value;
+            return weakSelf;
+        };
+    }
+    return _URLParam;
+}
+
+- (AddKeyValue)formParam {
+    if (!_formParam) {
+        __weak typeof(self) weakSelf = self;
+        _formParam = ^(NSString *key, id value) {
+            weakSelf.formDataDicts[key] = value;
+            return weakSelf;
+        };
+    }
+    return _formParam;
+}
+
+- (AddOneArrayParam)uploadFiles {
     if (!_uploadFiles) {
-        _uploadFiles = [NSMutableDictionary dictionaryWithCapacity:2];
+        __weak typeof(self) weakSelf = self;
+        _uploadFiles = ^(NSArray *array) {
+                weakSelf.request.uploadFileArray = array;
+            return weakSelf;
+        };
     }
-    
-    NSMutableArray *files = [_uploadFiles objectForKey:paramName];
-    if (!files) {
-        files = [NSMutableArray arrayWithCapacity:2];
-        _uploadFiles[paramName] = files;
+    return _uploadFiles;
+}
+
+- (AddOneIntParam)timeout {
+    if (!_timeout) {
+        __weak typeof(self) weakSelf = self;
+        _timeout = ^(NSInteger num) {
+                weakSelf.request.timeout = num;
+            return weakSelf;
+        };
     }
-    
-    [files addObject:path];
-    
-    return self;
+    return _timeout;
 }
 
-- (LDRequestBuilder *)addTimeout:(NSInteger)timeout {
-    _timeout = timeout;
-    return self;
-}
 
-- (LDRequestBuilder *)addModelId:(NSNumber *)modelId {
-    _modelId = modelId;
-    return self;
-}
-
-- (LDRequestBuilder *)addMasterModelId:(NSNumber *)modelId {
-    _masterModelId = modelId;
-    return self;
-}
-
-- (LDRequestBuilder *)addModelCls:(NSString *)modelCls {
-    _modelCls = modelCls;
-    return self;
-}
-
-- (LDRequest *)build {
-    LDRequest *request = [[LDRequest alloc] init];
+- (LDRequest *)buildRequest {
     @synchronized(requestIdCounter) {
-        request.requestId = @(requestIdCounter.integerValue + 1);
+        self.request.requestId = requestIdCounter.integerValue + 1;
+    }
+    if (self.URLParamDicts.allKeys.count) {
+        self.request.urlParam = [self.URLParamDicts lj_toURLString];
     }
     
-    request.contextPath = _contextPath;
-    request.methodName = _methodName;
-    [request setInnerUrlParams:_params];
-    [request setInnerFormDatas:_formData];
-    [request setInnerUploadFiles:_uploadFiles];
-    request.timeout = _timeout ?: DEFAULT_TIMEOUT_INTERVAL;
-    request.masterModelId = _masterModelId;
-    request.modelId = _modelId;
-    request.modelCls = _modelCls;
-    
-    return request;
+    if (self.formDataDicts.allKeys.count) {
+        
+        self.request.formParam = [self.formDataDicts lj_toURLString];
+    }
+    return self.request;
 }
 
 @end

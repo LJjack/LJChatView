@@ -43,7 +43,7 @@ NSString * const BJFileBoundary = @"c189x0x0x2xAaB03xx";
         [self appendBodyData:bodyData fileData:data name:@"uploadFile" fileName:dict[@"fileName"] mimeType:dict[@"mimeType"]];
     }];
     //声明结束符：--c189x0x0x2xAaB03xx--
-    [bodyData appendData:[[NSString stringWithFormat:@"--%@--\r\n", BJFileBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyData appendData:[[NSString stringWithFormat:@"\r\n--%@--", BJFileBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
     
     request.HTTPBody = bodyData;
     // 2> 设置Request的头属性
@@ -72,7 +72,7 @@ NSString * const BJFileBoundary = @"c189x0x0x2xAaB03xx";
     
     NSMutableString *strM = [NSMutableString string];
     //分界线 --c189x0x0x2xAaB03xx
-    [strM appendFormat:@"\r\n--%@\r\n", BJFileBoundary];
+    [strM appendFormat:@"--%@\r\n", BJFileBoundary];
     [strM appendFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n", name,fileName];
     [strM appendFormat:@"Content-Type: %@\r\n\r\n", mimeType];
     [bodyData appendData:[strM dataUsingEncoding:NSUTF8StringEncoding]];

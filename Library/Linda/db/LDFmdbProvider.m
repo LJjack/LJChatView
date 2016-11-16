@@ -5,53 +5,60 @@
 //  Created by cjh on 16/7/2.
 //  Copyright © 2016年 bujiong. All rights reserved.
 //
-#import <YYModel/YYModel.h>
-#import "NSObject+LDPropertyIterator.h"
 
 #import "LDFmdbProvider.h"
 
-@interface LDFmdbProvider()
+#import <YYModel/YYModel.h>
+#import <FMDB/FMDB.h>
 
-@property(nonatomic, assign) BOOL deepPolicy;
+#import "NSObject+LDProperty.h"
+
+NSString * const kDBForeignKey = @"db_foreign_key"; //外键字段
+
+@interface LDFmdbProvider()
 
 @property(nonatomic, strong) FMDatabaseQueue *dbQueue;
 
-@property(nonatomic, strong) NSDictionary *objcSqliteTypeMapper;
+@property(nonatomic, strong, readonly) NSDictionary *objcSqliteTypeMapper;
 
 @end
 
 @implementation LDFmdbProvider
 
 + (instancetype)sharedInstance {
-    static LDFmdbProvider *instance;
-    static dispatch_once_t token;
+    static LDFmdbProvider *_instance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _instance = [[LDFmdbProvider alloc] init];
+        _instance->_objcSqliteTypeMapper = @{@"NSString": @"VARCHAR(256)",
+                                             @"NSDate"  : @"TIMESTAMP",
+                                             @"NSNumber": @"INTEGER",
+                                             @"int"     : @"INTEGER",
+                                             @"long"    : @"INTEGER",
+                                             @"short"   : @"INTEGER",
+                                             @"NSInteger" : @"INTEGER",
+                                             @"NSUInteger": @"INTEGER",
+                                             @"BOOL"   : @"BOOLEAN",
+                                             @"float"  : @"FLOAT",
+                                             @"double" : @"DOUBLE"
+                                             };
+    });
     
-    if (!instance) {
-        dispatch_once(&token, ^{
-            instance = [LDFmdbProvider new];
-        });
-    }
-    
-    return instance;
+    return _instance;
 }
 
-- (void)enableDeepPolicy {
-    _deepPolicy = YES;
-}
-
-- (void)disableDeepPolicy {
-    _deepPolicy = NO;
-}
-
-- (NSString *) getDbPath {
+- (void)fmdbWithDbName:(NSString *)dbName {
     NSString *dir = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"dbs"];
-    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if (![fileManager fileExistsAtPath:dir]) {
         [fileManager createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:nil];
     }
     
-    return dir;
+    NSString *dbPath = [dir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.sqlite", dbName]];
+    _dbQueue = [FMDatabaseQueue databaseQueueWithPath:dbPath];
+    
+    // 检查数据库升级情况
+    [self checkDbUpgradeTask:dbName];
 }
 
 /**
@@ -139,27 +146,6 @@
     }
 }
 
-- (void)initWithDbName:(NSString *)dbName {
-    NSString *dbPath = [[self getDbPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.sqlite", dbName]];
-    _dbQueue = [FMDatabaseQueue databaseQueueWithPath:dbPath];
-    
-    _objcSqliteTypeMapper = @{@"NSString": @"VARCHAR(256)",
-                              @"NSDate": @"TIMESTAMP",
-                              @"NSNumber": @"INTEGER",
-                              @"int": @"INTEGER",
-                              @"long": @"INTEGER",
-                              @"short": @"INTEGER",
-                              @"NSInteger": @"INTEGER",
-                              @"NSUInteger": @"INTEGER",
-                              @"BOOL": @"BOOLEAN",
-                              @"float": @"FLOAT",
-                              @"double": @"DOUBLE"
-                              };
-    
-    // 检查数据库升级情况
-    [self checkDbUpgradeTask:dbName];
-}
-
 - (NSDictionary *)getRelatedModelClasses:(Class)modelClass {
     if ([(id<LDFmdbProvider>)modelClass respondsToSelector:@selector(dbRelationContainerPropertyGenericClass)]) {
         return [(id<LDFmdbProvider>)modelClass dbRelationContainerPropertyGenericClass];
@@ -178,12 +164,12 @@
     NSArray * array = [self queryByKey:modelClass sqlDict:@{[self getPrimaryKey:modelClass]:keyValue}];
     if (array.count) {
         return array.firstObject;
+    } else {
+        return nil;
     }
-    return nil;
 }
 
 - (NSArray *)queryByKey:(Class)modelClass sqlDict:(NSDictionary *)sqlDict {
-    
     return [self queryMore:modelClass sqlDict:sqlDict sortKeys:nil];
 }
 
@@ -240,38 +226,40 @@
 - (BOOL)deleteByKey:(Class)modelClass primaryKeyValue:(NSNumber *)keyValue {
     
     NSString *primaryKey = [self getPrimaryKey:modelClass];
+    if (!keyValue) {
+        keyValue = @(0);
+    }
     return [self deleteMoreModel:modelClass sqlDict:@{primaryKey:keyValue}];
 }
-
-
 
 - (BOOL)deleteMoreModel:(Class)modelClass sqlDict:(NSDictionary *)sqlDict {
     NSAssert(sqlDict, @"删除数据库内容的条件字典不能为空");
     NSArray *modelArray = [self queryMore:modelClass sqlDict:sqlDict sortKeys:nil];
-    
     NSMutableString *mSQL = [NSMutableString stringWithFormat:@"delete from %@ where ",[self getTableName:modelClass]];
     
     [mSQL appendString:[self toStringWithDict:sqlDict]];
     
-    if (_deepPolicy) {
-        NSDictionary<NSString *, Class> *classes = [self getRelatedModelClasses:modelClass];
-        // 获取关联的模型类
-        [classes enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, Class _Nonnull obj, BOOL * _Nonnull stop) {
-            for (id model in modelArray) {
-                NSString *primaryKey = [self getPrimaryKey:modelClass];
-                
-                id keyValue = [model valueForKey:primaryKey];
-                [self deleteByModel:obj key:[self getForeignKey:obj] keyValue:keyValue];
-            }
-        }];
-    }
+    //删除关联的数据库
+    NSDictionary<NSString *, Class> *classes = [self getRelatedModelClasses:modelClass];
+    // 获取关联的模型类
+    [classes enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, Class _Nonnull obj, BOOL * _Nonnull stop) {
+        for (id model in modelArray) {
+            NSString *primaryKey = [self getPrimaryKey:modelClass];
+            
+            id keyValue = [model valueForKey:primaryKey];
+            [self deleteByModel:obj key:[self getForeignKey:obj] keyValue:keyValue];
+        }
+    }];
    
     return [self executeUpdate:mSQL];
-    
+}
+
+- (BOOL)deleteAllModel:(Class)modelClass {
+    NSString *sql = [NSString stringWithFormat:@"delete from %@",[self getTableName:modelClass]];
+    return [self executeUpdate:sql];
 }
 
 - (BOOL)executeUpdate:(NSString*)sql {
-    
     __block BOOL result;
     [_dbQueue inDatabase:^(FMDatabase *db) {
         result = [db executeUpdate:sql];
@@ -290,7 +278,6 @@
     
     FMResultSet *rs = [db executeQuery:sql withArgumentsInArray:args];
     while ([rs next]) {
-        
         if ([modelClass isSubclassOfClass:[NSNumber class]]) {
             NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
             id v = [formatter numberFromString:[rs stringForColumnIndex:0]];
@@ -298,6 +285,7 @@
         } else if ([modelClass isSubclassOfClass:[NSString class]]) {
             [result addObject:[rs stringForColumnIndex:0]];
         } else {
+            //字典转模型
             id model = [modelClass yy_modelWithDictionary:[rs resultDictionary]];
             if (model) {
                 [result addObject:model];
@@ -305,22 +293,17 @@
                 // 如果存在关联关系，则再查询关联的数据 TODO 嵌套打开ResultSet可能有问题
                 NSDictionary<NSString *, id> *relatedClasses = [self getRelatedModelClasses:modelClass];
                 [relatedClasses enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, Class  _Nonnull redClass, BOOL * _Nonnull stop) {
-                    
                     NSString *foreignKey = [self getForeignKey:redClass];
-                    
-                        NSMutableString *sql = [NSMutableString stringWithFormat:@"select * from %@ where %@=%@", [self getTableName:redClass], foreignKey, [model valueForKey:primaryKey]];
-                        NSArray *relatedModels = [self queryImpl:db modelClass:relatedClasses[key] sql:sql withArgumentsInArray:nil];
-                        
-                        // 将结果设置到对应属性中
-                        [model setValue:relatedModels forKey:key];
+                    NSMutableString *sql = [NSMutableString stringWithFormat:@"select * from %@ where %@=%@", [self getTableName:redClass], foreignKey, [model valueForKey:primaryKey]];
+                    NSArray *relatedModels = [self queryImpl:db modelClass:relatedClasses[key] sql:sql withArgumentsInArray:nil];
+                    // 将结果设置到对应属性中
+                    [model setValue:relatedModels forKey:key];
                 }];
-                
             } else {
                 BJLog(@"ORM执行失败，yymodel无法将记录转换成模型");
             }
         }
     }
-    
     [rs close];
     
     return result;
@@ -328,22 +311,18 @@
 
 #pragma mark 插入或更新
 - (NSInteger)saveImpl:(NSArray *)models {
-    if (!models || models.count == 0) {
-        return 0;
-    }
+    if (!models || !models.count) { return 0; }
+    
     __block NSUInteger changeCount = 0;
     for (id model in models) {
         [self createTableIfNotExist:[model class]];
-        
         NSString *primaryName = [self getPrimaryKey:[model class]];
         BOOL isUpdate = [self isUpdateState:model primaryName:primaryName];
         NSString *sql = [self constructSql:[model class] isUpdate:isUpdate primaryName:primaryName];
-        
-        BJLog(@"generated sql is: %@.", sql);
-        
         NSDictionary *dict = [self modelToDictionary:model].copy;
+        id primaryValue = dict[primaryName];
+        
         [_dbQueue inDatabase:^(FMDatabase *db) {
-            
             [db executeUpdate:sql withParameterDictionary:dict];
             
             if (!isUpdate) {
@@ -359,30 +338,34 @@
                     BJLog(@"无法获取插入数据的主键值");
                 }
             }
-            
             changeCount += [db changes];
         }];
         
-        // 保留关联的数据库
-        if (_deepPolicy) {
-            NSDictionary<NSString *, id> *relatedClasses = [self getRelatedModelClasses:[model class]];
-            if (relatedClasses.count) {
-                [relatedClasses enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-                    id values = [model valueForKey:key];
-                    if ([values isKindOfClass:[NSArray class]]) {
-                        if ([values count]) {
-                            changeCount += [self saveImpl:values];
+        // 处理关联的数据库
+        NSDictionary<NSString *, Class> *relatedClasses = [self getRelatedModelClasses:[model class]];
+        if (relatedClasses.count) {
+            [relatedClasses enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, Class  _Nonnull objClass, BOOL * _Nonnull stop) {
+                id subValue = [model valueForKey:key];
+                if (subValue) {
+                    if ([subValue isKindOfClass:[NSArray class]]) {
+                        NSArray *array = subValue;
+                        if (array.count) {
+                            for (id subModel in array) {
+                                [subModel setValue:primaryValue forKey:[self getForeignKey:[subModel class]]];
+                            }
+                            changeCount += [self saveImpl:array];
+                        } else {
+                            [self deleteByModel:objClass key:[self getForeignKey:objClass] keyValue:primaryValue];
                         }
                     } else {
-                        changeCount += [self saveImpl:@[values]];
+                        changeCount += [self saveImpl:@[subValue]];
                     }
-                    
-                }];
-            }
+                } else {
+                    [self deleteByModel:objClass key:[self getForeignKey:objClass] keyValue:primaryValue];
+                }
+            }];
         }
     }
-    
-    
     return changeCount;
 }
 
@@ -424,20 +407,19 @@
                             isUpdate ? @"update %s set " : @"insert into %s (", tableName];
     NSMutableString *insertPlaceholders = [NSMutableString string];
     
-    [modelClass iterateProperty:^BOOL(NSString *name, NSString *typeName, NSInteger count) {
+    [modelClass ld_iterateProperty:^(NSString *name, NSString *typeName, BOOL *stop) {
         
         if ([primaryName isEqualToString:name] && isUpdate) {
-            return YES;
+            return;
         }
         
-        if ([dbIgnoreArray containsObject:name]) {
-            return YES;
+        if (dbIgnoreArray.count && [dbIgnoreArray containsObject:name]) {
+            return;
         }
         
-        // 数据字段类型
         NSString *fieldType = _objcSqliteTypeMapper[typeName];
         if (!fieldType) {
-            return YES;
+            return;
         }
         
         if (isUpdate) {
@@ -446,8 +428,6 @@
             [sql appendFormat:@"%@,", name];
             [insertPlaceholders appendFormat:@":%@,", name];
         }
-        
-        return YES;
     }];
     
     // 移除最后一个,
@@ -465,54 +445,50 @@
 
 - (NSMutableDictionary*)modelToDictionary:(id)model {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    //忽略属性
+    NSArray<NSString *> *dbIgnoreArray = nil;
+    Class modelClass = [model class];
+    if ([modelClass respondsToSelector:@selector(dbIgnoreProperty)]) {
+        dbIgnoreArray = [(id<LDFmdbProvider>)modelClass dbIgnoreProperty];
+    }
     
-    [[model class] iterateProperty:^BOOL(NSString *name, NSString *typeName, NSInteger count) {
+    [[model class] ld_iterateProperty:^(NSString *name, NSString *typeName, BOOL *stop) {
         
-        id value = [model valueForKey:name];
-        
-        if (value == nil) {
-            value = [NSNull null];
+        if (dbIgnoreArray.count && [dbIgnoreArray containsObject:name]) {
+            return;
         }
         
-        [dict setObject:value forKey:name];
+        NSString *fieldType = _objcSqliteTypeMapper[typeName];
+        if (!fieldType) {
+            return;
+        }
         
-        return YES;
+        id value = [model valueForKey:name];
+        if (!value) value = [NSNull null];
+        [dict setObject:value forKey:name];
     }];
     
     return dict;
 }
 
-
-/**
- * 如果表不存在，根据模型创建之
- */
+//如果表不存在，根据模型创建
 - (void)createTableIfNotExist:(Class)modelClass {
     NSString *tableName = [self getTableName:modelClass];    
     NSMutableString *ddl = [NSMutableString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (", tableName];
     
     //------- 协议 -----
-    //关联
-    NSDictionary<NSString *, id> *dbRelationDict = [self getRelatedModelClasses:modelClass];
     //忽略属性
     NSArray<NSString *> *dbIgnoreArray = nil;
     if ([modelClass respondsToSelector:@selector(dbIgnoreProperty)]) {
         dbIgnoreArray = [(id<LDFmdbProvider>)modelClass dbIgnoreProperty];
     }
-    //主键
+
     NSString *primaryKey = [self getPrimaryKey:modelClass];
-    
-    
-    
-    __weak typeof(self) weakSelf = self;
-    [modelClass iterateProperty:^BOOL(NSString *name, NSString *typeName, NSInteger count) {
+    [modelClass ld_iterateProperty:^(NSString *name, NSString *typeName, BOOL *stop) {
         
-        // 无类型属性 id
-        if (!typeName) {
-            return YES;
-        }
         // 忽略
-        if (dbIgnoreArray && [dbIgnoreArray containsObject:name]) {
-            return YES;
+        if (dbIgnoreArray.count && [dbIgnoreArray containsObject:name]) {
+            return;
         }
         
         // 主键
@@ -522,26 +498,14 @@
             } else {
                 [NSException raise:@"不支持的主键类型，目前只支持NSNumber" format:@"主键类型:%@", typeName];
             }
-        } else {
+        } else { //其他键
             // 字段属性
             NSString *fieldType = _objcSqliteTypeMapper[typeName];
             if (fieldType) {
                 // 字段名
                 [ddl appendFormat:@"[%@] %@,", name, fieldType];
-            } else {
-                // 如果存在关联关系，同时创建关联表
-                    if (dbRelationDict) {
-                        Class class = dbRelationDict[name];
-                        if (class) {
-                            [weakSelf createTableIfNotExist:class];
-                        }
-                    } else {
-                    return YES;
-                }
             }
         }
-        
-        return YES;
     }];
     
     [ddl deleteCharactersInRange:NSMakeRange(ddl.length - 1, 1)];
@@ -551,8 +515,6 @@
         [db executeUpdate:ddl];
     }];
 }
-
-
 
 - (NSString *)toStringWithDict:(NSDictionary *)dict {
     NSMutableString *mSQL = [NSMutableString string];
@@ -589,7 +551,8 @@
 
 - (NSString *)getForeignKey:(Class)modelClass {
     NSString *foreignKey = [(id<LDFmdbProvider>)modelClass dbForeignKey];
-    NSAssert(foreignKey, @"外键不能为空");
+    NSAssert(foreignKey, @"主键不能为空");
     return foreignKey;
 }
+
 @end

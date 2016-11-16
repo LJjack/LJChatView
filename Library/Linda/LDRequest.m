@@ -7,166 +7,136 @@
 //
 
 #import "LDRequest.h"
+#import "BJURLRequestSerialization.h"
+#import "BJUserManager.h"
+#import "NSString+LJHash.h"
 
-@interface LDRequest()
+@interface LDRequest ()
 
-@property(nonatomic, strong) NSMutableDictionary *innerUrlParams;
-
-@property(nonatomic, strong) NSMutableDictionary *innerFormDatas;
-
-@property(nonatomic, strong) NSMutableDictionary *innerUploadFiles;
+//上传文件基地址
+@property(nonatomic, copy) NSString *uploadBaseAddress;
 
 @end
 
 @implementation LDRequest
 
-- (NSString *)dictionaryToString:(NSDictionary *)dictionary {
+- (instancetype)init {
+    if (self = [super init]) {
+        // 配置默认值
+        _baseAddress = kAPPBaseAddress;
+        self.uploadBaseAddress = @"http://pic.8jiong.cn/api/upfiles/";
+        self.timeout = 30;
+    }
+    return self;
+}
+
+- (NSURLRequest *)request {
+    NSString *urlParam = @"";
+    if (self.urlParam.length) {
+        urlParam = [NSString stringWithFormat:@"?%@",self.urlParam];
+    }
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@/%@%@",  self.baseAddress, self.contextPath, self.methodName, urlParam]];
     
-    if (!dictionary) {
-        return nil;
+    BJLog(@"==%@",url);
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:0 timeoutInterval:self.timeout];
+    [request setHTTPShouldHandleCookies:NO];
+    [request setHTTPMethod:self.httpMethod];
+    
+    if ([self.httpMethod isEqualToString:@"POST"]) {
+        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        if (self.isSignature) {
+            [self signPOSTRequest:request];
+        }
+        if (self.formParam.length) {
+            request.HTTPBody = [self.formParam dataUsingEncoding:NSUTF8StringEncoding];
+        }
     }
     
-    NSMutableString *str = [[NSMutableString alloc] init];
-    
-    [dictionary enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[NSArray class]]) {
-            NSArray *vals = (NSArray *)obj;
-            [vals enumerateObjectsUsingBlock:^(id  _Nonnull obj2, NSUInteger idx, BOOL * _Nonnull stop2) {
-                [str appendFormat:@"%@=%@&", key, obj2];
-            }];
-        } else {
-            [str appendFormat:@"%@=%@&", key, obj];
+    if ([self.httpMethod isEqualToString:@"GET"]) {
+        if (self.isSignature) {
+            // 签名
+            [self signGETRequest:request];
         }
+    }
+    
+    
+    return request;
+}
+
+//上传请求
+- (NSURLRequest *)fileRequest {
+    
+    NSURL *url = [NSURL URLWithString:self.uploadBaseAddress];
+    
+    BJLog(@"==%@",url);
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:0 timeoutInterval:self.timeout];
+    NSMutableArray *uploadFileArray = [NSMutableArray array];
+    [self.uploadFileArray enumerateObjectsUsingBlock:^(NSString * _Nonnull path, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSString *fileName = [NSString stringWithFormat:@"%@.jpg",[path lastPathComponent]];
+        NSAssert(fileName && fileName.length, @"文件路径不能为空");
+        NSData *fileData = [NSData dataWithContentsOfFile:path];
+        NSAssert1(fileData && fileData.length, @"文件路径 %@ 的文件不能为空", path);
+        
+        NSDictionary *item = @{@"mimeType" : @"binary/any",
+                               @"fileName" : fileName,
+                               @"data"     : fileData};
+        
+        [uploadFileArray addObject:item];
     }];
     
-    [str deleteCharactersInRange:NSMakeRange(str.length - 1, 1)];
+    [[BJURLRequestSerialization serialization] uploadFileWithRequest:request fileArray:uploadFileArray];
     
-    return str;
+    return request;
 }
 
-- (NSMutableDictionary *)stringToDictionary:(NSString *)string {
-    
-    if (!string) {
-        return nil;
+/**
+ 电商签名 POST
+ "bb=2&aa=1"排序后形成 aa=1&bb=2
+
+ */
+- (void)signPOSTRequest:(NSMutableURLRequest *)request {
+    NSString *param = @"";
+    if (self.formParam.length) {
+        NSArray<NSString *> *array = [self.formParam componentsSeparatedByString:@"&"];
+        array = [array sortedArrayUsingComparator:^NSComparisonResult(NSString * _Nonnull obj1, NSString * _Nonnull obj2) {
+            return [obj1 compare:obj2];
+        }];
+        param = [array componentsJoinedByString:@"&"];
     }
     
-    NSArray *silces = [string componentsSeparatedByString:@"&"];
-    NSMutableDictionary *result = [NSMutableDictionary dictionaryWithCapacity:silces.count];
+    BJUser *user = [BJUserManager shareManager].currentUser;
     
-    [silces enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSArray *kv = [obj componentsSeparatedByString:@"="];
-        id key = kv[0];
-        id val = kv[1];
-        id currVal = [result objectForKey:key];
-        if (!currVal) {
-            result[key] = val;
-        } else {
-            // 已经存在，值改为数组
-            if ([currVal isKindOfClass:[NSMutableArray class]]) {
-                [currVal addObject:val];
-            } else {
-                [result setObject:@[currVal, val] forKey:key];
-            }
-        }
-    }];
-
-    return result;
+    NSString *signmMD5 = [NSString stringWithFormat:@"%@%@%@",user.secret,param,user.accessToken].lj_md5String;
+    
+    [request setValue:user.accessToken forHTTPHeaderField:@"Access-Token"];
+    [request setValue:signmMD5 forHTTPHeaderField:@"signature"];
 }
 
-- (NSString *)getUrlParams {
-    if (_urlParams) {
-        return _urlParams;
+/**
+ 电商签名 GET
+ "bb=2&aa=1"排序后形成 aa=1bb=2
+ */
+- (void)signGETRequest:(NSMutableURLRequest *)request {
+    NSString *param = @"";
+    if (self.urlParam.length) {
+        NSArray<NSString *> *array = [self.urlParam componentsSeparatedByString:@"&"];
+        array = [array sortedArrayUsingComparator:^NSComparisonResult(NSString * _Nonnull obj1, NSString * _Nonnull obj2) {
+            return [obj1 compare:obj2];
+        }];
+        param = [array componentsJoinedByString:@""];
     }
     
-    _urlParams = [self dictionaryToString:_innerUrlParams];
+    BJUser *user = [BJUserManager shareManager].currentUser;
     
-    return _urlParams;
-}
-
-- (void)setUrlParams:(NSString *)urlParams {
-    _urlParams = urlParams;
-    _innerUrlParams = [self stringToDictionary:urlParams];
-}
-
-- (NSString *)getFormDatas {
-    if (_formDatas) {
-        return _formDatas;
-    }
+    NSString *signmMD5 = [NSString stringWithFormat:@"%@%@%@",user.secret,param,user.accessToken].lj_md5String;
     
-    _formDatas = [self dictionaryToString:_innerFormDatas];
-    
-    return _formDatas;
+    [request setValue:user.accessToken forHTTPHeaderField:@"Access-Token"];
+    [request setValue:signmMD5 forHTTPHeaderField:@"signature"];
 }
 
-- (void)setFormDatas:(NSString *)formDatas {
-    _formDatas = formDatas;
-    _innerFormDatas = [self stringToDictionary:formDatas];
-}
-
-- (NSString *)getUploadFiles {
-    if (_uploadFiles) {
-        return _uploadFiles;
-    }
-    
-    _uploadFiles = [self dictionaryToString:_innerUploadFiles];
-    
-    return _uploadFiles;
-}
-
-- (void)setUploadFiles:(NSString *)uploadFiles {
-    _uploadFiles = uploadFiles;
-    _innerUploadFiles = [self stringToDictionary:uploadFiles];
-}
-
-- (NSArray *)getFormDatasByName:(NSString *)name {
-    return [_innerFormDatas objectForKey:name];
-}
-
-- (NSArray *)getUploadFilesByName:(NSString *)paramName {
-    return [_innerUploadFiles objectForKey:paramName];
-}
-
-- (NSMutableDictionary *)getInnerUrlParams {
-    return _innerUrlParams;
-}
-
-- (void)setInnerUrlParams:(NSMutableDictionary *)params {
-    _innerUrlParams = params;
-}
-
-- (NSMutableDictionary *)getInnerFormDatas {
-    return _innerFormDatas;
-}
-
-- (NSDictionary *)getSimplifiedInnerFormDatas {
-    NSMutableDictionary *result = [NSMutableDictionary dictionaryWithCapacity:_innerFormDatas.count];
-    [_innerFormDatas enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        if ([obj count] == 1) {
-            [result setObject:obj[0] forKey:key];
-        }
-    }];
-    
-    return result;
-}
-
-- (void)setInnerFormDatas:(NSMutableDictionary *)formDatas {
-    _innerFormDatas = formDatas;
-}
-
-- (NSMutableDictionary *)getInnerUploadFiles {
-    return _innerUploadFiles;
-}
-
-- (void)setInnerUploadFiles:(NSMutableDictionary *)files {
-    _innerUploadFiles = files;
-}
-
-+ (nonnull NSString *)dbPrimaryKey {
-    return @"requestId";
-}
-
-+ (nullable NSArray<NSString *> *)dbIgnoreProperty {
-    return @[@"innerUrlParams", @"innerFormDatas", @"innerUploadFiles"];
+- (Class)modelClass {
+    NSAssert(self.modelClassString && self.modelClassString.length, @"必须为modelClassString赋值");
+    return NSClassFromString(self.modelClassString);
 }
 
 @end
